@@ -7,6 +7,9 @@ const sidebarOpen = ref(false)
 const darkMode = ref(false)
 const dropdownOpen = ref(false)
 
+console.log("Roles:", user?.roles)
+console.log("Permissions:", user?.permissions)
+console.log('Usuário logado:', user)
 onMounted(() => {
   darkMode.value = localStorage.getItem('theme') === 'dark'
   updateHtmlClass()
@@ -91,6 +94,14 @@ function logout() {
 
         <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-users-cog mr-3 w-4"></i> Gestão Usuários
+        </Link>
+         <!-- PAPÉIS E PERMISSÕES (visível apenas para admins) -->
+        <Link
+        v-if="user && user.roles && user.roles.includes('admin')"
+        href="/roles"
+        class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg"
+        >
+        <i class="fas fa-user-shield mr-3 w-4"></i> Papéis e Permissões
         </Link>
 
         <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">

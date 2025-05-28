@@ -15,9 +15,24 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+        $this->call(RoleAndPermissionSeeder::class);
+
+        $user = \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $admin = \App\Models\User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+        ]);
+
+        // Atribuir papel
+        $admin->assignRole('admin');
+
+        // Atribuir permissão direta (opcional, além do papel)
+        $admin->givePermissionTo('ver logs');
+
+        $user->givePermissionTo('enviar notificações');
     }
 }

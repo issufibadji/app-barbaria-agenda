@@ -92,14 +92,6 @@ routes/
 
 ---
 
-## 🧠 Sugestão de Continuação
-
-- ✅ Criar layouts personalizados
-- ✅ Implementar gestão de usuários
-- ✅ Integrar com APIs
-- ✅ Adicionar permissões e papéis (roles)
-- ✅ Usar Tailwind plugins como forms, typography, etc.
-
 ---
 
 Feito com ❤️ por [Seu Nome ou Equipe]
