@@ -1,4 +1,5 @@
 <template>
+<AdminLayout>
   <div class="p-6 max-w-xl mx-auto">
     <h1 class="text-2xl font-bold mb-4">Editar Papel</h1>
 
@@ -30,11 +31,12 @@
       </div>
     </form>
   </div>
+  </AdminLayout>
 </template>
 
 <script setup>
 import { useForm, Link } from '@inertiajs/vue3'
-
+import AdminLayout from '@/Layouts/AdminLayout.vue'
 const props = defineProps({
   role: Object,
   permissions: Array,

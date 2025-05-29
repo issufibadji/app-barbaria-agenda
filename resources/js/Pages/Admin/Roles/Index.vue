@@ -1,4 +1,5 @@
 <template>
+<AdminLayout>
   <div class="p-6">
     <div class="flex justify-between items-center mb-4">
       <h1 class="text-2xl font-bold">Lista de Papéis</h1>
@@ -27,11 +28,12 @@
       </table>
     </div>
   </div>
+</AdminLayout>
 </template>
 
 <script setup>
 import { router, Link } from '@inertiajs/vue3'
-
+import AdminLayout from '@/Layouts/AdminLayout.vue'
 defineProps({ roles: Array })
 
 function deleteRole(id) {

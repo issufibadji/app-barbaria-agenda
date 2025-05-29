@@ -1,4 +1,5 @@
 <template>
+<AdminLayout>
   <div class="p-6">
     <h1 class="text-2xl font-bold mb-4">Atribuir/Remover Papel de Usuário</h1>
 
@@ -70,12 +71,13 @@
       </table>
     </div>
   </div>
+ </AdminLayout>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
-
+import AdminLayout from '@/Layouts/AdminLayout.vue'
 const props = defineProps({
   users: Array,
   roles: Array,

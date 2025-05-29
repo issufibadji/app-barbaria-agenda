@@ -1,48 +1,39 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import DeleteUserForm from './Partials/DeleteUserForm.vue';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
-import { Head } from '@inertiajs/vue3';
+import AdminLayout from '@/Layouts/AdminLayout.vue'
 
 defineProps({
-    mustVerifyEmail: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
+    mustVerifyEmail: Boolean,
+    status: String,
 });
 </script>
 
 <template>
-    <Head title="Profile" />
+    <AdminLayout>
+        <main class="flex-1 p-6 bg-white dark:bg-violet-900 bg-gradient-to-r from-white to-violet-100 dark:from-violet-900 dark:to-violet-800 min-h-screen">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <h1 class="text-2xl font-semibold text-violet-900 dark:text-white mb-4">Perfil</h1>
 
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-violet-800">
-                Profile
-            </h2>
-        </template>
+                <div class="space-y-6">
+                    <div class="bg-violet-100 p-4 shadow sm:rounded-lg sm:p-8">
+                        <UpdateProfileInformationForm
+                            :must-verify-email="mustVerifyEmail"
+                            :status="status"
+                            class="max-w-xl"
+                        />
+                    </div>
 
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                <div class="bg-violet-100 p-4 shadow sm:rounded-lg sm:p-8">
-                    <UpdateProfileInformationForm
-                        :must-verify-email="mustVerifyEmail"
-                        :status="status"
-                        class="max-w-xl"
-                    />
-                </div>
+                    <div class="bg-violet-100 p-4 shadow sm:rounded-lg sm:p-8">
+                        <UpdatePasswordForm class="max-w-xl" />
+                    </div>
 
-                <div class="bg-violet-100 p-4 shadow sm:rounded-lg sm:p-8">
-                    <UpdatePasswordForm class="max-w-xl" />
-                </div>
-
-                <div class="bg-violet-100 p-4 shadow sm:rounded-lg sm:p-8">
-                    <DeleteUserForm class="max-w-xl" />
+                    <div class="bg-violet-100 p-4 shadow sm:rounded-lg sm:p-8">
+                        <DeleteUserForm class="max-w-xl" />
+                    </div>
                 </div>
             </div>
-        </div>
-    </AuthenticatedLayout>
+        </main>
+    </AdminLayout>
 </template>
