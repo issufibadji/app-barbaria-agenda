@@ -11,14 +11,14 @@ class RoleController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Roles/Index', [
+        return Inertia::render('Admin/Roles/Index', [
             'roles' => Role::with('permissions')->get(),
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Roles/Create', [
+        return Inertia::render('Admin/Roles/Create', [
             'permissions' => Permission::all(),
         ]);
     }
@@ -38,7 +38,7 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-        return Inertia::render('Roles/Edit', [
+        return Inertia::render('Admin/Roles/Edit', [
             'role' => $role->load('permissions'),
             'permissions' => Permission::all(),
         ]);

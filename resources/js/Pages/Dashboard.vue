@@ -62,8 +62,10 @@ function logout() {
         </div>
       </div>
 
-     <!-- Menu -->
+   <!-- Menu principal -->
     <nav class="flex-1 px-2 space-y-2">
+
+        <!-- Seção: Usuário -->
         <Link href="/dashboard" class="flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-violet-800 text-white hover:bg-violet-700">
             <i class="fas fa-home mr-3 w-4"></i> Dashboard
         </Link>
@@ -72,49 +74,64 @@ function logout() {
             <i class="fas fa-user mr-3 w-4"></i> Meu Perfil
         </Link>
 
-        <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+        <!-- Seção: Funcionalidades -->
+        <div class="mt-2 border-t border-violet-800 pt-2">
+            <p class="text-xs text-violet-400 px-4 uppercase tracking-widest mb-1">Módulos</p>
+
+            <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-user-friends mr-3 w-4"></i> Cliente
-        </Link>
+            </Link>
 
-        <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-box-open mr-3 w-4"></i> Produtos
-        </Link>
+            </Link>
 
-        <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-layer-group mr-3 w-4"></i> Plano
-        </Link>
+            </Link>
 
-        <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-credit-card mr-3 w-4"></i> Pagamento
-        </Link>
+            </Link>
 
-        <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-chart-bar mr-3 w-4"></i> Relatórios
-        </Link>
+            </Link>
 
-        <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-users-cog mr-3 w-4"></i> Gestão Usuários
-        </Link>
-         <!-- PAPÉIS E PERMISSÕES (visível apenas para admins) -->
-        <Link
-        v-if="user && user.roles && user.roles.includes('admin')"
-        href="/roles"
-        class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg"
-        >
-        <i class="fas fa-user-shield mr-3 w-4"></i> Papéis e Permissões
-        </Link>
+            </Link>
+        </div>
 
-        <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-cogs mr-3 w-4"></i> Configurações de Sistema
-        </Link>
+        <!-- Seção: Administração -->
+        <div v-if="user && user.roles.includes('admin')" class="mt-4 border-t border-violet-800 pt-2">
+            <p class="text-xs text-violet-400 px-4 uppercase tracking-widest mb-1">Administração</p>
 
-        <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-file-alt mr-3 w-4"></i> Gestão de Logs
-        </Link>
+            <Link href="/roles" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <i class="fas fa-shield-alt mr-3 w-4"></i> Papéis
+            </Link>
 
-        <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-stream mr-3 w-4"></i> Gestão de Menus
-        </Link>
+            <Link href="/permissions" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <i class="fas fa-lock mr-3 w-4"></i> Permissões
+            </Link>
+
+            <Link href="/role-user" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <i class="fas fa-user-tag mr-3 w-4"></i> Papéis/Usuário
+            </Link>
+
+            <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <i class="fas fa-cogs mr-3 w-4"></i> Configurações
+            </Link>
+
+            <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <i class="fas fa-file-alt mr-3 w-4"></i> Logs
+            </Link>
+
+            <Link href="#" class="flex items-center px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <i class="fas fa-stream mr-3 w-4"></i> Menus
+            </Link>
+        </div>
+
     </nav>
 
       <!-- Footer do Sidebar -->
