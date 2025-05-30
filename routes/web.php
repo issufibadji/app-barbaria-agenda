@@ -9,6 +9,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleUserController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TwoFactorAuthController;
 
 // Rota inicial
 Route::get('/', function () {
@@ -30,6 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/profile/2fa/setup', [TwoFactorAuthController::class, 'show'])->name('2fa.setup');
+    Route::post('/profile/2fa/enable', [TwoFactorAuthController::class, 'enable'])->name('2fa.enable');
+    Route::post('/profile/2fa/disable', [TwoFactorAuthController::class, 'disable'])->name('2fa.disable');
 });
 
 // Administração (somente admin)
@@ -55,6 +61,20 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/role-user', [RoleUserController::class, 'index'])->name('role-user.index');
     Route::post('/role-user', [RoleUserController::class, 'assign'])->name('role-user.assign');
     Route::delete('/role-user', [RoleUserController::class, 'remove'])->name('role-user.remove');
+
+    // Usuários
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    // Ativar/desativar status
+    Route::post('/users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
+
+    // Ativar/desativar 2FA
+   Route::post('/users/{user}/toggle-2fa', [UserController::class, 'toggle2FA'])->name('users.toggle-2fa');
 });
 
 // Rota de teste de permissão
@@ -62,4 +82,4 @@ Route::get('/teste-role', function () {
     return 'Acesso autorizado para admin';
 })->middleware(['auth', 'role:admin']);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

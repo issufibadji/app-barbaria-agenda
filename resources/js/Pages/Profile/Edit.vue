@@ -1,6 +1,7 @@
 <script setup>
 import DeleteUserForm from './Partials/DeleteUserForm.vue';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
+import TwoFactorSetup from './Partials/TwoFactorSetup.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 
@@ -32,6 +33,22 @@ defineProps({
                     <div class="bg-violet-100 p-4 shadow sm:rounded-lg sm:p-8">
                         <DeleteUserForm class="max-w-xl" />
                     </div>
+
+                    <div class="bg-violet-100 p-4 shadow sm:rounded-lg sm:p-8">
+                    <TwoFactorSetup class="max-w-xl" />
+                    </div>
+
+                    <div class="bg-violet-100 p-4 shadow sm:rounded-lg sm:p-8">
+                    <h2 class="text-lg font-semibold text-violet-900 mb-2">Segurança</h2>
+                    <p class="mb-4 text-sm text-gray-600">Configure ou desative a autenticação em dois fatores para sua conta.</p>
+                    <Link
+                        href="/profile/2fa/setup"
+                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    >
+                        Acessar configuração de 2FA
+                    </Link>
+                    </div>
+
                 </div>
             </div>
         </main>

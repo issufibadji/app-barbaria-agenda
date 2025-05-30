@@ -92,7 +92,7 @@ function logout() {
             <Link href="#" class="flex items-center px-4 py-2 text-sm text-sky-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-chart-line mr-3 w-4"></i> Relatórios
             </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-sky-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <Link href="/users" class="flex items-center px-4 py-2 text-sm text-sky-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-user-cog mr-3 w-4"></i> Gestão Usuários
             </Link>
             <Link href="#" class="flex items-center px-4 py-2 text-sm text-sky-300 hover:text-white hover:bg-violet-700 rounded-lg">
