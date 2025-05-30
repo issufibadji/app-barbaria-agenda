@@ -1,14 +1,12 @@
 <script setup>
-import { useForm, usePage, router } from '@inertiajs/vue3'
 import { ref, computed } from 'vue'
+import { useForm, router } from '@inertiajs/vue3'
 
 const props = defineProps({
   qrCodeUrl: String,
   secretKey: String,
+  user: Object
 })
-
-const page = usePage()
-const user = computed(() => page.props.user)
 
 const code = ref('')
 const form = useForm({ code })
@@ -20,13 +18,15 @@ function enable2FA() {
 function disable2FA() {
   router.post(route('2fa.disable'))
 }
+
+const isActive2FA = computed(() => props.user?.active_2fa === true)
 </script>
 
 <template>
   <div class="mt-6 border-t pt-6">
     <h2 class="text-lg font-semibold text-violet-800 dark:text-violet-100">Autenticação em 2 Fatores (2FA)</h2>
 
-    <div v-if="!user.value?.active_2fa">
+    <div v-if="!isActive2FA">
       <p class="text-sm mb-2 text-violet-700">Escaneie o QR Code abaixo com seu app autenticador:</p>
       <img :src="qrCodeUrl" alt="QR Code 2FA" class="mb-4" />
 
@@ -38,6 +38,7 @@ function disable2FA() {
         placeholder="Código de autenticação"
         class="border px-3 py-2 rounded w-full mb-2"
       />
+
       <button @click="enable2FA" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
         Ativar 2FA
       </button>

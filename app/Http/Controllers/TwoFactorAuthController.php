@@ -9,15 +9,17 @@ use PragmaRX\Google2FA\Google2FA;
 use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use Illuminate\Contracts\Encryption\DecryptException;
 use BaconQrCode\Writer;
 
 class TwoFactorAuthController extends Controller
 {
-    public function show()
-    {
-        $user = Auth::user();
-        $google2fa = new Google2FA();
+  public function show()
+  {
+    $user = Auth::user();
+    $google2fa = new Google2FA();
 
+    try {
         if (!$user->google2fa_secret) {
             $secretKey = $google2fa->generateSecretKey();
             $user->google2fa_secret = Crypt::encrypt($secretKey);
@@ -25,28 +27,35 @@ class TwoFactorAuthController extends Controller
         }
 
         $secret = Crypt::decrypt($user->google2fa_secret);
-
-        $qrCodeUrl = $google2fa->getQRCodeUrl(
-            config('app.name'),
-            $user->email,
-            $secret
-        );
-
-        $renderer = new ImageRenderer(
-            new RendererStyle(200),
-            new SvgImageBackEnd()
-        );
-
-        $writer = new Writer($renderer);
-        $qrCodeSvg = $writer->writeString($qrCodeUrl);
-
-        return inertia('Profile/TwoFactorSetup', [
-            'qrCodeUrl' => 'data:image/svg+xml;base64,' . base64_encode($qrCodeSvg),
-            'secretKey' => $secret,
-            'user' => $user,
-        ]);
+    } catch (DecryptException $e) {
+        // Resetar secret se estiver inválido
+        $secretKey = $google2fa->generateSecretKey();
+        $user->google2fa_secret = Crypt::encrypt($secretKey);
+        $user->save();
+        $secret = $secretKey;
     }
 
+    $qrCodeUrl = $google2fa->getQRCodeUrl(
+        config('app.name'),
+        $user->email,
+        $secret
+    );
+
+    $renderer = new ImageRenderer(
+        new RendererStyle(200),
+        new SvgImageBackEnd()
+    );
+
+    $writer = new Writer($renderer);
+    $qrCodeSvg = $writer->writeString($qrCodeUrl);
+
+    return inertia('Profile/TwoFactorSetup', [
+        'qrCodeUrl' => 'data:image/svg+xml;base64,' . base64_encode($qrCodeSvg),
+        'secretKey' => $secret,
+        'user' => $user,
+    ]);
+
+  }
     public function enable(Request $request)
     {
         $request->validate(['code' => 'required']);

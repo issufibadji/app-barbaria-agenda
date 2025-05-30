@@ -10,7 +10,6 @@ return new class extends Migration {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('active_2fa')->default(false)->after('password');
 			$table->string('google2fa_secret')->nullable();
-            $table->boolean('active')->default(true);
             $table->timestamp('email_verified_at')->nullable()->change(); // já existe, garantimos que pode ser null
 
         });
