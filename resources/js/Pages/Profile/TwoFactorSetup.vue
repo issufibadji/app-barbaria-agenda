@@ -1,26 +1,49 @@
 <script setup>
-import { ref, computed } from 'vue'
 import { useForm, router } from '@inertiajs/vue3'
+import { ref } from 'vue'
 
 const props = defineProps({
   qrCodeUrl: String,
   secretKey: String,
-  user: Object
+  user: Object,
 })
 
 const code = ref('')
-const form = useForm({ code })
+const form = useForm({
+  code: code.value,
+})
 
+// Ativar 2FA
 function enable2FA() {
-  form.post(route('2fa.enable'))
+  form.post(route('2fa.enable'), {
+    preserveScroll: true,
+    onSuccess: () => {
+      alert('2FA ativado com sucesso!')
+      form.reset()
+    },
+    onError: () => {
+      alert('Código inválido. Tente novamente.')
+    }
+  })
 }
 
+// Desativar 2FA
 function disable2FA() {
-  router.post(route('2fa.disable'))
+  if (confirm('Deseja realmente desativar o 2FA?')) {
+    router.visit(route('2fa.disable'), {
+      method: 'post',
+      preserveScroll: true,
+      onSuccess: () => {
+        alert('2FA desativado com sucesso.')
+      },
+      onError: () => {
+        alert('Erro ao desativar 2FA.')
+      }
+    })
+  }
 }
-
-const isActive2FA = computed(() => props.user?.active_2fa === true)
 </script>
+
 
 <template>
   <div class="mt-6 border-t pt-6">
@@ -33,22 +56,28 @@ const isActive2FA = computed(() => props.user?.active_2fa === true)
       <p class="text-xs text-gray-500 mb-2">Ou digite este código manualmente:</p>
       <div class="text-sm font-mono bg-gray-100 p-2 rounded mb-4">{{ secretKey }}</div>
 
-      <input
+        <input
         v-model="form.code"
         placeholder="Código de autenticação"
         class="border px-3 py-2 rounded w-full mb-2"
-      />
+        />
+      <div class="mt-6 flex items-center gap-4">
+        <button
+        @click="enable2FA"
+        :disabled="form.processing"
+        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50"
+        >
+        <span v-if="form.processing">Ativando...</span>
+        <span v-else>Ativar 2FA</span>
+        </button>
 
-      <button @click="enable2FA" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-        Ativar 2FA
-      </button>
-    </div>
-
-    <div v-else>
-      <p class="text-sm text-green-700 mb-4">2FA está ativado para esta conta.</p>
-      <button @click="disable2FA" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+        <button
+        @click="disable2FA"
+        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+        >
         Desativar 2FA
       </button>
+      </div>
     </div>
-  </div>
+    </div>
 </template>
