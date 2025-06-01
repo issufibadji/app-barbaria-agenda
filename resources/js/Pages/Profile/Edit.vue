@@ -29,10 +29,12 @@ const user = page.props.auth.user
           <p class="text-sm text-gray-700 mb-4">
             Configure ou desative a autenticação em dois fatores para sua conta.
           </p>
-      <TwoFactorSetup
-        :qr-code-url="qrCodeUrl"
-        :secret-key="secretKey"
-        />
+           <TwoFactorSetup
+            :qr-code-url="qrCodeUrl"
+            :secret-key="secretKey"
+            :user="user"
+            />
+
         </div>
       </div>
     </main>
