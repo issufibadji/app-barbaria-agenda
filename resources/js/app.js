@@ -9,7 +9,7 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css'
 
 const appName =
-    import.meta.env.VITE_APP_NAME || 'Laravel';
+    import.meta.env.VITE_APP_NAME || 'AgendaBarbaria';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

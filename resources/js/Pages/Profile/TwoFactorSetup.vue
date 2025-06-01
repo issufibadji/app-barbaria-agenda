@@ -14,7 +14,6 @@ const form = useForm({
   secret: props.secretKey, // novo campo
 });
 
-const secret = '62HLETV42BQWCDFW'
 // Verifica se 2FA está ativado
 const isActive2FA = computed(() => props.user?.active_2fa)
 
@@ -24,8 +23,12 @@ function enable2FA() {
     preserveScroll: true,
     onSuccess: () => {
       toast.success('2FA ativado com sucesso! 🎉')
-      form.reset()
-      // Atualiza a página para refletir o novo status
+
+      // reset apenas o código e reatribui o secret
+      form.reset('code')
+      form.secret = props.secretKey
+
+      // Força recarregamento do componente para refletir o novo estado
       router.reload({ only: ['auth'] })
     },
     onError: () => {
@@ -33,6 +36,7 @@ function enable2FA() {
     }
   })
 }
+
 
 // Desativar 2FA
 function disable2FA() {

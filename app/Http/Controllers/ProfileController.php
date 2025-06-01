@@ -57,12 +57,12 @@ class ProfileController extends Controller
         $qrCodeSvg = $writer->writeString($qrCodeUrl);
 
         return Inertia::render('Profile/Edit', [
-            'auth' => ['user' => $user],
             'mustVerifyEmail' => $user instanceof MustVerifyEmail,
             'status' => session('status'),
             'qrCodeUrl' => 'data:image/svg+xml;base64,' . base64_encode($qrCodeSvg),
             'secretKey' => $secret,
         ]);
+
     }
     /**
      * Update the user's profile information.

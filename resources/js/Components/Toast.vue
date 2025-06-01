@@ -12,34 +12,44 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, computed } from 'vue'
 
 const props = defineProps({
-  message: String,
-  type: {
-    type: String,
-    default: 'success', // 'success' | 'error'
+  duration: {
+    type: Number,
+    default: 4000,
   },
 })
 
-const show = ref(true)
+const message = ref('')
+const type = ref('success')
+const show = ref(false)
 
-onMounted(() => {
-  setTimeout(() => (show.value = false), 4000)
-})
+function showToast(msg, msgType = 'success') {
+  message.value = msg
+  type.value = msgType
+  show.value = true
+
+  setTimeout(() => {
+    show.value = false
+  }, props.duration)
+}
 
 const toastClass = computed(() => {
-  return props.type === 'success'
+  return type.value === 'success'
     ? 'bg-green-500 text-white'
     : 'bg-red-500 text-white'
 })
 
 const iconClass = computed(() => {
-  return props.type === 'success'
+  return type.value === 'success'
     ? 'mdi mdi-check-circle-outline'
     : 'mdi mdi-alert-circle-outline'
 })
+
+defineExpose({ showToast })
 </script>
+
 
 <style scoped>
 .fade-enter-active,

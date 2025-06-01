@@ -11,6 +11,9 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TwoFactorAuthController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use PragmaRX\Google2FA\Google2FA;
 
 // Rota inicial
 Route::get('/', function () {
@@ -22,10 +25,42 @@ Route::get('/', function () {
     ]);
 });
 
-// Dashboard
+// Dashboard (acesso após login e e-mail verificado)
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+//  rotas protegidas por 2FA
+// Route::middleware(['auth', '2fa'])->group(function () {
+//     Route::get('/dashboard', fn () => Inertia::render('Dashboard'))->name('dashboard');
+//     // outras rotas protegidas
+// });
+// Página de digitação do código 2FA
+Route::get('/two-factor', function () {
+    return Inertia::render('Auth/TwoFactorAuth');
+})->middleware(['auth'])->name('two-factor');
+
+// Validação do código 2FA
+Route::post('/two-factor/verify', function (Request $request) {
+    $request->validate([
+        'code' => 'required|digits:6',
+    ]);
+
+    $user = $request->user();
+
+    $google2fa = new Google2FA();
+    $secret = Crypt::decrypt($user->google2fa_secret); // Ou outro campo secreto usado
+
+    $isValid = $google2fa->verifyKey($secret, $request->input('code'));
+
+    if (! $isValid) {
+        return response()->json(['message' => 'Invalid code'], 422);
+    }
+
+    session(['2fa_passed' => true]);
+
+    return response()->json(['redirect' => route('dashboard')]);
+})->middleware(['auth']);
 
 // Perfil de usuário autenticado
 Route::middleware('auth')->group(function () {
