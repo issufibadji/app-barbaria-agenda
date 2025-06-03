@@ -28,9 +28,67 @@ class MenuSidebarSeeder extends Seeder
             'group' => 'Público',
         ]);
 
+        // Grupo 1: Perfil
+        $user = MenuSideBar::create([
+            'description' => 'Clientes',
+            'icon' => 'fa-users',
+            'level' => 1,
+            'route' => 'users',
+            'acl' => 'youself',
+            'order' => 1,
+            'active' => true,
+            'style' => 'color: text-cyan-300;',
+            'group' => 'Público',
+        ]);
+
+        $user = MenuSideBar::create([
+            'description' => 'Funcionário',
+            'icon' => 'fa-user-team',
+            'level' => 1,
+            'route' => 'users',
+            'acl' => 'youself',
+            'order' => 1,
+            'active' => true,
+            'style' => 'color: text-cyan-300;',
+            'group' => 'Público',
+        ]);
+       // Dropdown de Agendas
+        $schedule = MenuSideBar::create([
+            'description' => 'Agendamentos',
+            'icon' => 'fa-calendar-check',
+            'level' => 1,
+            'route' => 'Appointments',
+            'acl' => 'Appointments-all',
+            'order' => 1,
+            'active' => true,
+            'style' => 'color: text-cyan-300;',
+            'group' => 'Público',
+        ]);
+
+         $schedule = MenuSideBar::create([
+            'description' => 'Agendamentos',
+            'icon' => 'fa-calendar-check',
+            'level' => 1,
+            'route' => 'schedule',
+            'acl' => 'schedule-all',
+            'order' => 1,
+            'active' => true,
+            'style' => 'color: text-cyan-300;',
+            'group' => 'Público',
+        ]);
+        $product = MenuSideBar::create([
+            'description' => 'Produtos',
+            'icon' => 'fas fa-box ',
+            'level' => 1,
+            'route' => 'products',
+            'acl' => 'products-all',
+            'order' => 1,
+            'active' => true,
+            'style' => 'color: text-cyan-300;',
+            'group' => 'Público',
+        ]);
 
         // Grupo 2: Blog
-
         $blog = MenuSideBar::create([
             'description' => 'Gestão de Blog',
             'icon' => 'fa-blog',
@@ -42,7 +100,7 @@ class MenuSidebarSeeder extends Seeder
             'style' => 'color: text-emerald-200;',
             'group' => 'Conteúdo',
         ]);
-        // Dropdown de Blog
+        // Dropdown de Gestão de Blog
         $blogMenus = [
             ['Listar Categorias', 'fa-boxes-stacked', 'blog/categories', 'blog::categorias'],
             ['Listar Tags', 'fa-tags', 'blog/tags', 'blog::tags'],
@@ -100,7 +158,6 @@ class MenuSidebarSeeder extends Seeder
             ]);
         }
 
-
         // Grupo 4: Administração do Sistema
         $sistema = MenuSideBar::create([
             'description' => 'Administração do Sistema',
@@ -116,6 +173,7 @@ class MenuSidebarSeeder extends Seeder
 
         $sistemaMenus = [
             ['Gestão de Menus', 'fa-stream', 'menus', 'menu-all'],
+            ['Gestão de Planos', 'fa-layer-group', 'roles', 'plan-all'],
             ['Gestão de Papéis', 'fa-shield-alt', 'roles', 'roles-all'],
             ['Gestão de Permissões', 'fa-lock', 'permissions', 'permissions-all'],
             ['Roles/Usuários', 'fa-user-tag', 'user-roles', 'user-roles-all'],
