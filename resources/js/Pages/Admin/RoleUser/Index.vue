@@ -87,7 +87,7 @@ const selectedRoles = ref({})
 
 function assignRole(userId) {
   if (selectedRoles.value[userId]) {
-    router.post(`/role-user`, {
+    router.post(`/roles-user`, {
       user_id: userId,
       role_id: selectedRoles.value[userId],
     }, {
@@ -100,7 +100,7 @@ function assignRole(userId) {
 
 function removeRole(userId, roleId) {
   if (confirm('Remover esse papel do usuário?')) {
-    router.delete(`/role-user`, {
+    router.delete(`/roles-user`, {
       data: {
         user_id: userId,
         role_id: roleId,

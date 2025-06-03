@@ -94,9 +94,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 
     // Atribuição de papéis a usuários
-    Route::get('/role-user', [RoleUserController::class, 'index'])->name('role-user.index');
-    Route::post('/role-user', [RoleUserController::class, 'assign'])->name('role-user.assign');
-    Route::delete('/role-user', [RoleUserController::class, 'remove'])->name('role-user.remove');
+    Route::get('/roles-user', [RoleUserController::class, 'index'])->name('roles-user.index');
+    Route::post('/roles-user', [RoleUserController::class, 'assign'])->name('roles-user.assign');
+    Route::delete('/roles-user', [RoleUserController::class, 'remove'])->name('roles-user.remove');
 
     // Usuários
     Route::get('/users', [UserController::class, 'index'])->name('users.index');

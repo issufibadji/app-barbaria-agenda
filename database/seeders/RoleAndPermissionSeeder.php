@@ -2,36 +2,53 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class RoleAndPermissionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run()
+    public function run(): void
     {
-        $admin = Role::create(['name' => 'admin']);
-        $user = Role::create(['name' => 'user']);
+        // 🔒 Desativa checagem de chaves estrangeiras
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-         $permissions = [
-            'gerenciar usuários',
-            'ver logs',
-            'enviar notificações',
-            'ver relatórios',
-            'acessar pagamentos',
-            'configurar sistema',
-            // adicione todas as que quiser aqui
+        // Limpa as tabelas com delete (mais seguro com FKs)
+        DB::table('role_has_permissions')->delete();
+        DB::table('model_has_roles')->delete();
+        DB::table('model_has_permissions')->delete();
+        Permission::query()->delete();
+        Role::query()->delete();
+
+        // 🔓 Reativa checagem de chaves estrangeiras
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        // Criação dos papéis
+        $superAdmin = Role::firstOrCreate(['name' => 'Super-Admin']);
+        $admin = Role::firstOrCreate(['name' => 'admin']);
+        $user = Role::firstOrCreate(['name' => 'user']);
+
+        // Lista de permissões
+        $permissions = [
+            'permissions-all',
+            'roles-all',
+            'user-roles-all',
+            'configs-all',
+            'user-all',
+            'audit-all',
+            'notification-all',
+            'menu-all',
+            'youself',
         ];
 
         foreach ($permissions as $perm) {
             Permission::firstOrCreate(['name' => $perm]);
         }
 
-        // Garantir que admin tenha todas
-        $admin->syncPermissions(Permission::all());
-        }
+        // Atribui todas as permissões aos papéis
+        $allPermissions = Permission::all();
+        $admin->syncPermissions($allPermissions);
+        $superAdmin->syncPermissions($allPermissions);
+    }
 }

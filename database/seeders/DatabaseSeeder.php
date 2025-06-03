@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,26 +12,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Cria usuários fictícios
         User::factory(10)->create();
 
-        $this->call(RoleAndPermissionSeeder::class);
+        // Executa os seeders dependentes
+        $this->call([
+            RoleAndPermissionSeeder::class,
+            MenuSidebarSeeder::class, // ✅ Seeder dos Menus
+        ]);
 
-        $user = \App\Models\User::factory()->create([
+        // Usuário comum
+        $user = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
 
-        $admin = \App\Models\User::factory()->create([
+        // Usuário admin
+        $admin = User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
         ]);
 
-        // Atribuir papel
+        // Atribui papéis
         $admin->assignRole('admin');
+        $user->assignRole('user');
 
-        // Atribuir permissão direta (opcional, além do papel)
-        $admin->givePermissionTo('ver logs');
-
-        $user->givePermissionTo('enviar notificações');
+        // Atribui permissões diretas (opcional, além dos papéis)
+        $admin->givePermissionTo('audit-all');
+        $user->givePermissionTo('notification-all');
     }
 }

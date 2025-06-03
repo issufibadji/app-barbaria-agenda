@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { Link, usePage, router } from '@inertiajs/vue3'
 
 const user = usePage().props.auth.user
@@ -31,6 +31,27 @@ function updateHtmlClass() {
 function logout() {
   router.post(route('logout'))
 }
+
+const groupedMenus = computed(() => {
+  return sideMenus.reduce((acc, item) => {
+    const group =
+      item.level === 1 ? 'Área Operacional'
+      : item.level === 2 ? 'Gestão da Loja'
+      : item.level === 3 ? 'Administração do Sistema'
+      : 'Outros'
+
+    if (!acc[group]) acc[group] = []
+    acc[group].push(item)
+    return acc
+  }, {})
+})
+
+function defaultTextClass(groupName) {
+  if (groupName === 'Área Operacional') return 'text-emerald-400'
+  if (groupName === 'Gestão da Loja') return 'text-sky-400'
+  if (groupName === 'Administração do Sistema') return 'text-yellow-400'
+  return 'text-gray-400'
+}
 </script>
 
 <template>
@@ -53,88 +74,28 @@ function logout() {
         </div>
       </div>
     <nav class="flex-1 px-2 space-y-2">
-        <!-- Dashboard -->
         <Link href="/dashboard" class="flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-violet-800 text-white hover:bg-violet-700">
-            <i class="fas fa-home mr-3 w-4"></i> Dashboard
+        <i class="fas fa-home mr-3 w-4"></i> Dashboard
         </Link>
 
-        <!-- Funcionários Loja -->
-        <div class="mt-2 border-t border-violet-800 pt-2">
-            <p class="text-xs text-emerald-400 px-4 uppercase tracking-widest mb-1">Área Operacional</p>
-            <Link href="/profile" class="flex items-center px-4 py-2 text-sm text-emerald-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-id-badge mr-3 w-4"></i> Meu Perfil
-            </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-emerald-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-users mr-3 w-4"></i> Clientes
-            </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-emerald-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-user-tie mr-3 w-4"></i> Funcionários
-            </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-emerald-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-calendar-check mr-3 w-4"></i> Agendamentos
-            </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-emerald-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-box mr-3 w-4"></i> Produtos
-            </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-emerald-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-comments mr-3 w-4"></i> Mensagens
-            </Link>
-        </div>
-
-        <!-- Gestores Loja -->
-        <div class="mt-2 border-t border-violet-800 pt-2">
-            <p class="text-xs text-sky-400 px-4 uppercase tracking-widest mb-1">Gestão da Loja</p>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-sky-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-layer-group mr-3 w-4"></i> Assinatura
-            </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-sky-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-credit-card mr-3 w-4"></i> Pagamento
-            </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-sky-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-chart-line mr-3 w-4"></i> Relatórios
-            </Link>
-            <Link href="/users" class="flex items-center px-4 py-2 text-sm text-sky-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-user-cog mr-3 w-4"></i> Gestão Usuários
-            </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-sky-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-paper-plane mr-3 w-4"></i> Enviar Notificações
-            </Link>
-        </div>
-
-        <!-- Administração -->
-        <div v-if="user && user.roles.includes('admin')" class="mt-4 border-t border-violet-800 pt-2">
-            <p class="text-xs text-yellow-400 px-4 uppercase tracking-widest mb-1">Administração do Sistema</p>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-file-alt mr-3 w-4"></i> Gestão Logs
-            </Link>
-            <Link href="/menus"class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-stream mr-3 w-4"></i> Gestão de Menus
-            </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-layer-group mr-3 w-4"></i> Gestão de Planos
-            </Link>
-            <Link href="/roles" class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-shield-alt mr-3 w-4"></i> Gestão de Papéis
-            </Link>
-            <Link href="/permissions" class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-lock mr-3 w-4"></i> Gestão de Permissões
-            </Link>
-            <Link href="/role-user" class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-user-tag mr-3 w-4"></i> Papéis/Usuários
-            </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
-            <i class="fas fa-cogs mr-3 w-4"></i> Configurações
-            </Link>
-            <template v-for="item in sideMenus.filter(m => m.level === 0)" :key="item.id">
+        <template v-for="(items, groupName) in groupedMenus" :key="groupName">
+        <div class="mt-4 border-t border-violet-800 pt-2">
+            <p :class="'text-xs px-4 uppercase tracking-widest mb-1 ' + defaultTextClass(groupName)">
+            {{ groupName }}
+            </p>
             <Link
+            v-for="item in items"
+            :key="item.id"
             :href="`/${item.route}`"
-            class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg"
+            class="flex items-center px-4 py-2 text-sm hover:text-white hover:bg-violet-700 rounded-lg"
+            :class="item.style ?? defaultTextClass(groupName).replace('text-', 'text-')"
             >
             <i :class="`fas ${item.icon} mr-3 w-4`"></i> {{ item.description }}
             </Link>
-        </template>
         </div>
+        </template>
     </nav>
+
       <div class="p-4 border-t border-violet-800 flex items-center">
         <img class="h-8 w-8 rounded-full" :src="`https://ui-avatars.com/api/?name=${user.name}`" alt="Avatar">
         <div class="ml-3">
