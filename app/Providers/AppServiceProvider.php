@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\MenuSideBar;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
@@ -35,7 +36,12 @@ class AppServiceProvider extends ServiceProvider
                     'roles' => Auth::user()->getRoleNames()->toArray(),
                     'permissions' => Auth::user()->getAllPermissions()->pluck('name')->toArray(),
                 ] : null
-            ]
-        ]);
+                ],
+                'sideMenus' => function () {
+                return MenuSideBar::where('active', true)
+                    ->orderBy('order')
+                    ->get(['id', 'description', 'route', 'icon', 'parent_id', 'level']);
+            }
+                ]);
     }
 }

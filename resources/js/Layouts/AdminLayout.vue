@@ -6,6 +6,7 @@ const user = usePage().props.auth.user
 const sidebarOpen = ref(false)
 const darkMode = ref(false)
 const dropdownOpen = ref(false)
+const sideMenus = usePage().props.sideMenus ?? []
 
 onMounted(() => {
   darkMode.value = localStorage.getItem('theme') === 'dark'
@@ -59,7 +60,7 @@ function logout() {
 
         <!-- Funcionários Loja -->
         <div class="mt-2 border-t border-violet-800 pt-2">
-            <p class="text-xs text-emerald-400 px-4 uppercase tracking-widest mb-1">Funcionários Loja</p>
+            <p class="text-xs text-emerald-400 px-4 uppercase tracking-widest mb-1">Área Operacional</p>
             <Link href="/profile" class="flex items-center px-4 py-2 text-sm text-emerald-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-id-badge mr-3 w-4"></i> Meu Perfil
             </Link>
@@ -82,7 +83,7 @@ function logout() {
 
         <!-- Gestores Loja -->
         <div class="mt-2 border-t border-violet-800 pt-2">
-            <p class="text-xs text-sky-400 px-4 uppercase tracking-widest mb-1">Gestores Loja</p>
+            <p class="text-xs text-sky-400 px-4 uppercase tracking-widest mb-1">Gestão da Loja</p>
             <Link href="#" class="flex items-center px-4 py-2 text-sm text-sky-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-layer-group mr-3 w-4"></i> Assinatura
             </Link>
@@ -102,11 +103,11 @@ function logout() {
 
         <!-- Administração -->
         <div v-if="user && user.roles.includes('admin')" class="mt-4 border-t border-violet-800 pt-2">
-            <p class="text-xs text-yellow-400 px-4 uppercase tracking-widest mb-1">Administração</p>
+            <p class="text-xs text-yellow-400 px-4 uppercase tracking-widest mb-1">Administração do Sistema</p>
             <Link href="#" class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-file-alt mr-3 w-4"></i> Gestão Logs
             </Link>
-            <Link href="#" class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
+            <Link href="/menus"class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-stream mr-3 w-4"></i> Gestão de Menus
             </Link>
             <Link href="#" class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
@@ -124,6 +125,14 @@ function logout() {
             <Link href="#" class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg">
             <i class="fas fa-cogs mr-3 w-4"></i> Configurações
             </Link>
+            <template v-for="item in sideMenus.filter(m => m.level === 0)" :key="item.id">
+            <Link
+            :href="`/${item.route}`"
+            class="flex items-center px-4 py-2 text-sm text-yellow-300 hover:text-white hover:bg-violet-700 rounded-lg"
+            >
+            <i :class="`fas ${item.icon} mr-3 w-4`"></i> {{ item.description }}
+            </Link>
+        </template>
         </div>
     </nav>
       <div class="p-4 border-t border-violet-800 flex items-center">

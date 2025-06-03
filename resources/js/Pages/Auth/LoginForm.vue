@@ -73,8 +73,10 @@ import { useForm, Link } from '@inertiajs/vue3'
 const showPassword = ref(false)
 
 const form = useForm({
-  email: '',
-  password: '',
+//   email: '',
+//   password: '',
+  email: 'admin@gmail.com',
+  password: 'password',
   remember: false,
 })
 
