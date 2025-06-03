@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { Link, usePage, router } from '@inertiajs/vue3'
 
 const user = usePage().props.auth.user
@@ -16,24 +16,24 @@ onMounted(() => {
 function toggleSidebar() {
   sidebarOpen.value = !sidebarOpen.value
 }
-
 function toggleDarkMode() {
   darkMode.value = !darkMode.value
   localStorage.setItem('theme', darkMode.value ? 'dark' : 'light')
   updateHtmlClass()
 }
-
 function updateHtmlClass() {
   const html = document.documentElement
   darkMode.value ? html.classList.add('dark') : html.classList.remove('dark')
 }
-
 function logout() {
   router.post(route('logout'))
 }
 
+// ✅ Agrupando por level (grupos visuais)
 const groupedMenus = computed(() => {
-  return sideMenus.reduce((acc, item) => {
+  const groups = {}
+  const parents = sideMenus.filter(m => m.parent_id === null)
+  parents.forEach(item => {
     const group =
       item.level === 1 ? 'Área Operacional'
       : item.level === 2 ? 'Gestão da Blog'
@@ -41,10 +41,13 @@ const groupedMenus = computed(() => {
       : item.level === 4 ? 'Administração do Sistema'
       : 'Outros'
 
-    if (!acc[group]) acc[group] = []
-    acc[group].push(item)
-    return acc
-  }, {})
+    if (!groups[group]) groups[group] = []
+    groups[group].push({
+      ...item,
+      children: sideMenus.filter(child => child.parent_id === item.id)
+    })
+  })
+  return groups
 })
 
 function defaultTextClass(groupName) {
@@ -75,29 +78,46 @@ function defaultTextClass(groupName) {
           </div>
         </div>
       </div>
-    <nav class="flex-1 px-2 space-y-2">
+        <nav class="flex-1 px-2 space-y-2">
         <Link href="/dashboard" class="flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-violet-800 text-white hover:bg-violet-700">
-        <i class="fas fa-home mr-3 w-4"></i> Dashboard
+            <i class="fas fa-home mr-3 w-4"></i> Dashboard
         </Link>
 
         <template v-for="(items, groupName) in groupedMenus" :key="groupName">
-        <div class="mt-4 border-t border-violet-800 pt-2">
+            <div class="mt-4 border-t border-violet-800 pt-2">
             <p :class="'text-xs px-4 uppercase tracking-widest mb-1 ' + defaultTextClass(groupName)">
-            {{ groupName }}
+                {{ groupName }}
             </p>
-            <Link
-            v-for="item in items"
-            :key="item.id"
-            :href="`/${item.route}`"
-            class="flex items-center px-4 py-2 text-sm hover:text-white hover:bg-violet-700 rounded-lg"
-            :class="item.style ?? defaultTextClass(groupName).replace('text-', 'text-')"
-            >
-            <i :class="`fas ${item.icon} mr-3 w-4`"></i> {{ item.description }}
-            </Link>
-        </div>
-        </template>
-    </nav>
 
+            <template v-for="item in items" :key="item.id">
+                <Link
+                v-if="!item.children.length"
+                :href="`/${item.route}`"
+                :class="['flex items-center px-4 py-2 text-sm hover:text-white hover:bg-violet-700 rounded-lg', item.style]"
+                >
+                <i :class="`fas ${item.icon} mr-3 w-4`"></i> {{ item.description }}
+                </Link>
+
+                <!-- Dropdown para menus com filhos -->
+                <div v-else class="pl-2">
+                <p class="flex items-center px-4 py-2 text-sm font-semibold text-white">
+                    <i :class="`fas ${item.icon} mr-3 w-4`"></i> {{ item.description }}
+                </p>
+                <div class="ml-4">
+                    <Link
+                    v-for="child in item.children"
+                    :key="child.id"
+                    :href="`/${child.route}`"
+                    :class="['flex items-center px-4 py-2 text-sm hover:text-white hover:bg-violet-700 rounded-lg', child.style]"
+                    >
+                    <i :class="`fas ${child.icon} mr-3 w-4`"></i> {{ child.description }}
+                    </Link>
+                </div>
+                </div>
+            </template>
+            </div>
+        </template>
+        </nav>
       <div class="p-4 border-t border-violet-800 flex items-center">
         <img class="h-8 w-8 rounded-full" :src="`https://ui-avatars.com/api/?name=${user.name}`" alt="Avatar">
         <div class="ml-3">
