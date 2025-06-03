@@ -11,6 +11,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TwoFactorAuthController;
+use App\Http\Controllers\MenuSideBarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use PragmaRX\Google2FA\Google2FA;
@@ -110,6 +111,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Ativar/desativar 2FA
    Route::post('/users/{user}/toggle-2fa', [UserController::class, 'toggle2FA'])->name('users.toggle-2fa');
+
+    // Menu Side Bar
+// MenuSideBar - Gestão de Menus
+Route::get('/menus', [MenuSideBarController::class, 'index'])->name('menus.index');
+Route::get('/menus/create', [MenuSideBarController::class, 'create'])->name('menus.create');
+Route::post('/menus', [MenuSideBarController::class, 'store'])->name('menus.store');
+Route::get('/menus/{menu}/edit', [MenuSideBarController::class, 'edit'])->name('menus.edit');
+Route::put('/menus/{menu}', [MenuSideBarController::class, 'update'])->name('menus.update');
+Route::delete('/menus/{menu}', [MenuSideBarController::class, 'destroy'])->name('menus.destroy');
+
+
+
 });
 
 // Rota de teste de permissão

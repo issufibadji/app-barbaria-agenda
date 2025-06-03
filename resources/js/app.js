@@ -7,6 +7,7 @@ import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 const appName =
     import.meta.env.VITE_APP_NAME || 'AgendaBarbaria';
