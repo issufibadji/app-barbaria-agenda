@@ -176,7 +176,7 @@ class MenuSidebarSeeder extends Seeder
             ['Gestão de Planos', 'fa-layer-group', 'roles', 'plan-all'],
             ['Gestão de Papéis', 'fa-shield-alt', 'roles', 'roles-all'],
             ['Gestão de Permissões', 'fa-lock', 'permissions', 'permissions-all'],
-            ['Roles/Usuários', 'fa-user-tag', 'user-roles', 'user-roles-all'],
+            ['Roles/Usuários', 'fa-user-tag', 'roles-user', 'roles-user-all'],
             ['Configurações do sistema', 'fa-cogs', 'config', 'configs-all'],
             ['Gestão de Logs', 'fa-list-alt', 'audit-logs', 'audit-all'],
             ['Enviar notificações', 'fa-paper-plane', 'notifications/send', 'notification-all'],

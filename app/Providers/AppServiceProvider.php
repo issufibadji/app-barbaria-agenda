@@ -43,5 +43,9 @@ class AppServiceProvider extends ServiceProvider
                     ->get(['id', 'description', 'route', 'icon', 'parent_id', 'level']);
             }
                 ]);
+
+                // Inertia::share([
+                //  'sideMenus' => fn () => MenuSideBar::all(),
+                //  ]);
     }
 }

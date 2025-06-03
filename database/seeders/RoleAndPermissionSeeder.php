@@ -25,7 +25,7 @@ class RoleAndPermissionSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Criação dos papéis
-        $superAdmin = Role::firstOrCreate(['name' => 'Super-Admin']);
+        $master = Role::firstOrCreate(['name' => 'master']);
         $admin = Role::firstOrCreate(['name' => 'admin']);
         $user = Role::firstOrCreate(['name' => 'user']);
 
@@ -33,7 +33,7 @@ class RoleAndPermissionSeeder extends Seeder
         $permissions = [
             'permissions-all',
             'roles-all',
-            'user-roles-all',
+            'roles-user-all',
             'configs-all',
             'user-all',
             'audit-all',
@@ -49,6 +49,6 @@ class RoleAndPermissionSeeder extends Seeder
         // Atribui todas as permissões aos papéis
         $allPermissions = Permission::all();
         $admin->syncPermissions($allPermissions);
-        $superAdmin->syncPermissions($allPermissions);
+        $master->syncPermissions($allPermissions);
     }
 }

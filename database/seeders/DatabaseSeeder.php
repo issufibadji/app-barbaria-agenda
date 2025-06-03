@@ -33,11 +33,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
         ]);
 
+         $master = User::factory()->create([
+            'name' => 'mastre',
+            'email' => 'master@gmail.com',
+        ]);
         // Atribui papéis
+       $master->assignRole('master');
         $admin->assignRole('admin');
         $user->assignRole('user');
 
         // Atribui permissões diretas (opcional, além dos papéis)
+       $master->givePermissionTo('audit-all');
         $admin->givePermissionTo('audit-all');
         $user->givePermissionTo('notification-all');
     }
