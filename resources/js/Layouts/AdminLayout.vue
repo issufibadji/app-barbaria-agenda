@@ -36,8 +36,9 @@ const groupedMenus = computed(() => {
   return sideMenus.reduce((acc, item) => {
     const group =
       item.level === 1 ? 'Área Operacional'
-      : item.level === 2 ? 'Gestão da Loja'
-      : item.level === 3 ? 'Administração do Sistema'
+      : item.level === 2 ? 'Gestão da Blog'
+      : item.level === 3 ? 'Gestão da Loja'
+      : item.level === 4 ? 'Administração do Sistema'
       : 'Outros'
 
     if (!acc[group]) acc[group] = []
@@ -47,7 +48,8 @@ const groupedMenus = computed(() => {
 })
 
 function defaultTextClass(groupName) {
-  if (groupName === 'Área Operacional') return 'text-emerald-400'
+  if (groupName === 'Área Operacional') return 'text-cyan-200'
+  if (groupName === 'Gestão da Blog') return 'text-emerald-400'
   if (groupName === 'Gestão da Loja') return 'text-sky-400'
   if (groupName === 'Administração do Sistema') return 'text-yellow-400'
   return 'text-gray-400'

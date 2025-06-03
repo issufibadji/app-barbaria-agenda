@@ -24,58 +24,25 @@ class MenuSidebarSeeder extends Seeder
             'acl' => 'youself',
             'order' => 1,
             'active' => true,
-            'style' => 'color: text-emerald-300;',
+            'style' => 'color: text-cyan-300;',
             'group' => 'Público',
         ]);
 
-        // Grupo 2: Gestão da Loja
-        $gestaoLoja = MenuSideBar::create([
-            'description' => 'Gestão da Loja',
-            'icon' => 'fa-store',
-            'level' => 1,
-            'route' => null,
-            'acl' => null,
-            'order' => 100,
-            'active' => true,
-            'style' => 'color: text-sky-300;',
-            'group' => 'Administração',
-        ]);
 
-        $lojaMenus = [
-            ['Gestão de Usuários', 'fa-user-cog', 'users', 'user-all'],
-            ['Assinatura', 'fa-layer-group', 'signature', 'signature-all'],
-            ['Pagamentos', 'fa-credit-card', 'Payments', 'Payments-all'],
-            ['Relatórios', 'fa-chart-line', 'Reports', 'Reports-all'],
-        ];
+        // Grupo 2: Blog
 
-        foreach ($lojaMenus as $i => [$desc, $icon, $route, $acl]) {
-            MenuSideBar::create([
-                'description' => $desc,
-                'icon' => $icon,
-                'level' => 2,
-                'route' => $route,
-                'acl' => $acl,
-                'order' => 101 + $i,
-                'active' => true,
-                'style' => 'color: text-sky-300;',
-                'group' => 'Administração',
-                'parent_id' => $gestaoLoja->id,
-            ]);
-        }
-
-        // Grupo 3: Blog
         $blog = MenuSideBar::create([
             'description' => 'Gestão de Blog',
             'icon' => 'fa-blog',
-            'level' => 1,
+            'level' => 2,
             'route' => null,
             'acl' => null,
             'order' => 150,
             'active' => true,
-            'style' => 'color: text-cyan-200;',
+            'style' => 'color: text-emerald-200;',
             'group' => 'Conteúdo',
         ]);
-
+        // Dropdown de Blog
         $blogMenus = [
             ['Listar Categorias', 'fa-boxes-stacked', 'blog/categories', 'blog::categorias'],
             ['Listar Tags', 'fa-tags', 'blog/tags', 'blog::tags'],
@@ -92,20 +59,56 @@ class MenuSidebarSeeder extends Seeder
                 'acl' => $acl,
                 'order' => 151 + $i,
                 'active' => true,
-                'style' => 'color: text-cyan-200;',
+                'style' => 'color: text-emerald-200;',
                 'group' => 'Conteúdo',
                 'parent_id' => $blog->id,
             ]);
         }
 
+        // Grupo 3: Gestão da Loja
+        $gestaoLoja = MenuSideBar::create([
+            'description' => 'Gestão da Loja',
+            'icon' => 'fa-store',
+            'level' => 3,
+            'route' => null,
+            'acl' => null,
+            'order' => 300,
+            'active' => true,
+            'style' => 'color: text-sky-300;',
+            'group' => 'Administração',
+        ]);
+
+        $lojaMenus = [
+            ['Gestão de Usuários', 'fa-user-cog', 'users', 'user-all'],
+            ['Assinatura', 'fa-layer-group', 'signature', 'signature-all'],
+            ['Pagamentos', 'fa-credit-card', 'Payments', 'Payments-all'],
+            ['Relatórios', 'fa-chart-line', 'Reports', 'Reports-all'],
+        ];
+
+        foreach ($lojaMenus as $i => [$desc, $icon, $route, $acl]) {
+            MenuSideBar::create([
+                'description' => $desc,
+                'icon' => $icon,
+                'level' => 3,
+                'route' => $route,
+                'acl' => $acl,
+                'order' => 301 + $i,
+                'active' => true,
+                'style' => 'color: text-sky-300;',
+                'group' => 'Administração',
+                'parent_id' => $gestaoLoja->id,
+            ]);
+        }
+
+
         // Grupo 4: Administração do Sistema
         $sistema = MenuSideBar::create([
             'description' => 'Administração do Sistema',
             'icon' => 'fa-tools',
-            'level' => 1,
+            'level' => 4,
             'route' => null,
             'acl' => null,
-            'order' => 200,
+            'order' => 400,
             'active' => true,
             'style' => 'color: text-yellow-300;',
             'group' => 'Sistema',
@@ -125,10 +128,10 @@ class MenuSidebarSeeder extends Seeder
             MenuSideBar::create([
                 'description' => $desc,
                 'icon' => $icon,
-                'level' => 2,
+                'level' => 4,
                 'route' => $route,
                 'acl' => $acl,
-                'order' => 201 + $i,
+                'order' => 401 + $i,
                 'active' => true,
                 'style' => 'color: text-yellow-300;',
                 'group' => 'Sistema',
