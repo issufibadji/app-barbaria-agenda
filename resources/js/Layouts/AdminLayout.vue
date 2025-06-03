@@ -33,6 +33,7 @@ function logout() {
 const groupedMenus = computed(() => {
   const groups = {}
   const parents = sideMenus.filter(m => m.parent_id === null)
+
   parents.forEach(item => {
     const group =
       item.level === 1 ? 'Área Operacional'
@@ -42,13 +43,21 @@ const groupedMenus = computed(() => {
       : 'Outros'
 
     if (!groups[group]) groups[group] = []
+
     groups[group].push({
       ...item,
-      children: sideMenus.filter(child => child.parent_id === item.id)
+      children: sideMenus
+        .filter(child => child.parent_id === item.id)
+        .map(child => ({
+          ...child,
+          style: item.style // Herdando estilo do pai
+        }))
     })
   })
+
   return groups
 })
+
 
 function defaultTextClass(groupName) {
   if (groupName === 'Área Operacional') return 'text-cyan-200'
@@ -90,17 +99,24 @@ function defaultTextClass(groupName) {
             </p>
 
             <template v-for="item in items" :key="item.id">
+                <!-- Menu sem filhos -->
                 <Link
                 v-if="!item.children.length"
                 :href="`/${item.route}`"
-                :class="['flex items-center px-4 py-2 text-sm hover:text-white hover:bg-violet-700 rounded-lg', item.style]"
+                :class="[
+                    'flex items-center px-4 py-2 text-sm hover:text-white hover:bg-violet-700 rounded-lg',
+                    item?.style || defaultTextClass(groupName)
+                ]"
                 >
                 <i :class="`fas ${item.icon} mr-3 w-4`"></i> {{ item.description }}
                 </Link>
 
-                <!-- Dropdown para menus com filhos -->
+                <!-- Menu com filhos (dropdown) -->
                 <div v-else class="pl-2">
-                <p class="flex items-center px-4 py-2 text-sm font-semibold text-white">
+                <p
+                    class="flex items-center px-4 py-2 text-sm font-semibold text-white"
+                    :class="item?.style || defaultTextClass(groupName)"
+                >
                     <i :class="`fas ${item.icon} mr-3 w-4`"></i> {{ item.description }}
                 </p>
                 <div class="ml-4">
@@ -108,7 +124,10 @@ function defaultTextClass(groupName) {
                     v-for="child in item.children"
                     :key="child.id"
                     :href="`/${child.route}`"
-                    :class="['flex items-center px-4 py-2 text-sm hover:text-white hover:bg-violet-700 rounded-lg', child.style]"
+                    :class="[
+                        'flex items-center px-4 py-2 text-sm hover:text-white hover:bg-violet-700 rounded-lg',
+                        child?.style || item?.style || defaultTextClass(groupName)
+                    ]"
                     >
                     <i :class="`fas ${child.icon} mr-3 w-4`"></i> {{ child.description }}
                     </Link>
@@ -118,6 +137,7 @@ function defaultTextClass(groupName) {
             </div>
         </template>
         </nav>
+
       <div class="p-4 border-t border-violet-800 flex items-center">
         <img class="h-8 w-8 rounded-full" :src="`https://ui-avatars.com/api/?name=${user.name}`" alt="Avatar">
         <div class="ml-3">
