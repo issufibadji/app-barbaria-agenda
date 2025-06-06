@@ -189,5 +189,5 @@ function defaultTextClass(groupName) {
 <style>
 html.dark {
   background-color: #1f2937;
-}http://127.0.0.1:8000/blog/posts
+}
 </style>
