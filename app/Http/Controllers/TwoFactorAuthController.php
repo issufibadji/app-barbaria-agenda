@@ -87,6 +87,8 @@ public function enable(Request $request)
     }
 
     $user->google2fa_secret = Crypt::encrypt($secret);
+    $user->confirmed_2fa = true;
+    $user->active_2fa = true;
     $user->save();
 
     return back()->with('status', 'Autenticação de 2 fatores ativada com sucesso!');
@@ -100,6 +102,7 @@ public function disable()
         $user = Auth::user();
         $user->google2fa_secret = null;
         $user->confirmed_2fa = false;
+        $user->active_2fa = false;
         $user->save();
 
         return back()->with('success', '2FA desativado com sucesso.');
