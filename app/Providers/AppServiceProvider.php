@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\User;
+use OwenIt\Auditing\AuditableObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        User::observe(AuditableObserver::class);
+
         Vite::prefetch(concurrency: 3);
 
             Inertia::share([

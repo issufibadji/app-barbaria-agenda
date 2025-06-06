@@ -1,10 +1,13 @@
 <?php
-
 namespace App\Models;
 
-use OwenIt\LaravelAuditing\Models\Audit;
+use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use OwenIt\Auditing\Auditable;
 
-class Log extends Audit
+class Log extends Model implements AuditableContract
 {
-    // Inherit the Audit model functionality
+    use Auditable;
+
+    // Coloque aqui seus atributos e métodos normalmente
 }

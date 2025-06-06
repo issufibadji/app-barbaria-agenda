@@ -43,7 +43,7 @@ class MenuSidebarSeeder extends Seeder
 
         $user = MenuSideBar::create([
             'description' => 'Funcionário',
-            'icon' => 'fa-user-team',
+            'icon' => 'fa-users',
             'level' => 1,
             'route' => 'users',
             'acl' => 'youself',
@@ -66,7 +66,7 @@ class MenuSidebarSeeder extends Seeder
         ]);
 
          $schedule = MenuSideBar::create([
-            'description' => 'Agendamentos',
+            'description' => 'Agenda',
             'icon' => 'fa-calendar-check',
             'level' => 1,
             'route' => 'schedule',
@@ -178,7 +178,7 @@ class MenuSidebarSeeder extends Seeder
             ['Gestão de Permissões', 'fa-lock', 'permissions', 'permissions-all'],
             ['Roles/Usuários', 'fa-user-tag', 'roles-user', 'roles-user-all'],
             ['Configurações do sistema', 'fa-cogs', 'config', 'configs-all'],
-            ['Gestão de Logs', 'fa-list-alt', 'audit-logs', 'audit-all'],
+            ['Gestão de Logs', 'fa-list-alt', 'audits', 'audit-all'],
             ['Enviar notificações', 'fa-paper-plane', 'notifications/send', 'notification-all'],
         ];
 

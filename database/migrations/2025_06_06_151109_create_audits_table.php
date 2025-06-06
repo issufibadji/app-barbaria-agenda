@@ -13,25 +13,38 @@ return new class extends Migration
     {
         $connection = config('audit.drivers.database.connection', config('database.default'));
         $table = config('audit.drivers.database.table', 'audits');
+        $morphPrefix = config('audit.user.morph_prefix', 'user');
 
-        Schema::connection($connection)->create($table, function (Blueprint $table) {
-
-            $morphPrefix = config('audit.user.morph_prefix', 'user');
-
+        Schema::connection($connection)->create($table, function (Blueprint $table) use ($morphPrefix) {
             $table->bigIncrements('id');
-            $table->string($morphPrefix . '_type')->nullable();
-            $table->unsignedBigInteger($morphPrefix . '_id')->nullable();
+
+            // Usuário que realizou a ação (relacionamento polimórfico)
+            $table->string("{$morphPrefix}_type")->nullable();
+            $table->unsignedBigInteger("{$morphPrefix}_id")->nullable();
+
+            // Evento de auditoria (created, updated, deleted, etc.)
             $table->string('event');
+
+            // Modelo auditado
             $table->morphs('auditable');
+
+            // Valores antigos e novos
             $table->text('old_values')->nullable();
             $table->text('new_values')->nullable();
+
+            // Informações contextuais
             $table->text('url')->nullable();
             $table->ipAddress('ip_address')->nullable();
             $table->string('user_agent', 1023)->nullable();
+
+            // Tags customizadas
             $table->string('tags')->nullable();
+
+            // Timestamps
             $table->timestamps();
 
-            $table->index([$morphPrefix . '_id', $morphPrefix . '_type']);
+            // Índices
+            $table->index(["{$morphPrefix}_id", "{$morphPrefix}_type"]);
         });
     }
 
@@ -43,6 +56,6 @@ return new class extends Migration
         $connection = config('audit.drivers.database.connection', config('database.default'));
         $table = config('audit.drivers.database.table', 'audits');
 
-        Schema::connection($connection)->drop($table);
+        Schema::connection($connection)->dropIfExists($table);
     }
 };

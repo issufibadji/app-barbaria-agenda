@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use OwenIt\Auditing\Models\Audit;
 // Controllers
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -16,6 +16,7 @@ use App\Http\Controllers\LogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use PragmaRX\Google2FA\Google2FA;
+use App\Http\Controllers\AuditController;
 
 // Rota inicial
 Route::get('/', function () {
@@ -113,25 +114,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // Ativar/desativar 2FA
    Route::post('/users/{user}/toggle-2fa', [UserController::class, 'toggle2FA'])->name('users.toggle-2fa');
 
-    // Menu Side Bar
-// MenuSideBar - Gestão de Menus
-Route::get('/menus', [MenuSideBarController::class, 'index'])->name('menus.index');
-Route::get('/menus/create', [MenuSideBarController::class, 'create'])->name('menus.create');
-Route::post('/menus', [MenuSideBarController::class, 'store'])->name('menus.store');
-Route::get('/menus/{menu}/edit', [MenuSideBarController::class, 'edit'])->name('menus.edit');
-Route::put('/menus/{menu}', [MenuSideBarController::class, 'update'])->name('menus.update');
-Route::delete('/menus/{menu}', [MenuSideBarController::class, 'destroy'])->name('menus.destroy');
+    // MenuSideBar - Gestão de Menus
+    Route::get('/menus', [MenuSideBarController::class, 'index'])->name('menus.index');
+    Route::get('/menus/create', [MenuSideBarController::class, 'create'])->name('menus.create');
+    Route::post('/menus', [MenuSideBarController::class, 'store'])->name('menus.store');
+    Route::get('/menus/{menu}/edit', [MenuSideBarController::class, 'edit'])->name('menus.edit');
+    Route::put('/menus/{menu}', [MenuSideBarController::class, 'update'])->name('menus.update');
+    Route::delete('/menus/{menu}', [MenuSideBarController::class, 'destroy'])->name('menus.destroy');
 
     // Logs
-    Route::get('/audit-logs', [LogController::class, 'index'])->name('logs.index');
-    Route::get('/audit-logs/create', [LogController::class, 'create'])->name('logs.create');
-    Route::post('/audit-logs', [LogController::class, 'store'])->name('logs.store');
-    Route::get('/audit-logs/{log}/edit', [LogController::class, 'edit'])->name('logs.edit');
-    Route::put('/audit-logs/{log}', [LogController::class, 'update'])->name('logs.update');
-    Route::delete('/audit-logs/{log}', [LogController::class, 'destroy'])->name('logs.destroy');
-
-
-
+    Route::get('/audits', [AuditController::class, 'index'])->name('audits.index');
+    Route::get('/audits/{audit}', [AuditController::class, 'show'])->name('audits.show');
+    Route::delete('/audits/{audit}', [AuditController::class, 'destroy'])->name('audits.destroy');
 });
 
 // Rota de teste de permissão
