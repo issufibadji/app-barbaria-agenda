@@ -125,11 +125,20 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/audits', [AuditController::class, 'index'])->name('audits.index');
     Route::get('/audits/{audit}', [AuditController::class, 'show'])->name('audits.show');
     Route::delete('/audits/{audit}', [AuditController::class, 'destroy'])->name('audits.destroy');
+
+
+//     Route::get('/template/barbershop', function () {
+//     return Inertia::render('Templates/landingpage/Barbershop');
+// })->name('template.barbershop');
 });
 
 // Rota de teste de permissão
 Route::get('/teste-role', function () {
     return 'Acesso autorizado para admin';
 })->middleware(['auth', 'role:admin']);
+
+    Route::get('/template/barbershop', function () {
+    return Inertia::render('Templates/landingpage/Barbershop');
+})->name('template.barbershop');
 
 require __DIR__ . '/auth.php';
