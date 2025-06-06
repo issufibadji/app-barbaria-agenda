@@ -37,7 +37,7 @@ const groupedMenus = computed(() => {
   parents.forEach(item => {
     const group =
       item.level === 1 ? 'Área Operacional'
-      : item.level === 2 ? 'Gestão da Blog'
+      : item.level === 2 ? 'Gestão da Site'
       : item.level === 3 ? 'Gestão da Loja'
       : item.level === 4 ? 'Administração do Sistema'
       : 'Outros'
@@ -61,7 +61,7 @@ const groupedMenus = computed(() => {
 
 function defaultTextClass(groupName) {
   if (groupName === 'Área Operacional') return 'text-cyan-200'
-  if (groupName === 'Gestão da Blog') return 'text-emerald-400'
+  if (groupName === 'Gestão da Site') return 'text-emerald-400'
   if (groupName === 'Gestão da Loja') return 'text-sky-400'
   if (groupName === 'Administração do Sistema') return 'text-yellow-400'
   return 'text-gray-400'
@@ -189,5 +189,5 @@ function defaultTextClass(groupName) {
 <style>
 html.dark {
   background-color: #1f2937;
-}
+}http://127.0.0.1:8000/blog/posts
 </style>

@@ -121,7 +121,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/menus/{menu}/edit', [MenuSideBarController::class, 'edit'])->name('menus.edit');
     Route::put('/menus/{menu}', [MenuSideBarController::class, 'update'])->name('menus.update');
     Route::delete('/menus/{menu}', [MenuSideBarController::class, 'destroy'])->name('menus.destroy');
-
     // Logs
     Route::get('/audits', [AuditController::class, 'index'])->name('audits.index');
     Route::get('/audits/{audit}', [AuditController::class, 'show'])->name('audits.show');
