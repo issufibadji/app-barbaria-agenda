@@ -12,6 +12,7 @@ use App\Http\Controllers\RoleUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TwoFactorAuthController;
 use App\Http\Controllers\MenuSideBarController;
+use App\Http\Controllers\LogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use PragmaRX\Google2FA\Google2FA;
@@ -120,6 +121,14 @@ Route::post('/menus', [MenuSideBarController::class, 'store'])->name('menus.stor
 Route::get('/menus/{menu}/edit', [MenuSideBarController::class, 'edit'])->name('menus.edit');
 Route::put('/menus/{menu}', [MenuSideBarController::class, 'update'])->name('menus.update');
 Route::delete('/menus/{menu}', [MenuSideBarController::class, 'destroy'])->name('menus.destroy');
+
+    // Logs
+    Route::get('/audit-logs', [LogController::class, 'index'])->name('logs.index');
+    Route::get('/audit-logs/create', [LogController::class, 'create'])->name('logs.create');
+    Route::post('/audit-logs', [LogController::class, 'store'])->name('logs.store');
+    Route::get('/audit-logs/{log}/edit', [LogController::class, 'edit'])->name('logs.edit');
+    Route::put('/audit-logs/{log}', [LogController::class, 'update'])->name('logs.update');
+    Route::delete('/audit-logs/{log}', [LogController::class, 'destroy'])->name('logs.destroy');
 
 
 
