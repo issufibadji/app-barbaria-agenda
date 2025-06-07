@@ -19,18 +19,12 @@
     </header>
 
     <!-- Hero -->
-    <section class="grid md:grid-cols-2 items-center px-6 py-20 gap-8">
-      <div class="space-y-6">
-        <h1 class="text-4xl md:text-5xl font-bold leading-tight">
-          Take care of your<br />hair and beard
-        </h1>
-        <p class="text-lg">
-          We help you to have the best hair and beard. Our barbershop is dedicated to providing best grooming experience.
-        </p>
-        <button class="bg-[#3b2c25] text-white px-6 py-3 rounded hover:bg-[#5a4335] transition">Get Started</button>
-      </div>
-      <div>
-        <img src="/images/templates/barbershop/barber-cutting.jpg" alt="Barber cutting hair" class="rounded-lg shadow-lg w-full h-auto object-cover" />
+    <section class="relative h-screen flex items-center justify-center text-center text-white" style="background-image: url('/images/templates/barbershop/barbershop-interior.jpg'); background-size: cover; background-position: center;">
+      <div class="absolute inset-0 bg-black/60"></div>
+      <div class="relative z-10 space-y-6 px-4">
+        <h1 class="text-5xl md:text-6xl font-bold leading-tight">Take care of your hair and beard</h1>
+        <p class="max-w-xl mx-auto">We provide the finest grooming experience for the modern gentleman.</p>
+        <a href="#services" class="bg-white text-[#3b2c25] px-6 py-3 rounded font-semibold hover:bg-[#e5c9a4] transition">Get Started</a>
       </div>
     </section>
 
