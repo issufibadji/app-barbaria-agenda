@@ -141,4 +141,8 @@ Route::get('/teste-role', function () {
     return Inertia::render('Templates/landingpage/Barbershop');
 })->name('template.barbershop');
 
+   Route::get('/template/LandingBarbershop', function () {
+    return Inertia::render('Templates/landingpage/LandingBarbershop');
+})->name('template.LandingBarbershop');
+
 require __DIR__ . '/auth.php';
