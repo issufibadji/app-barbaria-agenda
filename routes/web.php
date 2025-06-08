@@ -141,4 +141,47 @@ Route::get('/teste-role', function () {
     return Inertia::render('Templates/landingpage/Barbershop');
 })->name('template.barbershop');
 
+   Route::get('/template/LandingBarbershop', function () {
+    return Inertia::render('Templates/landingpage/LandingBarbershop');
+})->name('template.LandingBarbershop');
+
+   Route::get('/template/LandingManhattan', function () {
+    return Inertia::render('Templates/landingpage/LandingManhattan');
+})->name('template.LandingManhattan');
+
+   Route::get('/template/LandingNYC', function () {
+    return Inertia::render('Templates/landingpage/LandingNYC');
+})->name('template.LandingNYC');
+
+   Route::get('/template/LandingPrices', function () {
+    return Inertia::render('Templates/landingpage/LandingPrices');
+})->name('template.LandingPrices');
+
+   Route::get('/template/LandingBarberNY', function () {
+    return Inertia::render('Templates/landingpage/LandingBarberNY');
+})->name('template.LandingBarberNY');
+
+   Route::get('/template/LandingModel', function () {
+    return Inertia::render('Templates/landingpage/LandingModel');
+})->name('template.LandingModel');
+
+   Route::get('/template/LandingBlaxCut', function () {
+    return Inertia::render('Templates/landingpage/LandingBlaxCut');
+})->name('template.LandingBlaxCut');
+
+   Route::get('/template/LandingBarberHtml5', function () {
+    return Inertia::render('Templates/landingpage/LandingBarberHtml5');
+})->name('template.LandingBarberHtml5');
+
+
+   Route::get('/template/LandingBarberHouse', function () {
+    return Inertia::render('Templates/landingpage/LandingBarberHouse');
+})->name('template.LandingBarberHouse');
+
+
+   Route::get('/template/LandingCustom', function () {
+    return Inertia::render('Templates/landingpage/LandingCustom');
+})->name('template.LandingCustom');
+
+
 require __DIR__ . '/auth.php';
