@@ -51,7 +51,7 @@ class AgendaAiAppointmentController extends Controller
         AgendaAiAppointment::create($data);
 
         return redirect()
-            ->route('agendaai.appointments.index')
+            ->route('appointments.index')
             ->with('success', 'Agendamento criado com sucesso.');
     }
 

@@ -44,7 +44,7 @@ class AgendaAiScheduleController extends Controller
         AgendaAiSchedule::create($data);
 
         return redirect()
-            ->route('agendaai.schedules.index')
+            ->route('schedules.index')
             ->with('success', 'Agenda criada com sucesso.');
     }
 
