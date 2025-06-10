@@ -1,14 +1,15 @@
 <?php
 
-namespace Modules\AgendaAi\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Modules\AgendaAi\Entities\AgendaAiProfessional;
-use Modules\AgendaAi\Entities\AgendaAiEstablishment;
-use Modules\AgendaAi\Entities\AgendaAiPhone;
+use App\Models\AgendaAiProfessional;
+use App\Models\AgendaAiEstablishment;
+use App\Models\AgendaAiPhone;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 class AgendaAiProfessionalController extends Controller
@@ -23,7 +24,9 @@ class AgendaAiProfessionalController extends Controller
                             ->latest()
                             ->get();
 
-        return view('agendaai::agendaai_professionals.index', compact('professionals'));
+        return Inertia::render('Agenda/Professionals/Index', [
+            'professionals' => $professionals,
+        ]);
     }
 
     public function create()
@@ -39,9 +42,11 @@ class AgendaAiProfessionalController extends Controller
             'establishment_id' => null,
         ]]);
 
-        return view('agendaai::agendaai_professionals.create', compact(
-            'users', 'establishments', 'phones'
-        ));
+        return Inertia::render('Agenda/Professionals/Create', [
+            'users' => $users,
+            'establishments' => $establishments,
+            'phones' => $phones,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -96,9 +101,12 @@ class AgendaAiProfessionalController extends Controller
             ];
         })->toArray();
 
-        return view('agendaai::agendaai_professionals.edit', compact(
-            'professional', 'users', 'establishments', 'phones'
-        ));
+        return Inertia::render('Agenda/Professionals/Edit', [
+            'professional' => $professional,
+            'users' => $users,
+            'establishments' => $establishments,
+            'phones' => $phones,
+        ]);
     }
 
     public function update(Request $request, string $uuid): RedirectResponse

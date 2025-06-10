@@ -1,11 +1,12 @@
 <?php
 
-namespace Modules\AgendaAi\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Modules\AgendaAi\Entities\AgendaAiPlan;
+use App\Models\AgendaAiPlan;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -18,7 +19,9 @@ class AgendaAiPlanController extends Controller
             return redirect()->back();
         }
         $plans = AgendaAiPlan::orderBy('created_at',direction: 'desc')->get();
-        return view('agendaai::agendaai_plans.index', compact('plans'));
+        return Inertia::render('Agenda/Plans/Index', [
+            'plans' => $plans,
+        ]);
     }
 
     public function indexCustomer()
@@ -28,7 +31,9 @@ class AgendaAiPlanController extends Controller
             return redirect()->back();
         }
         $plans = AgendaAiPlan::orderBy('created_at','desc')->where('active','=', true)->get();
-        return view('agendaai::agendaai_plans.index-customer', compact('plans'));
+        return Inertia::render('Agenda/Plans/IndexCustomer', [
+            'plans' => $plans,
+        ]);
     }
 
     
@@ -39,7 +44,7 @@ class AgendaAiPlanController extends Controller
             Session::flash('error', 'Permissão Negada!');
             return redirect()->back();
         }
-        return view('agendaai::agendaai_plans.create');
+        return Inertia::render('Agenda/Plans/Create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -75,7 +80,9 @@ class AgendaAiPlanController extends Controller
         }
 
         $plan = AgendaAiPlan::findOrFail($id);
-        return view('agendaai::agendaai_plans.edit', compact('plan'));
+        return Inertia::render('Agenda/Plans/Edit', [
+            'plan' => $plan,
+        ]);
     }
 
     public function update(Request $request, int $id): RedirectResponse

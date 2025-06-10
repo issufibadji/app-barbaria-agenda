@@ -1,18 +1,19 @@
 <?php
 
-namespace Modules\AgendaAi\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Modules\AgendaAi\Entities\AgendaAiPayment;
-use Modules\AgendaAi\Entities\AgendaAiPlan;
-use Modules\AgendaAi\Entities\AgendaAiEstablishment;
-use Modules\MercadoPago\Entities\MercadoPayment;
+use App\Models\AgendaAiPayment;
+use App\Models\AgendaAiPlan;
+use App\Models\AgendaAiEstablishment;
+use App\Models\MercadoPayment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule; //Temporaria para alimentar apagem
-use Modules\MercadoPago\Http\Controllers\MercadoPagoController;
+use App\Http\Controllers\MercadoPagoController;
+use Inertia\Inertia;
 
 class AgendaAiPaymentController extends Controller
 {
@@ -28,7 +29,9 @@ class AgendaAiPaymentController extends Controller
             'mercadoPayment',
         ])->orderBy('created_at', 'desc')->get();
 
-        return view('agendaai::agendaai_payments.index', compact('payments'));
+        return Inertia::render('Agenda/Payments/Index', [
+            'payments' => $payments,
+        ]);
     }
 
 
@@ -39,12 +42,12 @@ class AgendaAiPaymentController extends Controller
         $mercadoPayments  = MercadoPayment::pluck('id_mp', 'id');
         $payment          = new AgendaAiPayment();
 
-        return view('agendaai::agendaai_payments.create', compact(
-            'plans',
-            'establishments',
-            'mercadoPayments',
-            'payment'
-        ));
+        return Inertia::render('Agenda/Payments/Create', [
+            'plans' => $plans,
+            'establishments' => $establishments,
+            'mercadoPayments' => $mercadoPayments,
+            'payment' => $payment,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -72,12 +75,12 @@ class AgendaAiPaymentController extends Controller
         $establishments = AgendaAiEstablishment::pluck('name', 'id');
         $mercadoPayments  = MercadoPayment::pluck('id_mp', 'id');
 
-        return view('agendaai::agendaai_payments.edit', compact(
-            'payment',
-            'plans',
-            'establishments',
-            'mercadoPayments'
-        ));
+        return Inertia::render('Agenda/Payments/Edit', [
+            'payment' => $payment,
+            'plans' => $plans,
+            'establishments' => $establishments,
+            'mercadoPayments' => $mercadoPayments,
+        ]);
     }
 
     public function update(Request $request, int $id): RedirectResponse
@@ -113,7 +116,6 @@ class AgendaAiPaymentController extends Controller
             'valor' => '0.00',
             'identificador' => Auth::user()->id,
             'plano' => '',
-            'modulo' => 'agendaai',
         ];
 
         $plan = AgendaAiPlan::where('id', '=', $plano)->first();
@@ -126,7 +128,7 @@ class AgendaAiPaymentController extends Controller
         $dados['valor'] = $plan->price;
         $dados['plano'] = $plan->descrition;
 
-        $payment = MercadoPayment::join('users', 'mercado_payments.id_module', '=', 'users.id')
+        $payment = MercadoPayment::join('users', 'mercado_payments.id_user', '=', 'users.id')
             ->where('mercado_payments.valor', $dados['valor'])
             ->where('mercado_payments.status', 'pendente')
             ->where('users.id', Auth::user()->id)
@@ -140,7 +142,6 @@ class AgendaAiPaymentController extends Controller
             $request = $request->merge([
                 'dados' => [
                     'identificador'     => Auth::user()->id,
-                    'modulo'            => 'agendaai',
                     'plano'             => $dados['plano'],
                     'valor'             => $dados['valor']
                 ],
@@ -157,7 +158,7 @@ class AgendaAiPaymentController extends Controller
             $response = $mp->processPayment($request);
 
             if ($response->isSuccessful()) {
-                $payment = MercadoPayment::join('users', 'mercado_payments.id_module', '=', 'users.id')
+                $payment = MercadoPayment::join('users', 'mercado_payments.id_user', '=', 'users.id')
                     ->where('mercado_payments.valor', $dados['valor'])
                     ->where('mercado_payments.status', 'pendente')
                     ->where('users.id', Auth::user()->id)
@@ -188,6 +189,8 @@ class AgendaAiPaymentController extends Controller
             'mercadoPayment',
         ])->orderBy('created_at', 'desc')->get();
 
-        return view('agendaai::agendaai_payments.list-payments', compact('payments'));
+        return Inertia::render('Agenda/Payments/List', [
+            'payments' => $payments,
+        ]);
     }
 }

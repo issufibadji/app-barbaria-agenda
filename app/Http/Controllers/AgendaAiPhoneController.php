@@ -1,13 +1,14 @@
 <?php
 
-namespace Modules\AgendaAi\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Modules\AgendaAi\Entities\AgendaAiPhone;
-use Modules\AgendaAi\Entities\AgendaAiProfessional;
-use Modules\AgendaAi\Entities\AgendaAiEstablishment;
+use App\Models\AgendaAiPhone;
+use App\Models\AgendaAiProfessional;
+use App\Models\AgendaAiEstablishment;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 class AgendaAiPhoneController extends Controller
@@ -19,7 +20,9 @@ class AgendaAiPhoneController extends Controller
             return redirect()->back();
         }
         $phones = AgendaAiPhone::with('professional.user', 'establishment')->latest()->get();
-        return view('agendaai::agendaai_phones.index', compact('phones'));
+        return Inertia::render('Agenda/Phones/Index', [
+            'phones' => $phones,
+        ]);
     }
 
     public function create()
@@ -39,9 +42,11 @@ class AgendaAiPhoneController extends Controller
             'establishment_id' => null,
         ]];
 
-        return view('agendaai::agendaai_phones.create', compact(
-            'professionals', 'establishments', 'phones'
-        ));
+        return Inertia::render('Agenda/Phones/Create', [
+            'professionals' => $professionals,
+            'establishments' => $establishments,
+            'phones' => $phones,
+        ]);
     }
 
     public function edit($id)
@@ -60,12 +65,12 @@ class AgendaAiPhoneController extends Controller
             'establishment_id' => $phone->establishment_id,
         ]];
 
-        return view('agendaai::agendaai_phones.edit', compact(
-            'phone',
-            'professionals',
-            'establishments',
-            'phones'
-        ));
+        return Inertia::render('Agenda/Phones/Edit', [
+            'phone' => $phone,
+            'professionals' => $professionals,
+            'establishments' => $establishments,
+            'phones' => $phones,
+        ]);
     }
 
 

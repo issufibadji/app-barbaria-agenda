@@ -1,13 +1,14 @@
 <?php
 
-namespace Modules\AgendaAi\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Modules\AgendaAi\Entities\AgendaAiEstablishment;
+use App\Models\AgendaAiEstablishment;
+use Inertia\Inertia;
 
 class AgendaAiEstablishmentController extends Controller
 {
@@ -22,7 +23,9 @@ class AgendaAiEstablishmentController extends Controller
         } 
         
         $establishments = AgendaAiEstablishment::orderBy('created_at', 'desc')->get();
-        return view('agendaai::agendaai_establishments.index', compact('establishments'));
+        return Inertia::render('Agenda/Establishments/Index', [
+            'establishments' => $establishments,
+        ]);
     }
 
     /**
@@ -30,7 +33,7 @@ class AgendaAiEstablishmentController extends Controller
      */
     public function create()
     {
-        return view('agendaai::agendaai_establishments.create');
+        return Inertia::render('Agenda/Establishments/Create');
     }
 
     /**
@@ -64,7 +67,10 @@ class AgendaAiEstablishmentController extends Controller
     public function show(string $uuid)
     {
         $establishment = AgendaAiEstablishment::findOrFail($uuid);
-        return view('agendaai::agendaai_establishments.show', compact('establishment'));
+        return Inertia::render('Agenda/Establishments/Edit', [
+            'establishment' => $establishment,
+            'mode' => 'show'
+        ]);
     }
 
     /**
@@ -73,7 +79,9 @@ class AgendaAiEstablishmentController extends Controller
     public function edit(string $uuid)
     {
         $establishment = AgendaAiEstablishment::findOrFail($uuid);
-        return view('agendaai::agendaai_establishments.edit', compact('establishment'));
+        return Inertia::render('Agenda/Establishments/Edit', [
+            'establishment' => $establishment,
+        ]);
     }
 
     /**
