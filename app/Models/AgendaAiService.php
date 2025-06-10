@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\AgendaAi\Entities;
+namespace App\Models;
 
 use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\AgendaAi\Entities\AgendaAiProfessional;
+use App\Models\AgendaAiProfessional;
 class AgendaAiService extends Model
 {
     use HasFactory;

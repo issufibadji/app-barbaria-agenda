@@ -1,13 +1,15 @@
 <?php
 
-namespace Modules\Report\Entities;
+namespace App\Models;
 
 use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Report\Database\factories\ReportModelFactory;
 
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Models\ReportRelationship;
+use App\Models\ReportField;
+use App\Models\ReportLayout;
 
 class ReportModel extends Model implements Auditable
 {

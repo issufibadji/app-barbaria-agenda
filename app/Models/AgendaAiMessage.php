@@ -1,9 +1,10 @@
 <?php
 
-namespace Modules\AgendaAi\Entities;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\AgendaAiEstablishment;
 
 class AgendaAiMessage extends Model
 {

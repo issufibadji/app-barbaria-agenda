@@ -1,15 +1,14 @@
 <?php
 
-namespace Modules\AgendaAi\Entities;
+namespace App\Models;
 
 use App\Models\User;
 use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\AgendaAi\Database\factories\AgendaAiProfessionalFactory;
-use Modules\AgendaAi\Entities\AgendaAiEstablishment;
-use Modules\AgendaAi\Entities\AgendaAiPhone;
-use Modules\AgendaAi\Entities\AgendaAiService;
+use App\Models\AgendaAiEstablishment;
+use App\Models\AgendaAiPhone;
+use App\Models\AgendaAiService;
 class AgendaAiProfessional extends Model
 {
     use HasFactory, Uuid;
@@ -23,10 +22,6 @@ class AgendaAiProfessional extends Model
         'establishment_id',
     ];
 
-    protected static function newFactory()
-    {
-        return AgendaAiProfessionalFactory::new();
-    }
 
     public function establishment()
     {

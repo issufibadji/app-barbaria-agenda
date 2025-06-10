@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\AgendaAi\Entities;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\AgendaAi\Entities\AgendaAiService;
-use Modules\AgendaAi\Entities\AgendaAiClient;
+use App\Models\AgendaAiService;
+use App\Models\AgendaAiClient;
 
 class AgendaAiAppointment extends Model
 {

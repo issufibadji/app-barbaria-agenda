@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\MercadoPago\Entities;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,8 +44,4 @@ class MercadoPayment extends Model
         return $base64;
     }
 
-    protected static function newFactory()
-    {
-        return \Modules\MercadoPago\Database\factories\MercadoPagoFactory::new();
-    }
 }
