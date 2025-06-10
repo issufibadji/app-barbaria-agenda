@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Crypt;
 use PragmaRX\Google2FA\Google2FA;
 use App\Http\Controllers\AuditController;
 
+use App\Models\User;
+
 // Rota inicial
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -127,10 +129,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/audits/{audit}', [AuditController::class, 'destroy'])->name('audits.destroy');
 
 
-//     Route::get('/template/barbershop', function () {
-//     return Inertia::render('Templates/landingpage/Barbershop');
-// })->name('template.barbershop');
-});
 
 // Rota de teste de permissão
 Route::get('/teste-role', function () {
