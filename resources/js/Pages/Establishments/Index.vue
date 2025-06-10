@@ -11,7 +11,7 @@ const props = defineProps({ establishments: Object })
     <div class="max-w-7xl mx-auto py-10 px-4">
       <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-bold text-violet-800">Gestão de Estabelecimentos</h1>
-        <Link :href="route('agendaai.establishments.create')" class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700">+ Estabelecimento</Link>
+        <Link :href="route('establishments.create')" class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700">+ Estabelecimento</Link>
       </div>
       <div class="grid gap-4 md:grid-cols-3">
         <div v-for="est in establishments.data" :key="est.uuid" class="bg-white shadow rounded overflow-hidden flex flex-col">
@@ -21,8 +21,8 @@ const props = defineProps({ establishments: Object })
             <p class="text-sm text-gray-600 flex-1">{{ est.descrition }}</p>
             <div class="mt-4 space-x-2">
               <a :href="est.link" target="_blank" class="text-blue-600 hover:underline">Visitar</a>
-              <Link :href="route('agendaai.establishments.edit', est.uuid)" class="text-yellow-600 hover:underline">Editar</Link>
-              <Link as="button" method="delete" :href="route('agendaai.establishments.destroy', est.uuid)" class="text-red-600 hover:underline" preserve-scroll>Excluir</Link>
+              <Link :href="route('establishments.edit', est.uuid)" class="text-yellow-600 hover:underline">Editar</Link>
+              <Link as="button" method="delete" :href="route('establishments.destroy', est.uuid)" class="text-red-600 hover:underline" preserve-scroll>Excluir</Link>
             </div>
           </div>
         </div>

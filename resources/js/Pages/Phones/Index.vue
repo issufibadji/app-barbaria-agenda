@@ -10,7 +10,7 @@ const props = defineProps({ phones: Object })
     <div class="max-w-7xl mx-auto py-10 px-4">
       <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-bold text-violet-800">Gestão de Telefones</h1>
-        <Link :href="route('agendaai.phones.create')" class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700">+ Telefone</Link>
+        <Link :href="route('phones.create')" class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700">+ Telefone</Link>
       </div>
       <div class="bg-white shadow rounded overflow-x-auto">
         <table class="w-full text-sm table-auto">
@@ -36,8 +36,8 @@ const props = defineProps({ phones: Object })
               <td class="px-4 py-2">{{ phone.establishment?.name || '—' }}</td>
               <td class="px-4 py-2">{{ phone.created_at }}</td>
               <td class="px-4 py-2 text-right space-x-2">
-                <Link :href="route('agendaai.phones.edit', phone.id)" class="text-yellow-600 hover:underline">Editar</Link>
-                <Link as="button" method="delete" :href="route('agendaai.phones.destroy', phone.id)" class="text-red-600 hover:underline" preserve-scroll>Excluir</Link>
+                <Link :href="route('phones.edit', phone.id)" class="text-yellow-600 hover:underline">Editar</Link>
+                <Link as="button" method="delete" :href="route('phones.destroy', phone.id)" class="text-red-600 hover:underline" preserve-scroll>Excluir</Link>
               </td>
             </tr>
             <tr v-if="phones.data.length === 0">

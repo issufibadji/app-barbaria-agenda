@@ -11,7 +11,7 @@ const props = defineProps({ appointments: Object })
     <div class="max-w-7xl mx-auto py-10 px-4">
       <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-bold text-violet-800">Gestão de Agendamentos</h1>
-        <Link :href="route('agendaai.appointments.create')" class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700">+ Agendamento</Link>
+        <Link :href="route('appointments.create')" class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700">+ Agendamento</Link>
       </div>
       <div class="bg-white shadow rounded overflow-x-auto">
         <table class="w-full text-sm table-auto">
@@ -33,8 +33,8 @@ const props = defineProps({ appointments: Object })
               <td class="px-4 py-2">{{ app.scheduled_at }}</td>
               <td class="px-4 py-2">{{ app.status }}</td>
               <td class="px-4 py-2 text-right space-x-2">
-                <Link :href="route('agendaai.appointments.edit', app.id)" class="text-yellow-600 hover:underline">Editar</Link>
-                <Link as="button" method="delete" :href="route('agendaai.appointments.destroy', app.id)" class="text-red-600 hover:underline" preserve-scroll>Excluir</Link>
+                <Link :href="route('appointments.edit', app.id)" class="text-yellow-600 hover:underline">Editar</Link>
+                <Link as="button" method="delete" :href="route('appointments.destroy', app.id)" class="text-red-600 hover:underline" preserve-scroll>Excluir</Link>
               </td>
             </tr>
             <tr v-if="appointments.data.length === 0">

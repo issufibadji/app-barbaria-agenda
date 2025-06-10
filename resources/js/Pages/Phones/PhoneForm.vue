@@ -16,9 +16,9 @@ const form = useForm({
 
 function submit() {
   if (props.mode === 'edit') {
-    form.post(route('agendaai.phones.update', props.phone.id), { _method: 'put' })
+    form.post(route('phones.update', props.phone.id), { _method: 'put' })
   } else {
-    form.post(route('agendaai.phones.store'))
+    form.post(route('phones.store'))
   }
 }
 </script>
@@ -67,7 +67,7 @@ function submit() {
           </div>
         </div>
         <div class="flex gap-2">
-          <Link :href="route('agendaai.phones.index')" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar</Link>
+          <Link :href="route('phones.index')" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar</Link>
           <button type="submit" class="px-4 py-2 bg-violet-700 text-white rounded hover:bg-violet-600" :disabled="form.processing">
             {{ props.mode === 'edit' ? 'Atualizar' : 'Salvar' }}
           </button>
