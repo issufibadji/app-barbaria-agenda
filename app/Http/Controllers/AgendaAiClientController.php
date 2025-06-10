@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\AgendaAi\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Modules\AgendaAi\Entities\AgendaAiClient;
+use App\Models\AgendaAiClient;
+use Inertia\Inertia;
 class AgendaAiClientController extends Controller
 {
     /**
@@ -26,7 +27,9 @@ class AgendaAiClientController extends Controller
                     ->latest()
                     ->paginate(15);
 
-        return view('agendaai::agendaai_clients.index', compact('clients'));
+        return Inertia::render('Agenda/Clients/Index', [
+            'clients' => $clients,
+        ]);
     }
 
 
@@ -38,7 +41,9 @@ class AgendaAiClientController extends Controller
         // lista de usuários para o select [id => name]
         $users = User::orderBy('name')->pluck('name','id');
 
-        return view('agendaai::agendaai_clients.create', compact('users'));
+        return Inertia::render('Agenda/Clients/Create', [
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -68,7 +73,10 @@ class AgendaAiClientController extends Controller
         // lista de usuários para o select
         $users = User::orderBy('name')->pluck('name','id');
 
-        return view('agendaai::agendaai_clients.edit', compact('client','users'));
+        return Inertia::render('Agenda/Clients/Edit', [
+            'client' => $client,
+            'users' => $users,
+        ]);
     }
 
     /**

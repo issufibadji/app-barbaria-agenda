@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Report\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
-use Modules\Report\Entities\ReportField;
-use Modules\Report\Entities\ReportLayout;
-use Modules\Report\Entities\ReportModel;
-use Modules\Report\Entities\ReportRelationship;
+use App\Models\ReportField;
+use App\Models\ReportLayout;
+use App\Models\ReportModel;
+use App\Models\ReportRelationship;
 
 class ReportController extends Controller
 {

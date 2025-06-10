@@ -1,12 +1,13 @@
 <?php
 
-namespace Modules\AgendaAi\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Modules\AgendaAi\Entities\AgendaAiService;
-use Modules\AgendaAi\Entities\AgendaAiProfessional;
+use App\Models\AgendaAiService;
+use App\Models\AgendaAiProfessional;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 class AgendaAiServiceController extends Controller
@@ -18,7 +19,9 @@ class AgendaAiServiceController extends Controller
             return redirect()->back();
         }
         $services = AgendaAiService::orderBy('created_at', 'desc')->get();
-        return view('agendaai::agendaai_services.index', compact('services'));
+        return Inertia::render('Agenda/Services/Index', [
+            'services' => $services,
+        ]);
     }
 
     public function create()
@@ -30,7 +33,10 @@ class AgendaAiServiceController extends Controller
         // instancia vazia para o partial
         $service = new AgendaAiService();
 
-        return view('agendaai::agendaai_services.create', compact('professionals','service'));
+        return Inertia::render('Agenda/Services/Create', [
+            'professionals' => $professionals,
+            'service' => $service,
+        ]);
     }
 
     public function store(Request $request)
@@ -68,7 +74,10 @@ class AgendaAiServiceController extends Controller
             ->get()
             ->pluck('user.name', 'id');
 
-        return view('agendaai::agendaai_services.edit', compact('service','professionals'));
+        return Inertia::render('Agenda/Services/Edit', [
+            'service' => $service,
+            'professionals' => $professionals,
+        ]);
     }
 
     public function update(Request $request, string $uuid): RedirectResponse

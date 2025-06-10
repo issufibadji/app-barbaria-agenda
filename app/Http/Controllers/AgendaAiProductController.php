@@ -1,11 +1,12 @@
 <?php
 
-namespace Modules\AgendaAi\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Modules\AgendaAi\Entities\AgendaAiProduct;
+use App\Models\AgendaAiProduct;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 class AgendaAiProductController extends Controller
@@ -20,7 +21,9 @@ class AgendaAiProductController extends Controller
             return redirect()->back();
         }
         $products = AgendaAiProduct::orderBy('created_at', 'desc')->get();
-        return view('agendaai::agendaai_products.index', compact('products'));
+        return Inertia::render('Agenda/Products/Index', [
+            'products' => $products,
+        ]);
     }
 
     /**
@@ -28,7 +31,7 @@ class AgendaAiProductController extends Controller
      */
     public function create()
     {
-        return view('agendaai::agendaai_products.create');
+        return Inertia::render('Agenda/Products/Create');
     }
 
     /**
@@ -63,7 +66,10 @@ class AgendaAiProductController extends Controller
     public function show(string $uuid)
     {
         $product = AgendaAiProduct::findOrFail($uuid);
-        return view('agendaai::agendaai_products.show', compact('product'));
+        return Inertia::render('Agenda/Products/Edit', [
+            'product' => $product,
+            'mode' => 'show'
+        ]);
     }
 
     /**
@@ -72,7 +78,9 @@ class AgendaAiProductController extends Controller
     public function edit(string $uuid)
     {
         $product = AgendaAiProduct::findOrFail($uuid);
-        return view('agendaai::agendaai_products.edit', compact('product'));
+        return Inertia::render('Agenda/Products/Edit', [
+            'product' => $product,
+        ]);
     }
 
     /**

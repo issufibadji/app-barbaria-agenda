@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\MercadoPago\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Exception;
@@ -10,8 +10,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use MercadoPago\Payment;
 use MercadoPago\SDK;
-use Modules\MercadoPago\Entities\MercadoPayment;
-use Modules\MercadoPago\Events\MPProcessWebHook;
+use App\Models\MercadoPayment;
+use App\Events\MPProcessWebHook;
 
 class MercadoPagoController extends Controller
 {
@@ -34,8 +34,6 @@ class MercadoPagoController extends Controller
             'status' => 'criado',
             'metodo_pagamento' => 'PIX',
             'id_user' => is_null(Auth::id()) ? '0' : Auth::id(),
-            'module' => $request->input('dados.modulo'),
-            'id_module' => $request->input('dados.identificador'),
             'data_pagamento' => null,
         ]);
 

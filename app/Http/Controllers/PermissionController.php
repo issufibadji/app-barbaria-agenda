@@ -25,12 +25,10 @@ class PermissionController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:permissions,name',
-            'module' => 'nullable|string|max:255',
         ]);
 
         Permission::create([
             'name' => $validated['name'],
-            'module' => $validated['module'] ?? null,
         ]);
 
         return redirect()->route('permissions.index')->with('success', 'Permissão criada com sucesso.');
@@ -47,12 +45,10 @@ class PermissionController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:permissions,name,' . $permission->id,
-            'module' => 'nullable|string|max:255',
         ]);
 
         $permission->update([
             'name' => $validated['name'],
-            'module' => $validated['module'] ?? null,
         ]);
 
         return redirect()->route('permissions.index')->with('success', 'Permissão atualizada.');

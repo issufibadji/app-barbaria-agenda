@@ -1,11 +1,12 @@
 <?php
-namespace Modules\AgendaAi\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Modules\AgendaAi\Entities\AgendaAiAddressEstablishment;
-use Modules\AgendaAi\Entities\AgendaAiEstablishment;
+use App\Models\AgendaAiAddressEstablishment;
+use App\Models\AgendaAiEstablishment;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -21,13 +22,17 @@ class AgendaAiAddressEstablishmentController extends Controller
         $addresses = AgendaAiAddressEstablishment::with('establishment')
                         ->latest()
                         ->paginate(15);
-        return view('agendaai::agendaai_address_establishments.index', compact('addresses'));
+        return Inertia::render('Agenda/Addresses/Index', [
+            'addresses' => $addresses,
+        ]);
     }
 
     public function create()
     {
         $establishments = AgendaAiEstablishment::pluck('name','id');
-        return view('agendaai::agendaai_address_establishments.create', compact('establishments'));
+        return Inertia::render('Agenda/Addresses/Create', [
+            'establishments' => $establishments,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -51,7 +56,10 @@ class AgendaAiAddressEstablishmentController extends Controller
     {
         $address = AgendaAiAddressEstablishment::findOrFail($id);
         $establishments = AgendaAiEstablishment::pluck('name','id');
-        return view('agendaai::agendaai_address_establishments.edit', compact('address','establishments'));
+        return Inertia::render('Agenda/Addresses/Edit', [
+            'address' => $address,
+            'establishments' => $establishments,
+        ]);
     }
 
     public function update(Request $request, int $id): RedirectResponse
