@@ -4,35 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\Log;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use OwenIt\Auditing\Models\Audit;
 
 class AuditController extends Controller
 {
-   public function index()
-    {
-        $audits = Audit::with('user')->latest()->paginate(10);
-        return Inertia::render('Audits/Index', [
-            'audits' => $audits,
-        ]);
-    }
-
     public function index(Request $request)
     {
         if (!Auth::user()->can('audit-all')) {
             Session::flash('error', 'Permissão Negada!');
             return redirect()->back();
         }
-        // Inicializar a consulta
-        $query = Audit::query();
 
-        // Aplicar filtro de evento, se presente
+        $query = Audit::with('user');
+
         if ($request->filled('event')) {
             $query->where('event', $request->input('event'));
         }
 
-        // Aplicar filtro de user_id, se presente
         if ($request->filled('user_id')) {
             $query->where('user_id', $request->input('user_id'));
         }
@@ -45,11 +35,14 @@ class AuditController extends Controller
             $query->whereDate('created_at', '<=', $request->input('end_date'));
         }
 
-        // Buscar os registros de auditoria com os filtros aplicados
         $audits = $query->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('audit.index', compact('audits'));
+        return Inertia::render('Audits/Index', [
+            'audits' => $audits,
+            'filters' => $request->only(['event', 'user_id', 'start_date', 'end_date']),
+        ]);
     }
+
     public function show(Audit $audit)
     {
         $audit->load('user');
