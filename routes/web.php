@@ -12,7 +12,22 @@ use App\Http\Controllers\RoleUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TwoFactorAuthController;
 use App\Http\Controllers\MenuSideBarController;
-use App\Http\Controllers\LogController;
+use App\Http\Controllers\AppConfigController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PushSubscriptionController;
+use App\Http\Controllers\AgendaAiAddressEstablishmentController;
+use App\Http\Controllers\AgendaAiAppointmentController;
+use App\Http\Controllers\AgendaAiClientController;
+use App\Http\Controllers\AgendaAiEstablishmentController;
+use App\Http\Controllers\AgendaAiMessageController;
+use App\Http\Controllers\AgendaAiPaymentController;
+use App\Http\Controllers\AgendaAiPhoneController;
+use App\Http\Controllers\AgendaAiPlanController;
+use App\Http\Controllers\AgendaAiProductController;
+use App\Http\Controllers\AgendaAiProfessionalController;
+use App\Http\Controllers\AgendaAiScheduleController;
+use App\Http\Controllers\AgendaAiServiceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use PragmaRX\Google2FA\Google2FA;
@@ -181,6 +196,43 @@ Route::get('/teste-role', function () {
     return Inertia::render('Templates/landingpage/LandingCustom');
 })->name('template.LandingCustom');
 
+});
+
+Route::middleware('auth')->prefix('agendaai')->name('agendaai.')->group(function () {
+    Route::resource('addresses', AgendaAiAddressEstablishmentController::class)->except('show');
+    Route::resource('appointments', AgendaAiAppointmentController::class)->except('show');
+    Route::resource('clients', AgendaAiClientController::class)->except('show');
+    Route::resource('establishments', AgendaAiEstablishmentController::class);
+    Route::resource('messages', AgendaAiMessageController::class)->except('show');
+    Route::resource('payments', AgendaAiPaymentController::class)->except('show');
+    Route::get('payments/list', [AgendaAiPaymentController::class, 'listPayments'])->name('payments.list');
+    Route::get('payments/generate/{plano}', [AgendaAiPaymentController::class, 'generatePayment'])->name('payments.generate');
+    Route::resource('phones', AgendaAiPhoneController::class)->except('show');
+    Route::resource('plans', AgendaAiPlanController::class)->except('show');
+    Route::get('plans/customer', [AgendaAiPlanController::class, 'indexCustomer'])->name('plans.customer');
+    Route::resource('products', AgendaAiProductController::class);
+    Route::resource('professionals', AgendaAiProfessionalController::class)->except('show');
+    Route::resource('schedules', AgendaAiScheduleController::class)->except('show');
+    Route::resource('services', AgendaAiServiceController::class)->except('show');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::resource('config', AppConfigController::class);
+
+    Route::resource('relatorios', ReportController::class);
+    Route::post('relatorios/preview', [ReportController::class, 'previewReport'])->name('relatorios.preview');
+    Route::post('relatorios/related-tables', [ReportController::class, 'listaTabelasRelacionadas'])->name('relatorios.relatedTables');
+    Route::post('relatorios/columns-fk', [ReportController::class, 'listaColunasFK'])->name('relatorios.columnsFk');
+    Route::post('relatorios/columns-pk', [ReportController::class, 'listaColunasPK'])->name('relatorios.columnsPk');
+    Route::post('relatorios/columns', [ReportController::class, 'listaColunas'])->name('relatorios.columns');
+    Route::get('relatorios/render/{reportUuid}', [ReportController::class, 'executeReport'])->name('relatorios.renderReport');
+
+    Route::post('notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::post('notifications/mark-all-read', [NotificationController::class, 'markAllRead'])->name('notifications.markAllRead');
+    Route::get('notifications/create', [NotificationController::class, 'create'])->name('notifications.create');
+    Route::post('notifications/send', [NotificationController::class, 'send'])->name('notifications.send');
+
+    Route::post('push-subscriptions', [PushSubscriptionController::class, 'store'])->name('push-subscriptions.store');
 });
 
 require __DIR__ . '/auth.php';
