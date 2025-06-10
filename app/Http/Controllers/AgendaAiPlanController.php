@@ -14,47 +14,29 @@ class AgendaAiPlanController extends Controller
 {
     public function index()
     {
-        if (!Auth::user()->can('agendaai::listar-plans')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
         $plans = AgendaAiPlan::orderBy('created_at',direction: 'desc')->get();
-        return Inertia::render('Agenda/Plans/Index', [
+        return Inertia::render('Plans/Index', [
             'plans' => $plans,
         ]);
     }
 
     public function indexCustomer()
     {
-        if (!Auth::user()->can('agendaai::listar-plans-customer')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
         $plans = AgendaAiPlan::orderBy('created_at','desc')->where('active','=', true)->get();
-        return Inertia::render('Agenda/Plans/IndexCustomer', [
+        return Inertia::render('Plans/IndexCustomer', [
             'plans' => $plans,
         ]);
     }
 
-    
+
 
     public function create()
     {
-        if (!Auth::user()->can('agendaai::listar-plans')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
-        return Inertia::render('Agenda/Plans/Create');
+        return Inertia::render('Plans/Create');
     }
 
     public function store(Request $request): RedirectResponse
     {
-
-        if (!Auth::user()->can('agendaai::listar-plans')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
-
         $validated = $request->validate([
             'name'       => 'required|string|max:255',
             'days'       => 'required|integer|min:0',
@@ -68,17 +50,12 @@ class AgendaAiPlanController extends Controller
         AgendaAiPlan::create($validated);
 
         return redirect()
-            ->route('agendaai.plans.index')
+            ->route('plans.index')
             ->with('success','Plano criado com sucesso.');
     }
 
     public function edit(int $id)
     {
-        if (!Auth::user()->can('agendaai::listar-plans')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
-
         $plan = AgendaAiPlan::findOrFail($id);
         return Inertia::render('Agenda/Plans/Edit', [
             'plan' => $plan,
@@ -87,12 +64,6 @@ class AgendaAiPlanController extends Controller
 
     public function update(Request $request, int $id): RedirectResponse
     {
-
-        if (!Auth::user()->can('agendaai::listar-plans')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
-
         $plan = AgendaAiPlan::findOrFail($id);
 
         $validated = $request->validate([
@@ -106,22 +77,16 @@ class AgendaAiPlanController extends Controller
         $plan->update($validated);
 
         return redirect()
-            ->route('agendaai.plans.index')
+            ->route('plans.index')
             ->with('success','Plano atualizado com sucesso.');
     }
 
     public function destroy(int $id): RedirectResponse
     {
-
-        if (!Auth::user()->can('agendaai::listar-plans')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
-        
         AgendaAiPlan::findOrFail($id)->delete();
 
         return redirect()
-            ->route('agendaai.plans.index')
+            ->route('plans.index')
             ->with('success','Plano excluído com sucesso.');
     }
 }

@@ -17,11 +17,6 @@ class AgendaAiEstablishmentController extends Controller
      */
     public function index()
     {
-        if (!Auth::user()->can('agendaai::listar-establishments')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        } 
-        
         $establishments = AgendaAiEstablishment::orderBy('created_at', 'desc')->get();
         return Inertia::render('Agenda/Establishments/Index', [
             'establishments' => $establishments,
@@ -33,7 +28,7 @@ class AgendaAiEstablishmentController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Agenda/Establishments/Create');
+        return Inertia::render('Establishments/Create');
     }
 
     /**
@@ -57,7 +52,7 @@ class AgendaAiEstablishmentController extends Controller
 
         AgendaAiEstablishment::create($data);
 
-        return redirect()->route('agendaai.establishments.index')
+        return redirect()->route('establishments.index')
                          ->with('success', 'Estabelecimento criado com sucesso.');
     }
 
@@ -67,7 +62,7 @@ class AgendaAiEstablishmentController extends Controller
     public function show(string $uuid)
     {
         $establishment = AgendaAiEstablishment::findOrFail($uuid);
-        return Inertia::render('Agenda/Establishments/Edit', [
+        return Inertia::render('Establishments/Edit', [
             'establishment' => $establishment,
             'mode' => 'show'
         ]);
@@ -79,7 +74,7 @@ class AgendaAiEstablishmentController extends Controller
     public function edit(string $uuid)
     {
         $establishment = AgendaAiEstablishment::findOrFail($uuid);
-        return Inertia::render('Agenda/Establishments/Edit', [
+        return Inertia::render('Establishments/Edit', [
             'establishment' => $establishment,
         ]);
     }
@@ -106,7 +101,7 @@ class AgendaAiEstablishmentController extends Controller
 
         $establishment->update($data);
 
-        return redirect()->route('agendaai.establishments.index')
+        return redirect()->route('establishments.index')
                          ->with('success', 'Estabelecimento atualizado com sucesso.');
     }
 
@@ -118,7 +113,7 @@ class AgendaAiEstablishmentController extends Controller
         $establishment = AgendaAiEstablishment::findOrFail($uuid);
         $establishment->delete();
 
-        return redirect()->route('agendaai.establishments.index')
+        return redirect()->route('establishments.index')
                          ->with('success', 'Estabelecimento excluído com sucesso.');
     }
 }

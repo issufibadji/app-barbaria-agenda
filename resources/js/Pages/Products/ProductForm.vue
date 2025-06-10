@@ -18,11 +18,11 @@ const form = useForm({
 
 function submit() {
   if (props.mode === 'edit') {
-    form.post(route('agendaai.products.update', props.product.uuid), {
+    form.post(route('products.update', props.product.uuid), {
       _method: 'put'
     })
   } else {
-    form.post(route('agendaai.products.store'))
+    form.post(route('products.store'))
   }
 }
 </script>
@@ -57,7 +57,7 @@ function submit() {
           <InputError :message="form.errors.descrition" />
         </div>
         <div class="flex gap-2">
-          <Link :href="route('agendaai.products.index')" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar</Link>
+          <Link :href="route('products.index')" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar</Link>
           <button type="submit" class="px-4 py-2 bg-violet-700 text-white rounded hover:bg-violet-600" :disabled="form.processing">
             {{ props.mode === 'edit' ? 'Atualizar' : 'Salvar' }}
           </button>

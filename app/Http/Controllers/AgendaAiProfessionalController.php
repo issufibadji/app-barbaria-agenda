@@ -16,15 +16,11 @@ class AgendaAiProfessionalController extends Controller
 {
     public function index()
     {
-        if (!Auth::user()->can('agendaai::listar-professionals')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
         $professionals = AgendaAiProfessional::with('establishment', 'phones')
                             ->latest()
                             ->get();
 
-        return Inertia::render('Agenda/Professionals/Index', [
+        return Inertia::render('Professionals/Index', [
             'professionals' => $professionals,
         ]);
     }
@@ -42,7 +38,7 @@ class AgendaAiProfessionalController extends Controller
             'establishment_id' => null,
         ]]);
 
-        return Inertia::render('Agenda/Professionals/Create', [
+        return Inertia::render('Professionals/Create', [
             'users' => $users,
             'establishments' => $establishments,
             'phones' => $phones,
@@ -77,7 +73,7 @@ class AgendaAiProfessionalController extends Controller
         }
 
         return redirect()
-            ->route('agendaai.professionals.index')
+            ->route('professionals.index')
             ->with('success', 'Profissional cadastrado com sucesso.');
     }
 
@@ -101,7 +97,7 @@ class AgendaAiProfessionalController extends Controller
             ];
         })->toArray();
 
-        return Inertia::render('Agenda/Professionals/Edit', [
+        return Inertia::render('Professionals/Edit', [
             'professional' => $professional,
             'users' => $users,
             'establishments' => $establishments,
@@ -140,7 +136,7 @@ class AgendaAiProfessionalController extends Controller
         }
 
         return redirect()
-            ->route('agendaai.professionals.index')
+            ->route('professionals.index')
             ->with('success', 'Profissional atualizado com sucesso.');
     }
 
@@ -152,7 +148,7 @@ class AgendaAiProfessionalController extends Controller
         $professional->delete();
 
         return redirect()
-            ->route('agendaai.professionals.index')
+            ->route('professionals.index')
             ->with('success', 'Profissional removido com sucesso.');
     }
 }

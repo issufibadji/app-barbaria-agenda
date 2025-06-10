@@ -15,12 +15,8 @@ class AgendaAiPhoneController extends Controller
 {
     public function index()
     {
-        if (!Auth::user()->can('agendaai::listar-phones')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
         $phones = AgendaAiPhone::with('professional.user', 'establishment')->latest()->get();
-        return Inertia::render('Agenda/Phones/Index', [
+        return Inertia::render('Phones/Index', [
             'phones' => $phones,
         ]);
     }
@@ -42,7 +38,7 @@ class AgendaAiPhoneController extends Controller
             'establishment_id' => null,
         ]];
 
-        return Inertia::render('Agenda/Phones/Create', [
+        return Inertia::render('Phones/Create', [
             'professionals' => $professionals,
             'establishments' => $establishments,
             'phones' => $phones,
@@ -65,7 +61,7 @@ class AgendaAiPhoneController extends Controller
             'establishment_id' => $phone->establishment_id,
         ]];
 
-        return Inertia::render('Agenda/Phones/Edit', [
+        return Inertia::render('Phones/Edit', [
             'phone' => $phone,
             'professionals' => $professionals,
             'establishments' => $establishments,
@@ -97,7 +93,7 @@ class AgendaAiPhoneController extends Controller
         }
 
         return redirect()
-            ->route('agendaai.phones.index')
+            ->route('phones.index')
             ->with('success', 'Telefone cadastrado com sucesso.');
     }
 
@@ -125,7 +121,7 @@ class AgendaAiPhoneController extends Controller
         ]);
 
         return redirect()
-            ->route('agendaai.phones.index')
+            ->route('phones.index')
             ->with('success', 'Telefone atualizado com sucesso.');
     }
 
@@ -134,7 +130,7 @@ class AgendaAiPhoneController extends Controller
     {
         AgendaAiPhone::findOrFail($id)->delete();
         return redirect()
-            ->route('agendaai.phones.index')
+            ->route('phones.index')
             ->with('success', 'Telefone removido com sucesso.');
     }
 }

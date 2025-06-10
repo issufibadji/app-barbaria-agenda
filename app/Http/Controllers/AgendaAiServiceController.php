@@ -14,12 +14,8 @@ class AgendaAiServiceController extends Controller
 {
     public function index()
     {
-        if (!Auth::user()->can('agendaai::listar-services')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
         $services = AgendaAiService::orderBy('created_at', 'desc')->get();
-        return Inertia::render('Agenda/Services/Index', [
+        return Inertia::render('Services/Index', [
             'services' => $services,
         ]);
     }
@@ -33,7 +29,7 @@ class AgendaAiServiceController extends Controller
         // instancia vazia para o partial
         $service = new AgendaAiService();
 
-        return Inertia::render('Agenda/Services/Create', [
+        return Inertia::render('Services/Create', [
             'professionals' => $professionals,
             'service' => $service,
         ]);
@@ -62,7 +58,7 @@ class AgendaAiServiceController extends Controller
         $service->professionals()->sync($validated['professionals'] ?? []);
 
         return redirect()
-            ->route('agendaai.services.index')
+            ->route('services.index')
             ->with('success','Serviço criado com sucesso.');
     }
 
@@ -74,7 +70,7 @@ class AgendaAiServiceController extends Controller
             ->get()
             ->pluck('user.name', 'id');
 
-        return Inertia::render('Agenda/Services/Edit', [
+        return Inertia::render('Services/Edit', [
             'service' => $service,
             'professionals' => $professionals,
         ]);
@@ -106,7 +102,7 @@ class AgendaAiServiceController extends Controller
         $service->professionals()->sync($validated['professionals'] ?? []);
 
         return redirect()
-            ->route('agendaai.services.index')
+            ->route('services.index')
             ->with('success', 'Serviço atualizado com sucesso.');
     }
 
@@ -121,7 +117,7 @@ class AgendaAiServiceController extends Controller
         $service->delete();
 
         return redirect()
-            ->route('agendaai.services.index')
+            ->route('services.index')
             ->with('success', 'Serviço excluído com sucesso.');
     }
 }

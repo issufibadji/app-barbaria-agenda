@@ -16,12 +16,9 @@ class AgendaAiProductController extends Controller
      */
     public function index()
     {
-        if (!Auth::user()->can('agendaai::listar-products')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
+
         $products = AgendaAiProduct::orderBy('created_at', 'desc')->get();
-        return Inertia::render('Agenda/Products/Index', [
+        return Inertia::render('Products/Index', [
             'products' => $products,
         ]);
     }
@@ -31,7 +28,7 @@ class AgendaAiProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Agenda/Products/Create');
+        return Inertia::render('Products/Create');
     }
 
     /**
@@ -56,7 +53,7 @@ class AgendaAiProductController extends Controller
 
         AgendaAiProduct::create($data);
 
-        return redirect()->route('agendaai.products.index')
+        return redirect()->route('products.index')
                          ->with('success', 'Produto criado com sucesso.');
     }
 
@@ -66,7 +63,7 @@ class AgendaAiProductController extends Controller
     public function show(string $uuid)
     {
         $product = AgendaAiProduct::findOrFail($uuid);
-        return Inertia::render('Agenda/Products/Edit', [
+        return Inertia::render('Products/Edit', [
             'product' => $product,
             'mode' => 'show'
         ]);
@@ -78,7 +75,7 @@ class AgendaAiProductController extends Controller
     public function edit(string $uuid)
     {
         $product = AgendaAiProduct::findOrFail($uuid);
-        return Inertia::render('Agenda/Products/Edit', [
+        return Inertia::render('Products/Edit', [
             'product' => $product,
         ]);
     }
@@ -105,7 +102,7 @@ class AgendaAiProductController extends Controller
 
         $product->update($data);
 
-        return redirect()->route('agendaai.products.index')
+        return redirect()->route('products.index')
                          ->with('success', 'Produto atualizado com sucesso.');
     }
 
@@ -117,7 +114,7 @@ class AgendaAiProductController extends Controller
         $product = AgendaAiProduct::findOrFail($uuid);
         $product->delete();
 
-        return redirect()->route('agendaai.products.index')
+        return redirect()->route('products.index')
                          ->with('success', 'Produto excluído com sucesso.');
     }
 }

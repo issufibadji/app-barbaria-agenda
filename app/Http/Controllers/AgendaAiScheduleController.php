@@ -14,15 +14,11 @@ class AgendaAiScheduleController extends Controller
 {
     public function index()
     {
-        if (!Auth::user()->can('agendaai::listar-schedules')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
         $schedules = AgendaAiSchedule::with('professional.user')
                         ->latest()
                         ->paginate(15);
 
-        return Inertia::render('Agenda/Schedules/Index', [
+        return Inertia::render('Schedules/Index', [
             'schedules' => $schedules,
         ]);
     }
@@ -33,7 +29,7 @@ class AgendaAiScheduleController extends Controller
                     ->get()
                     ->pluck('user.name', 'id');
 
-        return Inertia::render('Agenda/Schedules/Create', [
+        return Inertia::render('Schedules/Create', [
             'professionals' => $professionals,
         ]);
     }
@@ -59,7 +55,7 @@ class AgendaAiScheduleController extends Controller
         $professionals = AgendaAiProfessional::with('user')
                             ->get()
                             ->pluck('user.name', 'id');
-        return Inertia::render('Agenda/Schedules/Edit', [
+        return Inertia::render('Schedules/Edit', [
             'schedule' => $schedule,
             'professionals' => $professionals,
         ]);
@@ -77,7 +73,7 @@ class AgendaAiScheduleController extends Controller
         $schedule->update($data);
 
         return redirect()
-            ->route('agendaai.schedules.index')
+            ->route('schedules.index')
             ->with('success', 'Agenda atualizada com sucesso.');
     }
 
@@ -86,7 +82,7 @@ class AgendaAiScheduleController extends Controller
         AgendaAiSchedule::findOrFail($id)->delete();
 
         return redirect()
-            ->route('agendaai.schedules.index')
+            ->route('schedules.index')
             ->with('success', 'Agenda removida com sucesso.');
     }
 }

@@ -16,15 +16,11 @@ class AgendaAiAppointmentController extends Controller
 {
     public function index()
     {
-        if (!Auth::user()->can('agendaai::listar-appointments')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
         $appointments = AgendaAiAppointment::with(['service','client.user'])
             ->latest()
             ->paginate(15);
 
-        return Inertia::render('Agenda/Appointments/Index', [
+        return Inertia::render('Appointments/Index', [
             'appointments' => $appointments,
         ]);
     }
@@ -37,7 +33,7 @@ class AgendaAiAppointmentController extends Controller
                      ->get()
                      ->pluck('user.name', 'id');
 
-        return Inertia::render('Agenda/Appointments/Create', [
+        return Inertia::render('Appointments/Create', [
             'services' => $services,
             'clients' => $clients,
         ]);
@@ -68,7 +64,7 @@ class AgendaAiAppointmentController extends Controller
                      ->get()
                      ->pluck('user.name', 'id');
 
-        return Inertia::render('Agenda/Appointments/Edit', [
+        return Inertia::render('Appointments/Edit', [
             'appointment' => $appointment,
             'services' => $services,
             'clients' => $clients,
@@ -89,7 +85,7 @@ class AgendaAiAppointmentController extends Controller
         $appointment->update($data);
 
         return redirect()
-            ->route('agendaai.appointments.index')
+            ->route('appointments.index')
             ->with('success', 'Agendamento atualizado com sucesso.');
     }
 
@@ -98,7 +94,7 @@ class AgendaAiAppointmentController extends Controller
         AgendaAiAppointment::findOrFail($id)->delete();
 
         return redirect()
-            ->route('agendaai.appointments.index')
+            ->route('appointments.index')
             ->with('success', 'Agendamento excluído com sucesso.');
     }
 }

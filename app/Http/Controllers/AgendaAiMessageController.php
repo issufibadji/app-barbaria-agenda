@@ -14,15 +14,11 @@ class AgendaAiMessageController extends Controller
 {
     public function index()
     {
-        if(!Auth::user()->can('agendaai::listar-messages')){
-            Session::flash('error', 'Permissão Negada!');
-            return redirect->back();
-        }
         $messages = AgendaAiMessage::with('establishment')
                       ->orderBy('created_at','desc')
                       ->get();
 
-        return Inertia::render('Agenda/Messages/Index', [
+        return Inertia::render('Messages/Index', [
             'messages' => $messages,
         ]);
     }
@@ -31,7 +27,7 @@ class AgendaAiMessageController extends Controller
     {
         $establishments = AgendaAiEstablishment::pluck('name','id');
         $message = new AgendaAiMessage();
-        return Inertia::render('Agenda/Messages/Create', [
+        return Inertia::render('Messages/Create', [
             'establishments' => $establishments,
             'message' => $message,
         ]);
@@ -48,7 +44,7 @@ class AgendaAiMessageController extends Controller
         AgendaAiMessage::create($validated);
 
         return redirect()
-            ->route('agendaai.messages.index')
+            ->route('messages.index')
             ->with('success','Mensagem criada com sucesso.');
     }
 
@@ -56,7 +52,7 @@ class AgendaAiMessageController extends Controller
     {
         $message = AgendaAiMessage::findOrFail($id);
         $establishments = AgendaAiEstablishment::pluck('name','id');
-        return Inertia::render('Agenda/Messages/Edit', [
+        return Inertia::render('Messages/Edit', [
             'message' => $message,
             'establishments' => $establishments,
         ]);
@@ -75,7 +71,7 @@ class AgendaAiMessageController extends Controller
         $message->update($validated);
 
         return redirect()
-            ->route('agendaai.messages.index')
+            ->route('messages.index')
             ->with('success','Mensagem atualizada com sucesso.');
     }
 
@@ -84,7 +80,7 @@ class AgendaAiMessageController extends Controller
         AgendaAiMessage::findOrFail($id)->delete();
 
         return redirect()
-            ->route('agendaai.messages.index')
+            ->route('messages.index')
             ->with('success','Mensagem excluída com sucesso.');
     }
 }

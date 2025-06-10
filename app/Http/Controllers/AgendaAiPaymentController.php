@@ -19,17 +19,13 @@ class AgendaAiPaymentController extends Controller
 {
     public function index()
     {
-        if (!Auth::user()->can('agendaai::listar-payments')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
         $payments = AgendaAiPayment::with([
             'plan',
             'establishment',
             'mercadoPayment',
         ])->orderBy('created_at', 'desc')->get();
 
-        return Inertia::render('Agenda/Payments/Index', [
+        return Inertia::render('Payments/Index', [
             'payments' => $payments,
         ]);
     }
@@ -42,7 +38,7 @@ class AgendaAiPaymentController extends Controller
         $mercadoPayments  = MercadoPayment::pluck('id_mp', 'id');
         $payment          = new AgendaAiPayment();
 
-        return Inertia::render('Agenda/Payments/Create', [
+        return Inertia::render('Payments/Create', [
             'plans' => $plans,
             'establishments' => $establishments,
             'mercadoPayments' => $mercadoPayments,
@@ -64,7 +60,7 @@ class AgendaAiPaymentController extends Controller
         AgendaAiPayment::create($validated);
 
         return redirect()
-            ->route('agendaai.payments.index')
+            ->route('payments.index')
             ->with('success', 'Pagamento vinculado com sucesso.');
     }
 
@@ -75,7 +71,7 @@ class AgendaAiPaymentController extends Controller
         $establishments = AgendaAiEstablishment::pluck('name', 'id');
         $mercadoPayments  = MercadoPayment::pluck('id_mp', 'id');
 
-        return Inertia::render('Agenda/Payments/Edit', [
+        return Inertia::render('Payments/Edit', [
             'payment' => $payment,
             'plans' => $plans,
             'establishments' => $establishments,
@@ -97,7 +93,7 @@ class AgendaAiPaymentController extends Controller
         $payment->update($validated);
 
         return redirect()
-            ->route('agendaai.payments.index')
+            ->route('payments.index')
             ->with('success', 'Pagamento atualizado com sucesso.');
     }
 
@@ -106,7 +102,7 @@ class AgendaAiPaymentController extends Controller
         AgendaAiPayment::destroy($id);
 
         return redirect()
-            ->route('agendaai.payments.index')
+            ->route('payments.index')
             ->with('success', 'Pagamento desvinculado com sucesso.');
     }
 
@@ -179,17 +175,13 @@ class AgendaAiPaymentController extends Controller
 
     public function listPayments()
     {
-        if (!Auth::user()->can('agendaai::listar-payments')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
         $payments = AgendaAiPayment::with([
             'plan',
             'establishment',
             'mercadoPayment',
         ])->orderBy('created_at', 'desc')->get();
 
-        return Inertia::render('Agenda/Payments/List', [
+        return Inertia::render('Payments/List', [
             'payments' => $payments,
         ]);
     }

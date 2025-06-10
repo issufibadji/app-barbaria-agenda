@@ -17,7 +17,7 @@ class AgendaAiAddressEstablishmentController extends Controller
         $addresses = AgendaAiAddressEstablishment::with('establishment')
                         ->latest()
                         ->paginate(15);
-        return Inertia::render('Agenda/Addresses/Index', [
+        return Inertia::render('Addresses/Index', [
             'addresses' => $addresses,
         ]);
     }
@@ -25,7 +25,7 @@ class AgendaAiAddressEstablishmentController extends Controller
     public function create()
     {
         $establishments = AgendaAiEstablishment::pluck('name','id');
-        return Inertia::render('Agenda/Addresses/Create', [
+        return Inertia::render('Addresses/Create', [
             'establishments' => $establishments,
         ]);
     }
@@ -43,7 +43,7 @@ class AgendaAiAddressEstablishmentController extends Controller
 
         AgendaAiAddressEstablishment::create($data);
 
-        return redirect()->route('agendaai.addresses.index')
+        return redirect()->route('addresses.index')
                          ->with('success','Address created.');
     }
 
@@ -51,7 +51,7 @@ class AgendaAiAddressEstablishmentController extends Controller
     {
         $address = AgendaAiAddressEstablishment::findOrFail($id);
         $establishments = AgendaAiEstablishment::pluck('name','id');
-        return Inertia::render('Agenda/Addresses/Edit', [
+        return Inertia::render('Addresses/Edit', [
             'address' => $address,
             'establishments' => $establishments,
         ]);
@@ -71,14 +71,14 @@ class AgendaAiAddressEstablishmentController extends Controller
 
         $address->update($data);
 
-        return redirect()->route('agendaai.addresses.index')
+        return redirect()->route('addresses.index')
                          ->with('success','Address updated.');
     }
 
     public function destroy(int $id): RedirectResponse
     {
         AgendaAiAddressEstablishment::findOrFail($id)->delete();
-        return redirect()->route('agendaai.addresses.index')
+        return redirect()->route('addresses.index')
                          ->with('success','Address deleted.');
     }
 }

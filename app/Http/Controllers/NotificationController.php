@@ -12,11 +12,6 @@ class NotificationController extends Controller
 {
     public function markAsRead(Request $request)
     {
-        if (!Auth::user()->can('notification-all')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
-
         $notification = Auth::user()->unreadNotifications->where('id', $request->id)->first();
         if ($notification) {
             $notification->markAsRead();
@@ -25,22 +20,12 @@ class NotificationController extends Controller
     }
     public function markAllRead()
     {
-        if (!Auth::user()->can('notification-all')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
-
         Auth::user()->unreadNotifications->markAsRead();
         return redirect()->back()->with('success', 'Notificações marcadas como lidas.');
     }
 
     public function create()
     {
-        if (!Auth::user()->can('notification-all')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }   
-
         $users = User::all();
         return view('notifications.send', compact('users'));
     }
@@ -48,11 +33,7 @@ class NotificationController extends Controller
     public function send(Request $request)
     {
 
-        if (!Auth::user()->can('notification-all')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }   
-        
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'message' => 'required|string',
@@ -86,7 +67,7 @@ class NotificationController extends Controller
                     'renotify' => true,
                     'requireInteraction' => true
                 ];
-                
+
                 $user->pushNotify($payload);
             }
         }
