@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleAndPermissionSeeder::class,
             MenuSidebarSeeder::class, // ✅ Seeder dos Menus
-            UserSeeder::class,
             AppConfigSeeder::class
          ]);
         // Usuário comum
