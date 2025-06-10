@@ -143,7 +143,7 @@ Route::controller(AgendaAiClientController::class)
 });
 
 
-Route::controller(AgendaAiClientController::class)
+Route::controller(AgendaAiProfessionalController::class)
     ->prefix('professionals')
     ->name('professionals.')
     ->group(function () {
@@ -155,7 +155,7 @@ Route::controller(AgendaAiClientController::class)
         Route::delete('/{professional}',   'destroy')->name('destroy');
 });
 
-Route::controller(AgendaAiClientController::class)
+Route::controller(AgendaAiPhoneController::class)
     ->prefix('phones')
     ->name('phones.')
     ->group(function () {
@@ -168,20 +168,7 @@ Route::controller(AgendaAiClientController::class)
 });
 
 
-Route::controller(AgendaAiClientController::class)
-    ->prefix('phones')
-    ->name('phones.')
-    ->group(function () {
-        Route::get('/',   'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::post('/',  'store')->name('store');
-        Route::get('/{phone}/edit', 'edit')->name('edit');
-        Route::put('/{phone}',      'update')->name('update');
-        Route::delete('/{phone}',   'destroy')->name('destroy');
-});
-
-
-Route::controller(AgendaAiClientController::class)
+Route::controller(AgendaAiAddressEstablishmentController::class)
     ->prefix('addresses')
     ->name('addresses.')
     ->group(function () {
@@ -193,7 +180,7 @@ Route::controller(AgendaAiClientController::class)
         Route::delete('/{address}',   'destroy')->name('destroy');
 });
 
-Route::controller(AgendaAiClientController::class)
+Route::controller(AgendaAiServiceController::class)
     ->prefix('services')
     ->name('services.')
     ->group(function () {
@@ -205,7 +192,7 @@ Route::controller(AgendaAiClientController::class)
         Route::delete('/{service}',   'destroy')->name('destroy');
 });
 
-Route::controller(AgendaAiClientController::class)
+Route::controller(AgendaAiProductController::class)
     ->prefix('products')
     ->name('products.')
     ->group(function () {
@@ -217,7 +204,7 @@ Route::controller(AgendaAiClientController::class)
         Route::delete('/{product}',   'destroy')->name('destroy');
 });
 
-Route::controller(AgendaAiClientController::class)
+Route::controller(AgendaAiScheduleController::class)
     ->prefix('schedules')
     ->name('schedules.')
     ->group(function () {
@@ -229,7 +216,7 @@ Route::controller(AgendaAiClientController::class)
         Route::delete('/{schedule}',   'destroy')->name('destroy');
 });
 
-Route::controller(AgendaAiClientController::class)
+Route::controller(AgendaAiAppointmentController::class)
     ->prefix('appointments')
     ->name('appointments.')
     ->group(function () {
@@ -241,7 +228,7 @@ Route::controller(AgendaAiClientController::class)
         Route::delete('/{appointment}',   'destroy')->name('destroy');
 });
 
-Route::controller(AgendaAiClientController::class)
+Route::controller(AgendaAiEstablishmentController::class)
     ->prefix('establishments')
     ->name('establishments.')
     ->group(function () {
@@ -253,7 +240,7 @@ Route::controller(AgendaAiClientController::class)
         Route::delete('/{establishment}',   'destroy')->name('destroy');
 });
 
-Route::controller(AgendaAiClientController::class)
+Route::controller(AgendaAiMessageController::class)
     ->prefix('messages')
     ->name('messages.')
     ->group(function () {
@@ -266,7 +253,7 @@ Route::controller(AgendaAiClientController::class)
 });
 
 
-Route::controller(AgendaAiClientController::class)
+Route::controller(AgendaAiPlanController::class)
     ->prefix('plans')
     ->name('plans.')
     ->group(function () {
@@ -279,7 +266,7 @@ Route::controller(AgendaAiClientController::class)
 });
 
 
-Route::controller(AgendaAiClientController::class)
+Route::controller(AgendaAiPaymentController::class)
     ->prefix('payments')
     ->name('payments.')
     ->group(function () {
