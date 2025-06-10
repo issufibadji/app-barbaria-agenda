@@ -13,6 +13,11 @@ class PushSubscriptionController extends Controller
 {
     public function store(Request $request)
     {
+        if (!Auth::user()->can('notification-all')) {
+            Session::flash('error', 'Permissão Negada!');
+            return redirect()->back();
+        }
+
         // Validar os dados de inscrição
         $data = $request->validate([
             'endpoint' => 'required|string',
