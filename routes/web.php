@@ -18,6 +18,26 @@ use Illuminate\Support\Facades\Crypt;
 use PragmaRX\Google2FA\Google2FA;
 use App\Http\Controllers\AuditController;
 
+use Http\AgendaAiEstablishment;
+use Http\AgendaAiPlan;
+use Http\Controllers\AgendaAiPlanController;
+use Http\Controllers\AgendaAiPhoneController;
+use Http\Controllers\AgendaAiClientController;
+use Http\Controllers\AgendaAiServiceController;
+use Http\Controllers\AgendaAiPaymentController;
+use Http\Controllers\AgendaAiProductController;
+use Http\Controllers\AgendaAiScheduleController;
+use Http\Controllers\AgendaAiEstablishmentController;
+use Http\Controllers\AgendaAiProfessionalController;
+use Http\Controllers\AgendaAiAppointmentController;
+use Http\Controllers\AgendaAiMessageController;
+use Http\Controllers\AgendaAiAddressEstablishmentController;
+use Http\MercadoPayment;
+use Http\Controllers\MercadoPagoController;
+use Http\Request;
+use App\Models\User;
+use Http\AgendaAiPayment;
+
 // Rota inicial
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -127,6 +147,154 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/audits/{audit}', [AuditController::class, 'destroy'])->name('audits.destroy');
 
 
+    Route::prefix('mercadopago')->group(function() {
+    Route::post('/process_payment', 'MercadoPagoController@processPayment');
+});
+
+
+   // Página inicial direcionada para serviços
+   Route::get('/', [AgendaAiServiceController::class, 'index'])->name('home');
+
+   // Rotas de serviços
+   Route::resource('services', AgendaAiServiceController::class);
+
+   // Rotas de produtos
+   Route::resource('products', AgendaAiProductController::class);
+
+   // Rotas de estabelecimentos
+   Route::resource('establishments', AgendaAiEstablishmentController::class);
+
+   // Rotas de telefones (AgendaAiPhone)
+   Route::resource('phones', AgendaAiPhoneController::class);
+
+   // Rotas de Profissionais(AgendaAiProfessional)
+   Route::resource('professionals', AgendaAiProfessionalController::class);
+
+   // Rotas de Profissionais(AgendaAiClient)
+   Route::resource('clients',  AgendaAiClientController::class);
+
+   // Rotas de Profissionais(AgendaAiAppointment)
+   Route::resource('schedules', AgendaAiScheduleController::class);
+
+   // Rotas de Profissionais(AgendaAiSchedule)
+   Route::resource('appointments', AgendaAiAppointmentController::class);
+
+   // Rotas de Profissionais(AgendaAiAddressEstablishment)
+   Route::resource('addresses', AgendaAiAddressEstablishmentController::class);
+
+   // Rotas de Profissionais(AgendaAiPlanController)
+   Route::resource('plans', AgendaAiPlanController::class);
+
+   // Rotas de Profissionais(AgendaAiPaymentController)
+   Route::resource('payments', AgendaAiPaymentController::class);
+
+   // Rotas de Profissionais(AgendaAiPaymentController)
+   Route::resource('messages', AgendaAiMessageController::class);
+
+   // Rotas de Profissionais(AgendaAiPlanController)
+
+   // Rotas de Profissionais(AgendaAiPaymentController)
+   Route::get('list-payments', [AgendaAiPaymentController::class, 'listPayments']);
+
+   Route::get('plans-customer', [AgendaAiPlanController::class, 'indexCustomer']);
+
+   Route::get('checkout/{plano}', [AgendaAiPaymentController::class, 'generatePayment']);
+
+   Route::get('repayment/{id}', function ($id) {
+
+      $payment = MercadoPayment::join('users', 'mercado_payments.id_module', '=', 'users.id')
+         ->where('mercado_payments.status', 'pendente')
+         ->where('users.id', Auth::user()->id)
+         ->where('mercado_payments.id', $id)
+         ->select('mercado_payments.*')
+         ->first();
+
+      if ($payment && ($payment->status == 'pendente' && $payment->qr_code != null && $payment->id_mp != null)) {
+         return view('agendaai::agendaai_payments.payment', compact('payment'));
+      } else {
+         Session::flash('error', 'Pagamento Não Encontrado / Pagamento Vencido!');
+         return redirect()->back();
+      }
+   });
+
+
+
+Route::middleware(['auth', '2fa', 'check.email.verification'])->prefix('relatorio')->group(function () {
+    Route::get('/', function () {
+        // Obter todas as tabelas na base de dados
+        // $tables = DB::select('SHOW TABLES');
+        $tables = Schema::getConnection()->getDoctrineSchemaManager()->listTableNames();
+
+        foreach ($tables as $table) {
+            // Obter informações sobre cada coluna na tabela
+            // $columns = DB::select("DESCRIBE $table");
+            // $tableName = reset($table);
+
+            // Para obter comentários, você pode consultar a tabela information_schema
+            $tableComments = DB::select("
+                                            SELECT table_name, table_comment
+                                            FROM information_schema.tables
+                                            WHERE table_schema = :database AND table_name = :table
+                                        ", ['database' => env('DB_DATABASE'), 'table' => $table]);
+
+            // Obter informações sobre as chaves estrangeiras da tabela
+            $foreignKeys = DB::select("
+                                        SELECT
+                                            table_name,
+                                            column_name,
+                                            referenced_table_name,
+                                            referenced_column_name
+                                        FROM information_schema.key_column_usage
+                                        WHERE referenced_table_name IS NOT NULL
+                                            AND table_name = :table
+                                    ", ['table' => $table]);
+
+            // Obter informações sobre cada coluna na tabela, incluindo comentários
+            $columns = DB::select("
+                        SELECT column_name, column_type, column_comment
+                        FROM information_schema.columns
+                        WHERE table_name = :table
+                    ", ['table' => $table]);
+
+            // Imprimir informações sobre a tabela
+            echo "Tabela: $table<br>";
+
+            // Imprimir informações sobre as colunas
+            foreach ($columns as $column) {
+                echo "  - Coluna: {$column->column_name}, Tipo: {$column->column_type}";
+                echo !empty($column->column_comment) ? ", Comentário: {$column->column_comment}<br>" : "<br>";
+            }
+
+            // Imprimir comentários da tabela, se disponíveis
+            if (!empty($tableComments[0]->table_comment)) {
+                echo "  - Comentário da Tabela: {$tableComments[0]->table_comment}<br>";
+            }
+
+            // Imprimir informações sobre as chaves estrangeiras
+            foreach ($foreignKeys as $foreignKey) {
+                echo "  - Chave Estrangeira: {$foreignKey->column_name} em $table referencia {$foreignKey->referenced_column_name} em {$foreignKey->referenced_table_name}<br>";
+            }
+
+            echo "<br>";
+        }
+    });
+
+    Route::get('/listar', [Modules\Report\Http\Controllers\ReportController::class, 'index'])->name('relatorios.index'); // Listar
+    Route::get('/{uuid}/edit', [Modules\Report\Http\Controllers\ReportController::class, 'edit'])->name('relatorios.edit'); // Editar
+    Route::delete('/{uuid}', [Modules\Report\Http\Controllers\ReportController::class, 'destroy'])->name('relatorios.destroy'); // Excluir
+
+    Route::get('/criar', 'ReportController@create')->name('relatorios.create');
+    Route::post('/store', 'ReportController@store')->name('relatorios.store');
+
+    Route::post('/preview-store', 'ReportController@previewReport')->name('relatorios.preview-store');
+
+    Route::post('/lista_tabelas_relacionadas', [Modules\Report\Http\Controllers\ReportController::class, 'listaTabelasRelacionadas']);
+    Route::post('/lista_colunas_fk', 'ReportController@listaColunasFK');
+    Route::post('/lista_colunas_pk', 'ReportController@listaColunasPK');
+    Route::post('/lista_colunas', 'ReportController@listaColunas');
+
+    Route::get('/renderReport/{reportUuid}',  [Modules\Report\Http\Controllers\ReportController::class, 'executeReport'])->name('relatorios.renderReport');
+});
 //     Route::get('/template/barbershop', function () {
 //     return Inertia::render('Templates/landingpage/Barbershop');
 // })->name('template.barbershop');
