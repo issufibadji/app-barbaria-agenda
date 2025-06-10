@@ -181,5 +181,6 @@ Route::get('/teste-role', function () {
     return Inertia::render('Templates/landingpage/LandingCustom');
 })->name('template.LandingCustom');
 
+});
 
 require __DIR__ . '/auth.php';
