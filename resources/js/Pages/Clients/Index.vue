@@ -41,7 +41,7 @@
             </tr>
           </tbody>
         </table>
-
+        <div v-if="clients?.data?.length === 0" class="col-span-full text-center text-gray-500">Nenhum estabelecimento cadastrado.</div>
         <div class="p-2">
           <Pagination :links="clients.links" />
         </div>
@@ -56,9 +56,11 @@ import Pagination from '@/Components/Pagination.vue'
 import { Link, router } from '@inertiajs/vue3'
 
 const props = defineProps({
-  clients: Object,
+  clients:{
+    type:Object,
+    default: () => ({ data: [], links: [] })
+  }
 })
-
 function deleteClient(id) {
   if (confirm('Deseja excluir este cliente?')) {
     router.delete(route('clients.destroy', { client: id }))

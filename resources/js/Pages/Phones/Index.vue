@@ -2,7 +2,13 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link } from '@inertiajs/vue3'
 import Pagination from '@/Components/Pagination.vue'
-const props = defineProps({ phones: Object })
+
+const props = defineProps({
+  phones:{
+    type:Object,
+    default: () => ({ data: [], links: [] })
+  }
+})
 </script>
 
 <template>
@@ -40,7 +46,7 @@ const props = defineProps({ phones: Object })
                 <Link as="button" method="delete" :href="route('phones.destroy', phone.id)" class="text-red-600 hover:underline" preserve-scroll>Excluir</Link>
               </td>
             </tr>
-            <tr v-if="phones.data.length === 0">
+            <tr v-if="phones?.data?.length === 0">
               <td colspan="8" class="px-4 py-2 text-center">Nenhum telefone cadastrado.</td>
             </tr>
           </tbody>

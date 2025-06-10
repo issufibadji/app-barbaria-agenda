@@ -2,7 +2,12 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link } from '@inertiajs/vue3'
 
-const props = defineProps({ payments: Object })
+const props = defineProps({
+  payments:{
+    type:Object,
+    default: () => ({ data: [], links: [] })
+  }
+})
 </script>
 
 <template>
@@ -22,7 +27,7 @@ const props = defineProps({ payments: Object })
             <Link as="button" method="delete" :href="route('payments.destroy', payment.id)" class="px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700" preserve-scroll>Excluir</Link>
           </div>
         </div>
-        <p v-if="payments.length === 0" class="text-center col-span-full">Nenhum pagamento cadastrado.</p>
+        <p v-if="payments?.length === 0" class="text-center col-span-full">Nenhum pagamento cadastrado.</p>
       </div>
     </div>
   </AdminLayout>

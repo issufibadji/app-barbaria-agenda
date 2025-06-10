@@ -4,7 +4,10 @@ import { Link } from '@inertiajs/vue3'
 import Pagination from '@/Components/Pagination.vue'
 
 const props = defineProps({
-  products: Object
+  products:{
+    type:Object,
+    default: () => ({ data: [], links: [] })
+  }
 })
 </script>
 
@@ -28,7 +31,7 @@ const props = defineProps({
             </div>
           </div>
         </div>
-        <p v-if="products.data.length === 0" class="text-center col-span-full">Nenhum produto cadastrado.</p>
+        <p v-if="products?.data?.length === 0" class="text-center col-span-full">Nenhum produto cadastrado.</p>
       </div>
       <div class="mt-4">
         <Pagination :links="products.links" />

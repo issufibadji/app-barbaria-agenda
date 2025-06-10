@@ -3,7 +3,13 @@ import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link } from '@inertiajs/vue3'
 import Pagination from '@/Components/Pagination.vue'
 
-const props = defineProps({ services: Object })
+const props = defineProps({
+  services: {
+    type: Object,
+    default: () => ({ data: [], links: [] })
+  }
+});
+
 </script>
 
 <template>
@@ -27,7 +33,7 @@ const props = defineProps({ services: Object })
             </div>
           </div>
         </div>
-        <p v-if="services.data.length === 0" class="text-center col-span-full">Nenhum serviço cadastrado.</p>
+        <p v-if="services?.data?.length === 0" class="text-center col-span-full">Nenhum serviço cadastrado.</p>
       </div>
       <div class="mt-4">
         <Pagination :links="services.links" />

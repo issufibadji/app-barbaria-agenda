@@ -3,7 +3,12 @@ import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link } from '@inertiajs/vue3'
 import Pagination from '@/Components/Pagination.vue'
 
-const props = defineProps({ establishments: Object })
+const props = defineProps({
+  establishments:{
+    type:Object,
+    default: () => ({ data: [], links: [] })
+  }
+})
 </script>
 
 <template>
@@ -26,7 +31,7 @@ const props = defineProps({ establishments: Object })
             </div>
           </div>
         </div>
-        <div v-if="establishments.data.length === 0" class="col-span-full text-center text-gray-500">Nenhum estabelecimento cadastrado.</div>
+        <div v-if="establishments?.data?.length === 0" class="col-span-full text-center text-gray-500">Nenhum estabelecimento cadastrado.</div>
       </div>
       <div class="mt-4">
         <Pagination :links="establishments.links" />

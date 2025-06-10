@@ -2,7 +2,12 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link } from '@inertiajs/vue3'
 
-const props = defineProps({ plans: Object })
+const props = defineProps({
+     plans: {
+      type:Object,
+       default: () => ({ data: [], links: [] })
+     }
+     })
 </script>
 
 <template>
@@ -25,7 +30,7 @@ const props = defineProps({ plans: Object })
             <Link as="button" method="delete" :href="route('plans.destroy', plan.id)" class="px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700" preserve-scroll>Excluir</Link>
           </div>
         </div>
-        <p v-if="plans.length === 0" class="text-center col-span-full">Nenhum plano cadastrado.</p>
+        <p v-if="plans?.length === 0" class="text-center col-span-full">Nenhum plano cadastrado.</p>
       </div>
     </div>
   </AdminLayout>

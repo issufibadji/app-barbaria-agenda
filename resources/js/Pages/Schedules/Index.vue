@@ -2,7 +2,12 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link } from '@inertiajs/vue3'
 
-const props = defineProps({ schedules: Object })
+const props = defineProps({
+  schedules:{
+    type:Object,
+    default: () => ({ data: [], links: [] })
+  }
+})
 </script>
 
 <template>
@@ -32,7 +37,7 @@ const props = defineProps({ schedules: Object })
                 <Link as="button" method="delete" :href="route('schedules.destroy', item.id)" class="text-red-600 hover:underline" preserve-scroll>Excluir</Link>
               </td>
             </tr>
-            <tr v-if="schedules.length === 0">
+            <tr v-if="schedules?.length === 0">
               <td colspan="4" class="px-4 py-2 text-center">Nenhuma agenda encontrada.</td>
             </tr>
           </tbody>

@@ -45,6 +45,7 @@ class RoleAndPermissionSeeder extends Seeder
             'appointments-all',
             'schedule-all',
             'products-all',
+            'services-all'
         ];
 
         foreach ($permissions as $perm) {
