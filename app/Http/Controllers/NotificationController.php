@@ -11,7 +11,12 @@ use Illuminate\Support\Facades\Session;
 class NotificationController extends Controller
 {
     public function markAsRead(Request $request)
-    {        
+    {
+        if (!Auth::user()->can('notification-all')) {
+            Session::flash('error', 'Permissão Negada!');
+            return redirect()->back();
+        }
+
         $notification = Auth::user()->unreadNotifications->where('id', $request->id)->first();
         if ($notification) {
             $notification->markAsRead();
@@ -20,6 +25,11 @@ class NotificationController extends Controller
     }
     public function markAllRead()
     {
+        if (!Auth::user()->can('notification-all')) {
+            Session::flash('error', 'Permissão Negada!');
+            return redirect()->back();
+        }
+
         Auth::user()->unreadNotifications->markAsRead();
         return redirect()->back()->with('success', 'Notificações marcadas como lidas.');
     }
