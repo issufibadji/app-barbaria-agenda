@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Traits\Uuid;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class AgendaAiClient extends Model
 {
-    use HasFactory, Uuid;
+    use HasFactory, HasUuids;
+
+    // Se sua PK for 'uuid' em vez de 'id'
+    protected $primaryKey = 'uuid';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $table = 'agendaai_clients';
     protected $fillable = [

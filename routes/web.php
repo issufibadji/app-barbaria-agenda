@@ -130,27 +130,169 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 });
 
-// AgendaAi - Módulo principal
-Route::middleware('auth')->prefix('agendaai')->name('agendaai.')->group(function () {
-    Route::resources([
-        'addresses' => AgendaAiAddressEstablishmentController::class,
-        'appointments' => AgendaAiAppointmentController::class,
-        'clients' => AgendaAiClientController::class,
-        'establishments' => AgendaAiEstablishmentController::class,
-        'messages' => AgendaAiMessageController::class,
-        'payments' => AgendaAiPaymentController::class,
-        'phones' => AgendaAiPhoneController::class,
-        'plans' => AgendaAiPlanController::class,
-        'products' => AgendaAiProductController::class,
-        'professionals' => AgendaAiProfessionalController::class,
-        'schedules' => AgendaAiScheduleController::class,
-        'services' => AgendaAiServiceController::class,
-    ]);
-
-    Route::get('payments/list', [AgendaAiPaymentController::class, 'listPayments'])->name('payments.list');
-    Route::get('payments/generate/{plano}', [AgendaAiPaymentController::class, 'generatePayment'])->name('payments.generate');
-    Route::get('plans/customer', [AgendaAiPlanController::class, 'indexCustomer'])->name('plans.customer');
+Route::controller(AgendaAiClientController::class)
+    ->prefix('clients')
+    ->name('clients.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{client}/edit', 'edit')->name('edit');
+        Route::put('/{client}',      'update')->name('update');
+        Route::delete('/{client}',   'destroy')->name('destroy');
 });
+
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('professionals')
+    ->name('professionals.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{professional}/edit', 'edit')->name('edit');
+        Route::put('/{professional}',      'update')->name('update');
+        Route::delete('/{professional}',   'destroy')->name('destroy');
+});
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('phones')
+    ->name('phones.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{phone}/edit', 'edit')->name('edit');
+        Route::put('/{phone}',      'update')->name('update');
+        Route::delete('/{phone}',   'destroy')->name('destroy');
+});
+
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('phones')
+    ->name('phones.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{phone}/edit', 'edit')->name('edit');
+        Route::put('/{phone}',      'update')->name('update');
+        Route::delete('/{phone}',   'destroy')->name('destroy');
+});
+
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('addresses')
+    ->name('addresses.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{address}/edit', 'edit')->name('edit');
+        Route::put('/{address}',      'update')->name('update');
+        Route::delete('/{address}',   'destroy')->name('destroy');
+});
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('services')
+    ->name('services.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{service}/edit', 'edit')->name('edit');
+        Route::put('/{service}',      'update')->name('update');
+        Route::delete('/{service}',   'destroy')->name('destroy');
+});
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('products')
+    ->name('products.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{product}/edit', 'edit')->name('edit');
+        Route::put('/{product}',      'update')->name('update');
+        Route::delete('/{product}',   'destroy')->name('destroy');
+});
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('schedules')
+    ->name('schedules.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{schedule}/edit', 'edit')->name('edit');
+        Route::put('/{schedule}',      'update')->name('update');
+        Route::delete('/{schedule}',   'destroy')->name('destroy');
+});
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('appointments')
+    ->name('appointments.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{appointment}/edit', 'edit')->name('edit');
+        Route::put('/{appointment}',      'update')->name('update');
+        Route::delete('/{appointment}',   'destroy')->name('destroy');
+});
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('establishments')
+    ->name('establishments.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{establishment}/edit', 'edit')->name('edit');
+        Route::put('/{establishment}',      'update')->name('update');
+        Route::delete('/{establishment}',   'destroy')->name('destroy');
+});
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('messages')
+    ->name('messages.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{message}/edit', 'edit')->name('edit');
+        Route::put('/{message}',      'update')->name('update');
+        Route::delete('/{message}',   'destroy')->name('destroy');
+});
+
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('plans')
+    ->name('plans.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{plan}/edit', 'edit')->name('edit');
+        Route::put('/{plan}',      'update')->name('update');
+        Route::delete('/{plan}',   'destroy')->name('destroy');
+});
+
+
+Route::controller(AgendaAiClientController::class)
+    ->prefix('payments')
+    ->name('payments.')
+    ->group(function () {
+        Route::get('/',   'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/',  'store')->name('store');
+        Route::get('/{payment}/edit', 'edit')->name('edit');
+        Route::put('/{payment}',      'update')->name('update');
+        Route::delete('/{payment}',   'destroy')->name('destroy');
+        Route::get('payments/list', [AgendaAiPaymentController::class, 'listPayments'])->name('payments.list');
+        Route::get('payments/generate/{plano}', [AgendaAiPaymentController::class, 'generatePayment'])->name('payments.generate');
+        Route::get('plans/customer', [AgendaAiPlanController::class, 'indexCustomer'])->name('plans.customer');
+    });
 
 // Configurações e Relatórios
 Route::middleware('auth')->group(function () {

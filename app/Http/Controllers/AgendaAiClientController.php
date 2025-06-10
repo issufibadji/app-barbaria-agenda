@@ -2,53 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use App\Models\AgendaAiClient;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+
 class AgendaAiClientController extends Controller
 {
-    /**
-     * Exibe a listagem de clientes.
-     */
+    // você já está protegido pelo auth+role:admin nas rotas
+
     public function index()
     {
-        // verifica permissão antes de buscar os registros
-        if (! Auth::user()->can('agendaai::listar-clients')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
-
         $clients = AgendaAiClient::with('user')
-                    ->latest()
-                    ->paginate(15);
+                        ->latest()
+                        ->paginate(15);
 
-        return Inertia::render('Agenda/Clients/Index', [
+        return Inertia::render('Clients/Index', [
             'clients' => $clients,
         ]);
     }
 
-
-    /**
-     * Mostra o formulário de criação de cliente.
-     */
     public function create()
     {
-        // lista de usuários para o select [id => name]
         $users = User::orderBy('name')->pluck('name','id');
-
-        return Inertia::render('Agenda/Clients/Create', [
+        return Inertia::render('Clients/Create', [
             'users' => $users,
         ]);
     }
 
-    /**
-     * Persiste um novo cliente no banco.
-     */
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
@@ -59,33 +41,21 @@ class AgendaAiClientController extends Controller
         AgendaAiClient::create($data);
 
         return redirect()
-            ->route('agendaai.clients.index')
+            ->route('clients.index')
             ->with('success', 'Cliente criado com sucesso.');
     }
 
-    /**
-     * Mostra o formulário de edição de um cliente.
-     */
-    public function edit(int $id)
+    public function edit(AgendaAiClient $client)
     {
-        $client = AgendaAiClient::findOrFail($id);
-
-        // lista de usuários para o select
         $users = User::orderBy('name')->pluck('name','id');
-
-        return Inertia::render('Agenda/Clients/Edit', [
+        return Inertia::render('Clients/Edit', [
             'client' => $client,
-            'users' => $users,
+            'users'  => $users,
         ]);
     }
 
-    /**
-     * Atualiza os dados de um cliente existente.
-     */
-    public function update(Request $request, int $id): RedirectResponse
+    public function update(Request $request, AgendaAiClient $client): RedirectResponse
     {
-        $client = AgendaAiClient::findOrFail($id);
-
         $data = $request->validate([
             'user_id' => 'required|exists:users,id',
             'gender'  => 'nullable|string|max:20',
@@ -94,20 +64,16 @@ class AgendaAiClientController extends Controller
         $client->update($data);
 
         return redirect()
-            ->route('agendaai.clients.index')
+            ->route('clients.index')
             ->with('success', 'Cliente atualizado com sucesso.');
     }
 
-    /**
-     * Remove um cliente (soft ou hard delete).
-     */
-    public function destroy(int $id): RedirectResponse
+    public function destroy(AgendaAiClient $client): RedirectResponse
     {
-        $client = AgendaAiClient::findOrFail($id);
         $client->delete();
 
         return redirect()
-            ->route('agendaai.clients.index')
+            ->route('clients.index')
             ->with('success', 'Cliente removido com sucesso.');
     }
 }

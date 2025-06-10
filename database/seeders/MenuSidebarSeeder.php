@@ -31,7 +31,7 @@ class MenuSidebarSeeder extends Seeder
             'icon' => 'fa-users',
             'level' => 1,
             'route' => 'users',
-            'acl' => 'users-all',
+            'acl' => 'clients-all',
             'order' => 2,
             'active' => true,
             'style' => 'color: text-cyan-300;',
@@ -39,7 +39,7 @@ class MenuSidebarSeeder extends Seeder
         ]);
 
         MenuSideBar::create([
-            'description' => 'Funcionário',
+            'description' => 'professionais',
             'icon' => 'fa-users',
             'level' => 1,
             'route' => 'employees',

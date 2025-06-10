@@ -14,11 +14,6 @@ class AgendaAiAddressEstablishmentController extends Controller
 {
     public function index()
     {
-        if (!Auth::user()->can('agendaai::listar-addresses')) {
-            Session::flash('error', 'Permissão Negada!');
-            return redirect()->back();
-        }
-
         $addresses = AgendaAiAddressEstablishment::with('establishment')
                         ->latest()
                         ->paginate(15);
