@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Report\Entities;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Report\Database\factories\ReportFieldFactory;
+use App\Models\ReportModel;
 
 class ReportField extends Model
 {

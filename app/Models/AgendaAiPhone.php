@@ -1,9 +1,11 @@
 <?php
 
-namespace Modules\AgendaAi\Entities;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\AgendaAiProfessional;
+use App\Models\AgendaAiEstablishment;
 
 class AgendaAiPhone extends Model
 {

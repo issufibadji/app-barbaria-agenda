@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\AgendaAi\Entities;
+namespace App\Models;
 
 use App\Models\User;
 use App\Traits\Uuid;

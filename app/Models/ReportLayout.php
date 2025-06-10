@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Report\Entities;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Report\Database\factories\ReportLayoutFactory;
 
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Models\ReportModel;
 
 class ReportLayout extends Model implements Auditable
 {

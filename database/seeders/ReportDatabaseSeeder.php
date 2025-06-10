@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Report\Database\Seeders;
+namespace Database\Seeders;
 
 use App\Models\MenuSideBar;
 use Illuminate\Database\Seeder;

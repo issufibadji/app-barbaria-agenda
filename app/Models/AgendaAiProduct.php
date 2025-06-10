@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\AgendaAi\Entities;
+namespace App\Models;
 
 use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\AgendaAi\Database\factories\AgendaAiProductFactory;
+use App\Models\AgendaAiEstablishment;
 
 class AgendaAiProduct extends Model
 {
@@ -25,10 +25,6 @@ class AgendaAiProduct extends Model
         'descrition',
     ];
 
-    protected static function newFactory()
-    {
-        return AgendaAiProductFactory::new();
-    }
 
     public function establishment()
     {
