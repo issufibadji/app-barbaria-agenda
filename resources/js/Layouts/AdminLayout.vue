@@ -76,7 +76,7 @@ function defaultTextClass(groupName) {
       sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
     ]">
       <div class="p-4 border-b border-brown-800 flex items-center justify-between">
-        <img src="/images/logo.svg" alt="Logo" class="h-24 w-auto">
+        <img src="/images/logotipo.svg" alt="Logo" class="h-24 w-auto">
         <span class="text-xl font-bold">Barbershop</span>
       </div>
       <div class="p-4">

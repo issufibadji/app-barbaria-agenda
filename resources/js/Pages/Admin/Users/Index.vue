@@ -55,7 +55,7 @@ function toggle2FA(user) {
     <div class="max-w-7xl mx-auto py-10 px-4">
       <div class="flex items-center justify-between mb-4">
         <h1 class="text-2xl font-bold text-brown-800">Lista de Usuários</h1>
-        <Link href="/users/create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <Link href="/users/create" class="bg-brown-600 text-white px-4 py-2 rounded hover:bg-brown-700">
           + Usuário
         </Link>
       </div>
@@ -145,7 +145,7 @@ function toggle2FA(user) {
 
               <button
                 @click="toggle2FA(user)"
-                class="text-blue-600 hover:underline flex items-center"
+                class="text-brown-600 hover:underline flex items-center"
                 :disabled="loading2FA === user.id"
               >
                 <i class="mdi" :class="user.active_2fa ? 'mdi-lock-off-outline' : 'mdi-lock-open-outline'"></i>

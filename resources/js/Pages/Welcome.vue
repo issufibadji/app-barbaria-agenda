@@ -80,7 +80,7 @@ const isLogin = ref(true)
       <div class="flex-1 bg-brown-100 text-center hidden lg:flex">
         <div
             class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
-            style="background-image: url('/images/undraw_barber_utly.svg');"
+            style="background-image: url('/images/walcame1.svg');"
         >
         </div>
         </div>

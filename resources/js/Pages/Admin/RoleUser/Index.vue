@@ -59,7 +59,7 @@
                   </select>
                   <button
                     type="submit"
-                    class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm"
+                    class="bg-mint-600 text-white px-3 py-1 rounded hover:bg-mint-700 text-sm"
                   >
                     Atribuir
                   </button>

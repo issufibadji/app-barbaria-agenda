@@ -3,7 +3,7 @@
   <div class="p-6">
     <div class="flex justify-between items-center mb-4">
       <h1 class="text-2xl font-bold">Lista de Papéis</h1>
-      <Link href="/roles/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">+ Papel</Link>
+      <Link href="/roles/create" class="bg-brown-600 hover:bg-brown-700 text-white px-4 py-2 rounded">+ Papel</Link>
     </div>
 
     <div class="overflow-x-auto bg-white dark:bg-brown-800 rounded shadow">

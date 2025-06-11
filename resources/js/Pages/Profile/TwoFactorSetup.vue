@@ -91,7 +91,7 @@ function disable2FA() {
         v-if="!isActive2FA"
         @click="enable2FA"
         :disabled="form.processing"
-        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50"
+        class="bg-mint-600 text-white px-4 py-2 rounded hover:bg-mint-700 disabled:opacity-50"
       >
         <span v-if="form.processing">Ativando...</span>
         <span v-else>Ativar 2FA</span>
