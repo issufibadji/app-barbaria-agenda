@@ -30,7 +30,7 @@
                 type="email"
                 v-model="form.email"
                 required
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brown-500 focus:border-transparent"
                 placeholder="you@example.com"
               />
               <i class="fas fa-envelope absolute right-3 top-4 text-gray-400"></i>
@@ -41,7 +41,7 @@
           <!-- Submit -->
           <button
             type="submit"
-            class="w-full bg-violet-500 text-white py-3 rounded-lg font-semibold hover:bg-violet-600 transition focus:ring-4 focus:ring-violet-400 focus:ring-opacity-50"
+            class="w-full bg-brown-500 text-white py-3 rounded-lg font-semibold hover:bg-brown-600 transition focus:ring-4 focus:ring-brown-400 focus:ring-opacity-50"
             :disabled="form.processing"
           >
             Send Password Reset Link

@@ -3,9 +3,9 @@
   <div class="p-6">
     <h1 class="text-2xl font-bold mb-4">Atribuir/Remover Papel de Usuário</h1>
 
-    <div class="overflow-x-auto bg-white dark:bg-violet-800 rounded shadow">
+    <div class="overflow-x-auto bg-white dark:bg-brown-800 rounded shadow">
       <table class="min-w-full text-sm table-auto">
-        <thead class="bg-violet-100 dark:bg-violet-700 text-left text-violet-800 dark:text-white">
+        <thead class="bg-brown-100 dark:bg-brown-700 text-left text-brown-800 dark:text-white">
           <tr>
             <th class="px-4 py-3">ID</th>
             <th class="px-4 py-3">Usuário</th>
@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.id" class="border-t border-gray-200 dark:border-violet-600">
+          <tr v-for="user in users" :key="user.id" class="border-t border-gray-200 dark:border-brown-600">
             <!-- ID -->
             <td class="px-4 py-2">{{ user.id }}</td>
             <!-- Nome -->
@@ -30,7 +30,7 @@
               <span
                 v-for="role in user.roles"
                 :key="role.id"
-                class="inline-flex items-center bg-violet-600 text-white px-2 py-1 rounded text-xs"
+                class="inline-flex items-center bg-brown-600 text-white px-2 py-1 rounded text-xs"
               >
                 {{ role.name }}
                 <button

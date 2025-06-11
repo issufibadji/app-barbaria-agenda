@@ -54,7 +54,7 @@ function toggle2FA(user) {
 
     <div class="max-w-7xl mx-auto py-10 px-4">
       <div class="flex items-center justify-between mb-4">
-        <h1 class="text-2xl font-bold text-violet-800">Lista de Usuários</h1>
+        <h1 class="text-2xl font-bold text-brown-800">Lista de Usuários</h1>
         <Link href="/users/create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
           + Usuário
         </Link>
@@ -82,7 +82,7 @@ function toggle2FA(user) {
       </div>
 
       <table class="w-full table-auto text-sm bg-white shadow rounded">
-        <thead class="bg-violet-100 text-left">
+        <thead class="bg-brown-100 text-left">
           <tr>
             <th class="px-4 py-2">ID</th>
             <th class="px-4 py-2">Nome</th>

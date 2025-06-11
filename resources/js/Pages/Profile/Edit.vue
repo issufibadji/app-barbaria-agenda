@@ -17,14 +17,14 @@ const user = page.props.auth.user
 <template>
   <AdminLayout>
     <main class="p-6">
-      <h1 class="text-2xl font-bold mb-4 text-violet-800">Perfil</h1>
+      <h1 class="text-2xl font-bold mb-4 text-brown-800">Perfil</h1>
 
       <div class="space-y-8">
         <!-- Formulário unificado -->
         <ProfileInformationForm :user="user" />
 
         <!-- 2FA -->
-        <div class="bg-violet-100 p-4 rounded shadow">
+        <div class="bg-brown-100 p-4 rounded shadow">
           <h2 class="text-lg font-semibold mb-2">Segurança</h2>
           <p class="text-sm text-gray-700 mb-4">
             Configure ou desative a autenticação em dois fatores para sua conta.

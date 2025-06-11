@@ -35,42 +35,42 @@ function submit() {
     <Head :title="props.mode === 'edit' ? 'Editar Usuário' : 'Criar Usuário'" />
 
     <div class="py-10 max-w-3xl mx-auto px-4">
-      <h1 class="text-2xl font-bold text-violet-900 dark:text-white mb-6">
+      <h1 class="text-2xl font-bold text-brown-900 dark:text-white mb-6">
         {{ props.mode === 'edit' ? 'Editar Usuário' : 'Criar Novo Usuário' }}
       </h1>
 
       <form @submit.prevent="submit" class="space-y-6">
         <!-- Nome -->
         <div>
-          <label for="name" class="block text-sm font-medium text-violet-700">Nome</label>
+          <label for="name" class="block text-sm font-medium text-brown-700">Nome</label>
           <input v-model="form.name" id="name" type="text" class="input" />
           <InputError :message="form.errors.name" class="mt-1" />
         </div>
 
         <!-- Email -->
         <div>
-          <label for="email" class="block text-sm font-medium text-violet-700">E-mail</label>
+          <label for="email" class="block text-sm font-medium text-brown-700">E-mail</label>
           <input v-model="form.email" id="email" type="email" class="input" />
           <InputError :message="form.errors.email" class="mt-1" />
         </div>
 
         <!-- Senha -->
         <div>
-          <label for="password" class="block text-sm font-medium text-violet-700">Senha</label>
+          <label for="password" class="block text-sm font-medium text-brown-700">Senha</label>
           <input v-model="form.password" id="password" type="password" class="input" />
           <InputError :message="form.errors.password" class="mt-1" />
         </div>
 
         <!-- Confirmação de senha -->
         <div>
-          <label for="password_confirmation" class="block text-sm font-medium text-violet-700">Confirmar Senha</label>
+          <label for="password_confirmation" class="block text-sm font-medium text-brown-700">Confirmar Senha</label>
           <input v-model="form.password_confirmation" id="password_confirmation" type="password" class="input" />
           <InputError :message="form.errors.password_confirmation" class="mt-1" />
         </div>
 
         <!-- Status -->
         <div>
-          <label for="status" class="block text-sm font-medium text-violet-700">Status</label>
+          <label for="status" class="block text-sm font-medium text-brown-700">Status</label>
           <select v-model="form.status" id="status" class="input">
             <option value="active">Ativo</option>
             <option value="inactive">Inativo</option>
@@ -89,7 +89,7 @@ function submit() {
 
         <!-- Email verificado em -->
         <div>
-          <label for="email_verified_at" class="block text-sm font-medium text-violet-700">E-mail verificado em</label>
+          <label for="email_verified_at" class="block text-sm font-medium text-brown-700">E-mail verificado em</label>
           <input v-model="form.email_verified_at" id="email_verified_at" type="datetime-local" class="input" />
           <InputError :message="form.errors.email_verified_at" class="mt-1" />
         </div>
@@ -98,7 +98,7 @@ function submit() {
         <div class="flex justify-end">
           <button
             type="submit"
-            class="inline-flex items-center px-4 py-2 bg-violet-700 border border-transparent rounded-md font-semibold text-white hover:bg-violet-600"
+            class="inline-flex items-center px-4 py-2 bg-brown-700 border border-transparent rounded-md font-semibold text-white hover:bg-brown-600"
             :disabled="form.processing"
           >
             {{ props.mode === 'edit' ? 'Atualizar' : 'Salvar' }}
@@ -111,6 +111,6 @@ function submit() {
 
 <style scoped>
 .input {
-  @apply mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-violet-500 focus:border-violet-500;
+  @apply mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-brown-500 focus:border-brown-500;
 }
 </style>

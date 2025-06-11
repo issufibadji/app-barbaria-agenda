@@ -9,12 +9,12 @@ const props = defineProps({ reports: Object })
   <AdminLayout>
     <div class="max-w-6xl mx-auto py-10 px-4">
       <div class="flex justify-between items-center mb-4">
-        <h1 class="text-2xl font-bold text-violet-800">Modelos de Relatórios</h1>
-        <Link :href="route('relatorios.create')" class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700">Novo Relatório</Link>
+        <h1 class="text-2xl font-bold text-brown-800">Modelos de Relatórios</h1>
+        <Link :href="route('relatorios.create')" class="bg-brown-600 text-white px-4 py-2 rounded hover:bg-brown-700">Novo Relatório</Link>
       </div>
       <div class="bg-white shadow rounded overflow-x-auto">
         <table class="w-full text-sm table-auto">
-          <thead class="bg-violet-100 text-left">
+          <thead class="bg-brown-100 text-left">
             <tr>
               <th class="px-4 py-2">ID</th>
               <th class="px-4 py-2">Nome</th>

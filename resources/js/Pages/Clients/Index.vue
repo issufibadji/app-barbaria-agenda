@@ -4,14 +4,14 @@
       <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-bold">Clientes</h1>
         <Link :href="route('clients.create')"
-        class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700">
+        class="bg-brown-600 text-white px-4 py-2 rounded hover:bg-brown-700">
           + Novo Cliente
         </Link>
       </div>
 
-      <div class="overflow-x-auto bg-white dark:bg-violet-800 rounded shadow">
+      <div class="overflow-x-auto bg-white dark:bg-brown-800 rounded shadow">
         <table class="min-w-full text-sm table-auto">
-          <thead class="bg-violet-100 dark:bg-violet-700 text-left text-violet-800 dark:text-white">
+          <thead class="bg-brown-100 dark:bg-brown-700 text-left text-brown-800 dark:text-white">
             <tr>
               <th class="px-4 py-3">UUID</th>
               <th class="px-4 py-3">Usuário</th>
@@ -23,7 +23,7 @@
             <tr
               v-for="client in clients.data"
               :key="client.uuid"
-              class="border-t hover:bg-violet-50 dark:hover:bg-violet-900"
+              class="border-t hover:bg-brown-50 dark:hover:bg-brown-900"
             >
               <td class="px-4 py-2">{{ client.uuid }}</td>
               <td class="px-4 py-2">{{ client.user?.name || '-' }}</td>

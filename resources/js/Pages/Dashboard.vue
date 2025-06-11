@@ -15,10 +15,10 @@ console.log('Usuário logado:', user)
   <AdminLayout>
     <div class="py-12">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <h1 class="text-2xl font-semibold text-violet-900 dark:text-white mb-4">Dashboard</h1>
+        <h1 class="text-2xl font-semibold text-brown-900 dark:text-white mb-4">Dashboard</h1>
 
-        <div class="p-6 bg-white dark:bg-violet-800 rounded-lg shadow-md">
-          <p class="text-violet-600 dark:text-violet-200">
+        <div class="p-6 bg-white dark:bg-brown-800 rounded-lg shadow-md">
+          <p class="text-brown-600 dark:text-brown-200">
             This is a dark sidebar example with submenus.
           </p>
         </div>

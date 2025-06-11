@@ -50,7 +50,7 @@ function submit() {
         </div>
         <div class="flex gap-2">
           <Link :href="route('relatorios.index')" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar</Link>
-          <button type="submit" class="px-4 py-2 bg-violet-700 text-white rounded hover:bg-violet-600" :disabled="form.processing">
+          <button type="submit" class="px-4 py-2 bg-brown-700 text-white rounded hover:bg-brown-600" :disabled="form.processing">
             Salvar
           </button>
         </div>
@@ -61,6 +61,6 @@ function submit() {
 
 <style scoped>
 .input {
-  @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-violet-500 focus:ring-violet-500;
+  @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brown-500 focus:ring-brown-500;
 }
 </style>

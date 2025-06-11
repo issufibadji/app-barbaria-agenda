@@ -6,9 +6,9 @@
       <Link href="/permissions/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">+ Permissão</Link>
     </div>
 
-    <div class="overflow-x-auto bg-white dark:bg-violet-800 rounded shadow">
+    <div class="overflow-x-auto bg-white dark:bg-brown-800 rounded shadow">
       <table class="min-w-full text-sm table-auto">
-        <thead class="bg-violet-100 dark:bg-violet-700 text-left text-violet-800 dark:text-white">
+        <thead class="bg-brown-100 dark:bg-brown-700 text-left text-brown-800 dark:text-white">
           <tr>
             <th class="px-4 py-3">ID</th>
             <th class="px-4 py-3">Nome</th>
@@ -17,7 +17,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="permission in permissions" :key="permission.id" class="border-t border-gray-200 dark:border-violet-600 hover:bg-violet-50 dark:hover:bg-violet-900">
+          <tr v-for="permission in permissions" :key="permission.id" class="border-t border-gray-200 dark:border-brown-600 hover:bg-brown-50 dark:hover:bg-brown-900">
             <td class="px-4 py-2">{{ permission.id }}</td>
             <td class="px-4 py-2">{{ permission.name }}</td>
             <td class="px-4 py-2">{{ permission.module || '-' }}</td>

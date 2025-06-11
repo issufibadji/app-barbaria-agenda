@@ -28,7 +28,7 @@ function deleteAccount() {
 
 <template>
   <div class="mt-6 border-t pt-6">
-    <h2 class="text-lg font-semibold text-violet-800 dark:text-violet-100">Autenticação em 2 Fatores (2FA)</h2>
+    <h2 class="text-lg font-semibold text-brown-800 dark:text-brown-100">Autenticação em 2 Fatores (2FA)</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
       <!-- Nome -->
@@ -62,7 +62,7 @@ function deleteAccount() {
 
     <!-- Botões -->
     <div class="mt-6 flex items-center gap-4">
-      <button @click="submitForm" type="button" class="bg-violet-600 hover:bg-violet-700 text-white font-semibold px-4 py-2 rounded">
+      <button @click="submitForm" type="button" class="bg-brown-600 hover:bg-brown-700 text-white font-semibold px-4 py-2 rounded">
         Salvar alterações
       </button>
       <button @click="deleteAccount" type="button" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">

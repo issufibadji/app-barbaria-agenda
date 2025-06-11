@@ -14,9 +14,7 @@ const isLogin = ref(true)
         <!-- Logo -->
         <div class="flex justify-center">
           <img
-            src="https://storage.googleapis.com/devitary-image-host.appspot.com/15846435184459982716-LogoMakr_7POjrN.png"
-            class="w-32 mx-auto"
-            alt="Logo"
+            src="/images/logo.svg" alt="Logo" class="h-24 w-auto"
           />
         </div>
 
@@ -30,7 +28,7 @@ const isLogin = ref(true)
           <div class="w-full flex-1 mt-8">
             <div class="flex flex-col items-center">
               <button
-                class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-violet-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
+                class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-brown-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
               >
                 <div class="bg-white p-2 rounded-full">
                   <svg class="w-4" viewBox="0 0 533.5 544.3">
@@ -42,21 +40,6 @@ const isLogin = ref(true)
                 </div>
                 <span class="ml-4">
                   Sign {{ isLogin ? 'In' : 'Up' }} with Google
-                </span>
-              </button>
-
-              <button
-                class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-violet-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
-              >
-                <div class="bg-white p-1 rounded-full">
-                  <svg class="w-6" viewBox="0 0 32 32">
-                    <path fill-rule="evenodd"
-                      d="M16 4C9.371 4 4 9.371 4 16c0 5.3 3.438 9.8 8.207 11.387.602.11.82-.258.82-.578 0-.286-.011-1.04-.015-2.04-3.34.723-4.043-1.609-4.043-1.609-.547-1.387-1.332-1.758-1.332-1.758-1.09-.742.082-.726.082-.726 1.203.086 1.836 1.234 1.836 1.234 1.07 1.836 2.808 1.305 3.492 1 .11-.777.422-1.305.762-1.605-2.664-.301-5.465-1.332-5.465-5.93 0-1.313.469-2.383 1.234-3.223-.121-.3-.535-1.523.117-3.175 0 0 1.008-.32 3.301 1.23A11.487 11.487 0 0116 9.805c1.02.004 2.047.136 3.004.402 2.293-1.55 3.297-1.23 3.297-1.23.656 1.652.246 2.875.12 3.175.77.84 1.231 1.91 1.231 3.223 0 4.61-2.804 5.621-5.476 5.922.43.367.812 1.101.812 2.219 0 1.605-.011 2.898-.011 3.293 0 .32.214.695.824.578C24.566 25.797 28 21.3 28 16c0-6.629-5.371-12-12-12z"
-                    />
-                  </svg>
-                </div>
-                <span class="ml-4">
-                  Sign {{ isLogin ? 'In' : 'Up' }} with GitHub
                 </span>
               </button>
             </div>
@@ -84,7 +67,7 @@ const isLogin = ref(true)
               {{ isLogin ? "Don't have an account?" : 'Already have an account?' }}
               <button
                 @click="isLogin = !isLogin"
-                class="ml-1 font-medium text-violet-600 hover:text-violet-800"
+                class="ml-4 font-medium text-brown-800 hover:text-brown-800"
               >
                 {{ isLogin ? 'Sign up' : 'Sign in' }}
               </button>
@@ -94,11 +77,13 @@ const isLogin = ref(true)
       </div>
 
       <!-- Illustration Panel -->
-      <div class="flex-1 bg-violet-100 text-center hidden lg:flex">
-        <div class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
-          style="background-image: url('https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg');">
+      <div class="flex-1 bg-brown-100 text-center hidden lg:flex">
+        <div
+            class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
+            style="background-image: url('/images/undraw_barber_utly.svg');"
+        >
         </div>
-      </div>
+        </div>
     </div>
   </div>
 </template>

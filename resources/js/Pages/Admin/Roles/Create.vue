@@ -18,7 +18,7 @@
               type="checkbox"
               :value="permission.name"
               v-model="form.permissions"
-              class="rounded text-violet-600"
+              class="rounded text-brown-600"
             />
             <span>{{ permission.name }}</span>
           </label>

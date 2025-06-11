@@ -14,7 +14,7 @@
     </div>
    <div class="flex gap-2">
     <Link :href="route('clients.index')" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar</Link>
-    <button type="submit" class="px-4 py-2 bg-violet-700 text-white rounded hover:bg-violet-600">
+    <button type="submit" class="px-4 py-2 bg-brown-700 text-white rounded hover:bg-brown-600">
       {{ isEditing ? 'Salvar' : 'Criar' }}
     </button>
     </div>

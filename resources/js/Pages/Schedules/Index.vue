@@ -15,7 +15,7 @@ const props = defineProps({
   <AdminLayout>
     <div class="max-w-7xl mx-auto py-10 px-4">
       <div class="flex justify-between items-center mb-4">
-        <h1 class="text-2xl font-bold text-violet-800">Gestão de Agendas</h1>
+        <h1 class="text-2xl font-bold text-brown-800">Gestão de Agendas</h1>
         <Link
           :href="route('schedules.create')"
           class="bg-brown-600 text-white px-4 py-2 rounded hover:bg-brown-700"
@@ -24,7 +24,7 @@ const props = defineProps({
 
       <div class="bg-white shadow rounded overflow-x-auto">
         <table class="w-full text-sm table-auto">
-          <thead class="bg-violet-100 text-left">
+          <thead class="bg-brown-100 text-left">
             <tr>
               <th class="px-4 py-2">ID</th>
               <th class="px-4 py-2">Agenda</th>

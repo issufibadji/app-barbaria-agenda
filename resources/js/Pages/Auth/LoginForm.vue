@@ -9,7 +9,7 @@
           type="email"
           v-model="form.email"
           required
-          class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-violet-400 focus:bg-white"
+          class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-brown-400 focus:bg-white"
           placeholder="you@example.com"
         />
         <i class="fas fa-envelope absolute right-3 top-4 text-gray-400"></i>
@@ -25,7 +25,7 @@
           :type="showPassword ? 'text' : 'password'"
           v-model="form.password"
           required
-          class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-violet-400 focus:bg-white"
+          class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-brown-400 focus:bg-white"
           placeholder="••••••••"
         />
         <button
@@ -42,7 +42,7 @@
     <!-- Remember Me -->
     <div class="mb-6 flex items-center justify-between">
       <label class="flex items-center space-x-2 text-sm text-gray-700">
-        <input type="checkbox" v-model="form.remember" class="rounded border-gray-300 text-violet-500 shadow-sm focus:ring-violet-400" />
+        <input type="checkbox" v-model="form.remember" class="rounded border-gray-300 text-brown-500 shadow-sm focus:ring-brown-400" />
         <span>Remember me</span>
       </label>
       <Link :href="route('password.request')" class="text-sm text-red-600 hover:text-red-700 font-medium">
@@ -53,7 +53,7 @@
     <!-- Submit -->
     <button
       type="submit"
-      class="w-full bg-violet-500 text-white py-3 rounded-lg font-semibold hover:bg-violet-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:outline-none focus:shadow-outline"
+      class="w-full bg-brown-500 text-white py-3 rounded-lg font-semibold hover:bg-brown-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:outline-none focus:shadow-outline"
       :disabled="form.processing"
     >
       <svg class="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

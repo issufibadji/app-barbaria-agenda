@@ -58,7 +58,7 @@ function disable2FA() {
 
 <template>
   <div class="mt-6 border-t pt-6">
-    <h2 class="text-lg font-semibold text-violet-800 dark:text-violet-100">Autenticação em 2 Fatores (2FA)</h2>
+    <h2 class="text-lg font-semibold text-brown-800 dark:text-brown-100">Autenticação em 2 Fatores (2FA)</h2>
 
     <!-- Status atual -->
     <p class="text-sm mt-2 mb-4">
@@ -70,7 +70,7 @@ function disable2FA() {
 
     <!-- Ativação -->
     <div v-if="!isActive2FA">
-      <p class="text-sm mb-2 text-violet-700">Escaneie o QR Code abaixo com seu app autenticador:</p>
+      <p class="text-sm mb-2 text-brown-700">Escaneie o QR Code abaixo com seu app autenticador:</p>
       <img :src="qrCodeUrl" alt="QR Code 2FA" class="mb-4" />
 
       <p class="text-xs text-gray-500 mb-2">Ou digite este código manualmente:</p>

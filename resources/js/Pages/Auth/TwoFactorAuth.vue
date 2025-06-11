@@ -3,8 +3,8 @@
   <div class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
     <div class="bg-white rounded-xl shadow-md p-8 w-full max-w-md text-center">
       <div class="flex justify-center mb-6">
-        <div class="bg-violet-100 p-3 rounded-full">
-          <svg class="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" stroke-width="2"
+        <div class="bg-brown-100 p-3 rounded-full">
+          <svg class="w-6 h-6 text-brown-600" fill="none" stroke="currentColor" stroke-width="2"
             viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M12 11c0-1.105-.895-2-2-2s-2 .895-2 2c0 1.105.895 2 2 2s2-.895 2-2zm0 0v3m0 4h.01M21 12c0-4.97-4.03-9-9-9S3 7.03 3 12s4.03 9 9 9 9-4.03 9-9z" />
@@ -22,14 +22,14 @@
           maxlength="1"
           @input="focusNext(index, $event)"
           type="text"
-          class="w-10 h-12 text-xl text-center border-2 border-gray-300 rounded-md focus:outline-none focus:border-violet-500"
+          class="w-10 h-12 text-xl text-center border-2 border-gray-300 rounded-md focus:outline-none focus:border-brown-500"
         />
       </div>
 
       <p class="text-gray-400 mb-4">{{ 6 - code.join('').length }} digits left</p>
 
       <button
-        class="w-full bg-violet-500 hover:bg-violet-600 text-white py-2 rounded-md transition"
+        class="w-full bg-brown-500 hover:bg-brown-600 text-white py-2 rounded-md transition"
         @click="submitCode"
       >
         Verify

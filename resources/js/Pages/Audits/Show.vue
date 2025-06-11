@@ -1,6 +1,6 @@
 <template>
   <AdminLayout>
-    <div class="p-6 max-w-4xl mx-auto bg-white dark:bg-violet-800 rounded shadow">
+    <div class="p-6 max-w-4xl mx-auto bg-white dark:bg-brown-800 rounded shadow">
       <h1 class="text-2xl font-bold mb-4">Detalhes da Auditoria</h1>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-6">
@@ -18,14 +18,14 @@
 
       <div>
         <h2 class="text-lg font-semibold mb-2">Valores Antigos</h2>
-        <ul class="bg-gray-100 dark:bg-violet-700 p-4 rounded text-sm mb-4">
+        <ul class="bg-gray-100 dark:bg-brown-700 p-4 rounded text-sm mb-4">
           <li v-for="(value, key) in audit.old_values" :key="key">
             <strong>{{ key }}:</strong> {{ value }}
           </li>
         </ul>
 
         <h2 class="text-lg font-semibold mb-2">Valores Novos</h2>
-        <ul class="bg-gray-100 dark:bg-violet-700 p-4 rounded text-sm">
+        <ul class="bg-gray-100 dark:bg-brown-700 p-4 rounded text-sm">
           <li v-for="(value, key) in audit.new_values" :key="key">
             <strong>{{ key }}:</strong> {{ value }}
           </li>

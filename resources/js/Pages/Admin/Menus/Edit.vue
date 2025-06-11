@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head title="Editar Menu" />
-    <!-- <h1 class="text-2xl font-bold mb-4 text-violet-800">Editar Menu</h1> -->
+    <!-- <h1 class="text-2xl font-bold mb-4 text-brown-800">Editar Menu</h1> -->
     <Form :menu="menu" :parents="parents" :submit-url="`/menus/${menu.id}`" method="put" />
   </div>
 </template>

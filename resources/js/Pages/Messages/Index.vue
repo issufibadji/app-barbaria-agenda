@@ -14,8 +14,8 @@ const props = defineProps({
   <AdminLayout>
     <div class="max-w-7xl mx-auto py-10 px-4">
       <div class="flex justify-between items-center mb-4">
-        <h1 class="text-2xl font-bold text-violet-800">Gestão de Mensagens</h1>
-        <Link :href="route('messages.create')" class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700">+ Mensagem</Link>
+        <h1 class="text-2xl font-bold text-brown-800">Gestão de Mensagens</h1>
+        <Link :href="route('messages.create')" class="bg-brown-600 text-white px-4 py-2 rounded hover:bg-brown-700">+ Mensagem</Link>
       </div>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div v-for="msg in messages" :key="msg.id" class="bg-white rounded shadow p-4 flex flex-col">
