@@ -18,7 +18,7 @@ class AgendaAiEstablishmentController extends Controller
     public function index()
     {
         $establishments = AgendaAiEstablishment::orderBy('created_at', 'desc')->get();
-        return Inertia::render('Agenda/Establishments/Index', [
+        return Inertia::render('Establishments/Index', [
             'establishments' => $establishments,
         ]);
     }

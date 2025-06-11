@@ -39,11 +39,11 @@ class MenuSidebarSeeder extends Seeder
         ]);
 
         MenuSideBar::create([
-            'description' => 'professionais',
+            'description' => 'Professionais',
             'icon' => 'fa-users',
             'level' => 1,
-            'route' => 'employees',
-            'acl' => 'employees-all',
+            'route' => 'professionals',
+            'acl' => 'professionals-all',
             'order' => 3,
             'active' => true,
             'style' => 'color: text-cyan-300;',
@@ -149,6 +149,7 @@ class MenuSidebarSeeder extends Seeder
             ['Assinatura', 'fa-layer-group', 'signature', 'signature-all'],
             ['Pagamentos', 'fa-credit-card', 'payments', 'payments-all'],
             ['Relatórios', 'fa-chart-line', 'reports', 'reports-all'],
+            ['Estabelicimento', 'fa-house', 'house', 'establishments-all'],
         ];
 
         foreach ($adminMenus as $i => [$desc, $icon, $route, $acl]) {
