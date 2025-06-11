@@ -183,7 +183,7 @@ class MenuSidebarSeeder extends Seeder
             ['Assinatura', 'fa-layer-group', 'signature', 'signature-all'],
             ['Pagamentos', 'fa-credit-card', 'payments', 'payments-all'],
             ['Relatórios', 'fa-chart-line', 'reports', 'reports-all'],
-            ['Estabelicimento', 'fa-house', 'house', 'establishments-all'],
+            ['Estabelicimento', 'fa-house', 'establishments', 'establishments-all'],
         ];
 
         foreach ($adminMenus as $i => [$desc, $icon, $route, $acl]) {
