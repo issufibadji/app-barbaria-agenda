@@ -3,8 +3,9 @@
     <div class="p-6">
       <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-bold">Clientes</h1>
-        <Link :href="route('clients.create')" class="btn-primary">
-          Novo Cliente
+        <Link :href="route('clients.create')"
+        class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700">
+          + Novo Cliente
         </Link>
       </div>
 
