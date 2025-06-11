@@ -43,10 +43,14 @@ class RoleAndPermissionSeeder extends Seeder
             'clients-all',
             'employees-all',
             'appointments-all',
-            'schedule-all',
+            'schedules-all',
             'products-all',
             'services-all',
-            'establishments-all'
+            'establishments-all',
+            'messages-all',
+            'addresses-all',
+            'phones-all'
+
         ];
 
         foreach ($permissions as $perm) {

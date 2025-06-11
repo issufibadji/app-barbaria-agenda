@@ -50,24 +50,47 @@ class MenuSidebarSeeder extends Seeder
             'group' => 'Público',
         ]);
 
+
+        MenuSideBar::create([
+            'description' => 'Telefones',
+            'icon' => 'fa-phone',
+            'level' => 1,
+            'route' => 'phones',
+            'acl' => 'phones-all',
+            'order' => 4,
+            'active' => true,
+            'style' => 'color: text-cyan-300;',
+            'group' => 'Público',
+        ]);
+        MenuSideBar::create([
+            'description' => 'Endereço',
+            'icon' => 'fa-address-card',
+            'level' => 1,
+            'route' => 'addresses',
+            'acl' => 'addresses-all',
+            'order' => 6,
+            'active' => true,
+            'style' => 'color: text-cyan-300;',
+            'group' => 'Público',
+        ]);
         MenuSideBar::create([
             'description' => 'Serviços',
             'icon' => 'fa-cut',
             'level' => 1,
             'route' => 'services',
             'acl' => 'services-all',
-            'order' => 3,
+            'order' => 7,
             'active' => true,
             'style' => 'color: text-cyan-300;',
             'group' => 'Público',
         ]);
-     MenuSideBar::create([
+       MenuSideBar::create([
             'description' => 'Produtos',
-            'icon' => 'fas fa-box',
+            'icon' => 'fa-box',
             'level' => 1,
             'route' => 'products',
             'acl' => 'products-all',
-            'order' => 6,
+            'order' => 8,
             'active' => true,
             'style' => 'color: text-cyan-300;',
             'group' => 'Público',
@@ -78,8 +101,8 @@ class MenuSidebarSeeder extends Seeder
             'icon' => 'fa-calendar-check',
             'level' => 1,
             'route' => 'schedules',
-            'acl' => 'schedule-all',
-            'order' => 5,
+            'acl' => 'schedules-all',
+            'order' => 9,
             'active' => true,
             'style' => 'color: text-cyan-300;',
             'group' => 'Público',
@@ -90,12 +113,23 @@ class MenuSidebarSeeder extends Seeder
             'level' => 1,
             'route' => 'appointments',
             'acl' => 'appointments-all',
-            'order' => 4,
+            'order' => 10,
             'active' => true,
             'style' => 'color: text-cyan-300;',
             'group' => 'Público',
         ]);
 
+        MenuSideBar::create([
+            'description' => 'Mensages',
+            'icon' => 'fa-message',
+            'level' => 1,
+            'route' => 'messages',
+            'acl' => 'messages-all',
+            'order' => 11,
+            'active' => true,
+            'style' => 'color: text-cyan-300;',
+            'group' => 'Público',
+        ]);
         // Grupo: Conteúdo - Blog
         $blog = MenuSideBar::create([
             'description' => 'Gestão de Blog',
