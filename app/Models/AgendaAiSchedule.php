@@ -18,6 +18,10 @@ class AgendaAiSchedule extends Model
 
     public function professional()
     {
-        return $this->belongsTo(AgendaAiProfessional::class, 'professional_id');
+        // The schedules table stores the professional_id referencing the
+        // numeric `id` column of AgendaAiProfessional, but the model's
+        // primary key is a UUID. Specify the owner key so the relationship
+        // works correctly.
+        return $this->belongsTo(AgendaAiProfessional::class, 'professional_id', 'id');
     }
 }

@@ -20,8 +20,12 @@ class AgendaAiPhone extends Model
         'establishment_id',
     ];
 
-    public function professional() {
-    return $this->belongsTo(AgendaAiProfessional::class, 'professional_id');
+    public function professional()
+    {
+        // Explicit owner key is required because AgendaAiProfessional uses a
+        // UUID as its primary key, while the phones table stores the
+        // professional_id referencing the numeric `id` column.
+        return $this->belongsTo(AgendaAiProfessional::class, 'professional_id', 'id');
     }
 
     public function establishment() {
