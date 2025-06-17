@@ -79,7 +79,7 @@ class AgendaAiMessageController extends Controller
     public function bulkUpdate(Request $request)
      {
     foreach ($request->messages as $id => $content) {
-        AgendaAiMessage::where('id', $id)->update(['content' => $content]);
+        AgendaAiMessage::where('id', $id)->update(['message' => $content]);
     }
 
     return redirect()->back()->with('success', 'Mensagens atualizadas com sucesso.');
