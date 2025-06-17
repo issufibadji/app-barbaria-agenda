@@ -16,7 +16,7 @@ class AgendaAiProfessionalController extends Controller
 {
     public function index()
     {
-        $professionals = AgendaAiProfessional::with('establishment', 'phones')
+        $professionals = AgendaAiProfessional::with('user', 'establishment', 'phones')
                             ->latest()
                             ->paginate(15);
 
