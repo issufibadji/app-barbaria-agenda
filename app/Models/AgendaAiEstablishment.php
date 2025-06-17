@@ -21,10 +21,16 @@ class AgendaAiEstablishment extends Model
         'uuid',
         'name',
         'link',
+        'manual_chat_link',
         'descrition',
         'image',
         'user_id',
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 
 
     public function services()

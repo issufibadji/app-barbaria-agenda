@@ -32,7 +32,8 @@ use App\Http\Controllers\{
     AgendaAiProfessionalController,
     AgendaAiScheduleController,
     AgendaAiServiceController,
-    AuditController
+    AuditController,
+    ChatController
 };
 
 // Home
@@ -302,5 +303,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('push-subscriptions', [PushSubscriptionController::class, 'store'])->name('push-subscriptions.store');
 });
+
+Route::get('chat/{establishment}', [ChatController::class, 'show'])->name('chat.show');
 
 require __DIR__ . '/auth.php';

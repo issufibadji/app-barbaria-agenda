@@ -3,6 +3,10 @@
     <Head title="Mensagens Manuais" />
     <div class="max-w-5xl mx-auto py-8">
       <h1 class="text-2xl font-bold mb-4 text-brown-800">Mensagens Manuais</h1>
+      <p class="mb-6 text-sm text-gray-700">
+        Use os campos abaixo para personalizar os textos enviados manualmente aos clientes.
+        Você pode utilizar tags dinâmicas como {nome_cliente}, {data_agendamento}, {hora_agendamento}, {link}, {nome_estabelecimento} e {chat_link}.
+      </p>
       <form @submit.prevent="submit" class="space-y-6">
         <div v-for="(group, type) in groupedMessages" :key="type" class="bg-white shadow rounded p-4">
           <h2 class="text-lg font-semibold mb-2 text-brown-700">{{ messageLabels[type] || type }}</h2>
@@ -36,7 +40,7 @@ const groupedMessages = computed(() => {
 })
 
 const form = ref({
-  messages: Object.fromEntries(props.messages.map(m => [m.id, m.content]))
+  messages: Object.fromEntries(props.messages.map(m => [m.id, m.message]))
 })
 
 const messageLabels = {
