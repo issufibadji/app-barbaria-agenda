@@ -12,6 +12,7 @@ const props = defineProps({
 const form = useForm({
   name: props.establishment?.name || '',
   link: props.establishment?.link || '',
+  manual_chat_link: props.establishment?.manual_chat_link || '',
   image: null,
   descrition: props.establishment?.descrition || ''
 })
@@ -44,6 +45,11 @@ function submit() {
           <InputLabel for="link" value="Link" />
           <input id="link" v-model="form.link" type="url" class="input" />
           <InputError :message="form.errors.link" />
+        </div>
+        <div>
+          <InputLabel for="manual_chat_link" value="Link do Chat Manual" />
+          <input id="manual_chat_link" v-model="form.manual_chat_link" type="url" class="input" />
+          <InputError :message="form.errors.manual_chat_link" />
         </div>
         <div>
           <InputLabel for="image" value="Imagem" />
