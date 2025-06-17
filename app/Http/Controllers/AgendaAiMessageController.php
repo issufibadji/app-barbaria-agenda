@@ -75,6 +75,16 @@ class AgendaAiMessageController extends Controller
             ->with('success','Mensagem atualizada com sucesso.');
     }
 
+
+    public function bulkUpdate(Request $request)
+     {
+    foreach ($request->messages as $id => $content) {
+        AgendaAiMessage::where('id', $id)->update(['content' => $content]);
+    }
+
+    return redirect()->back()->with('success', 'Mensagens atualizadas com sucesso.');
+  }
+
     public function destroy(int $id): RedirectResponse
     {
         AgendaAiMessage::findOrFail($id)->delete();

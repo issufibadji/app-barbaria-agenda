@@ -250,6 +250,8 @@ Route::controller(AgendaAiMessageController::class)
         Route::get('/{message}/edit', 'edit')->name('edit');
         Route::put('/{message}',      'update')->name('update');
         Route::delete('/{message}',   'destroy')->name('destroy');
+        Route::post('bulk-update', 'bulkUpdate')->name('messages.bulk-update');
+
 });
 
 
