@@ -25,8 +25,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('agendaai_message_settings', function (Blueprint $table) {
-            $table->dropColumn('agendaai_message_settings');
-        });
+        Schema::dropIfExists('agendaai_message_settings');
     }
 };

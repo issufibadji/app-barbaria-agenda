@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleAndPermissionSeeder::class,
             MenuSidebarSeeder::class, // ✅ Seeder dos Menus
-            AppConfigSeeder::class
+            AppConfigSeeder::class,
+            MessageSettingsSeeder::class
          ]);
         // Usuário comum
         $user = User::factory()->create([

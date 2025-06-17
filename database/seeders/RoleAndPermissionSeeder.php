@@ -52,7 +52,8 @@ class RoleAndPermissionSeeder extends Seeder
             'establishments-all',
             'messages-all',
             'addresses-all',
-            'phones-all'
+            'phones-all',
+            'mensagens-settings-all'
 
         ];
 
