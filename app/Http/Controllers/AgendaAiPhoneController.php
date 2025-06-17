@@ -15,7 +15,9 @@ class AgendaAiPhoneController extends Controller
 {
     public function index()
     {
-        $phones = AgendaAiPhone::with('professional.user', 'establishment')->latest()->get();
+        $phones = AgendaAiPhone::with('professional.user', 'establishment')
+                                ->latest()
+                                ->paginate(15);
         return Inertia::render('Phones/Index', [
             'phones' => $phones,
         ]);
