@@ -17,8 +17,8 @@ class AgendaAiMessageSetting extends Model
         'establishment_id',
     ];
 
-    public function establishment()
+      public function establishment()
     {
-
+        return $this->belongsTo(AgendaAiEstablishment::class, 'establishment_id', 'id');
     }
 }
