@@ -54,6 +54,9 @@ class AgendaAiServiceController extends Controller
         $validated['user_id'] = auth()->id();
         $service = AgendaAiService::create($validated);
 
+        // Garantir que a coluna autoincremento "id" esteja carregada
+        $service->refresh();
+
         // sincroniza o pivot usando o id numérico que agora existe
         $service->professionals()->sync($validated['professionals'] ?? []);
 
