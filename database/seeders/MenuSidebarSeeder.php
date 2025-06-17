@@ -185,6 +185,7 @@ class MenuSidebarSeeder extends Seeder
             ['Relatórios', 'fa-chart-line', 'reports', 'reports-all'],
             ['Estabelicimento', 'fa-house', 'establishments', 'establishments-all'],
             ['Configuração Mensagem', 'fa-wrench', 'messages/settings', 'mensagens-settings-all'],
+            ['Link do Chat', 'fa-link', 'settings/chat-link', 'chat-link-settings-all'],
         ];
 
         foreach ($adminMenus as $i => [$desc, $icon, $route, $acl]) {

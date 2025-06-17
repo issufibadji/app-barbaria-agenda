@@ -53,7 +53,8 @@ class RoleAndPermissionSeeder extends Seeder
             'messages-all',
             'addresses-all',
             'phones-all',
-            'mensagens-settings-all'
+            'mensagens-settings-all',
+            'chat-link-settings-all'
 
         ];
 

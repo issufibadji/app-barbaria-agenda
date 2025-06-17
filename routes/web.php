@@ -33,8 +33,9 @@ use App\Http\Controllers\{
     AgendaAiScheduleController,
     AgendaAiServiceController,
     AuditController,
-    ChatController,
-    AgendaAiMessageSettingController
+    PublicChatController,
+    AgendaAiMessageSettingController,
+    AgendaAiChatLinkController
 };
 
 // Home
@@ -259,6 +260,9 @@ Route::controller(AgendaAiMessageController::class)
 
 Route::get('/messages/settings', [AgendaAiMessageSettingController::class, 'index'])->name('messages.settings');
 Route::post('/messages/settings', [AgendaAiMessageSettingController::class, 'update'])->name('messages.settings.update');
+Route::get('/settings/chat-link', [AgendaAiChatLinkController::class, 'edit'])->name('settings.chat-link.edit');
+Route::post('/settings/chat-link', [AgendaAiChatLinkController::class, 'update'])->name('settings.chat-link.update');
+
 
 Route::controller(AgendaAiPlanController::class)
     ->prefix('plans')
@@ -308,6 +312,7 @@ Route::middleware('auth')->group(function () {
     Route::post('push-subscriptions', [PushSubscriptionController::class, 'store'])->name('push-subscriptions.store');
 });
 
-Route::get('chat/{establishment}', [ChatController::class, 'show'])->name('chat.show');
+
+Route::get('/{slug}', [\App\Http\Controllers\PublicChatController::class, 'show']);
 
 require __DIR__ . '/auth.php';
