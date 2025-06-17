@@ -12,11 +12,19 @@ class AgendaAiClient extends Model
     use HasFactory, Uuid;
 
     protected $table = 'agendaai_clients';
+    protected $primaryKey = 'uuid';
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $fillable = [
         'uuid',
         'user_id',
         'gender',
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 
     public function user()
     {
