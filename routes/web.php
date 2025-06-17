@@ -33,7 +33,8 @@ use App\Http\Controllers\{
     AgendaAiScheduleController,
     AgendaAiServiceController,
     AuditController,
-    ChatController
+    ChatController,
+    AgendaAiMessageSettingController
 };
 
 // Home
@@ -253,8 +254,11 @@ Route::controller(AgendaAiMessageController::class)
         Route::delete('/{message}',   'destroy')->name('destroy');
         Route::post('bulk-update', 'bulkUpdate')->name('messages.bulk-update');
 
+
 });
 
+Route::get('/messages/settings', [AgendaAiMessageSettingController::class, 'index'])->name('messages.settings');
+Route::post('/messages/settings', [AgendaAiMessageSettingController::class, 'update'])->name('messages.settings.update');
 
 Route::controller(AgendaAiPlanController::class)
     ->prefix('plans')
