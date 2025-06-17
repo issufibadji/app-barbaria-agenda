@@ -18,7 +18,7 @@ class AgendaAiProfessionalController extends Controller
     {
         $professionals = AgendaAiProfessional::with('establishment', 'phones')
                             ->latest()
-                            ->get();
+                            ->paginate(15);
 
         return Inertia::render('Professionals/Index', [
             'professionals' => $professionals,
