@@ -5,24 +5,24 @@ use Illuminate\Support\Str;
 
 trait Uuid
 {
-
-    protected static function boot()
+    /**
+     * Boot the trait and assign a UUID when creating a new model instance.
+     */
+    protected static function bootUuid(): void
     {
-        parent::boot();
         static::creating(function ($model) {
-            $model->incrementing = false;
-            $model->keyType = 'string';
-            $model->{$model->getKeyName()} = Str::uuid()->toString();
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
         });
     }
 
-    public function getIncrementing()
+    /**
+     * Initialize the trait for an instance.
+     */
+    public function initializeUuid(): void
     {
-        return false;
-    }
-
-    public function getKeyType()
-    {
-        return 'string';
+        $this->incrementing = false;
+        $this->keyType = 'string';
     }
 }
