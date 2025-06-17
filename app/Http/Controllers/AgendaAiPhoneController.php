@@ -26,22 +26,9 @@ class AgendaAiPhoneController extends Controller
         $professionals  = AgendaAiProfessional::with('user')->get();
         $establishments = AgendaAiEstablishment::all();
 
-        // 1. tenta recuperar old() se veio de validação
-        $phonesOld = old('phones', null);
-
-        // 2. se não veio old, cria um array com um telefone vazio
-        $phones = $phonesOld ?: [[
-            'ddi' => '',
-            'ddd' => '',
-            'phone' => '',
-            'professional_id'  => null,
-            'establishment_id' => null,
-        ]];
-
         return Inertia::render('Phones/Create', [
             'professionals' => $professionals,
             'establishments' => $establishments,
-            'phones' => $phones,
         ]);
     }
 
@@ -52,20 +39,10 @@ class AgendaAiPhoneController extends Controller
 
         $phone = AgendaAiPhone::findOrFail($id);
 
-        $phonesOld = old('phones', null);
-        $phones = $phonesOld ?: [[
-            'ddi' => $phone->ddi,
-            'ddd'  => $phone->ddd,
-            'phone' => $phone->phone,
-            'professional_id'  => $phone->professional_id,
-            'establishment_id' => $phone->establishment_id,
-        ]];
-
         return Inertia::render('Phones/Edit', [
             'phone' => $phone,
             'professionals' => $professionals,
             'establishments' => $establishments,
-            'phones' => $phones,
         ]);
     }
 
@@ -73,24 +50,20 @@ class AgendaAiPhoneController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'phones.*.ddi' => 'nullable|string|max:5',
-            'phones.*.ddd' => 'nullable|string|max:5',
-            'phones.*.phone' => 'required|string|max:20',
-            'phones.*.professional_id'  => 'nullable|exists:agendaai_professionals,id',
-            'phones.*.establishment_id' => 'nullable|exists:agendaai_establishments,id',
+            'ddi' => 'nullable|string|max:5',
+            'ddd' => 'nullable|string|max:5',
+            'phone' => 'required|string|max:20',
+            'professional_id'  => 'nullable|exists:agendaai_professionals,id',
+            'establishment_id' => 'nullable|exists:agendaai_establishments,id',
         ]);
 
-        foreach ($validated['phones'] as $phone) {
-            if (empty($phone['phone'])) continue;
-
-            AgendaAiPhone::create([
-                'ddi'  => $phone['ddi']              ?? null,
-                'ddd'  => $phone['ddd']              ?? null,
-                'phone' => $phone['phone'],
-                'professional_id'  => $phone['professional_id']  ?? null,
-                'establishment_id' => $phone['establishment_id'] ?? null,
-            ]);
-        }
+        AgendaAiPhone::create([
+            'ddi'  => $validated['ddi'] ?? null,
+            'ddd'  => $validated['ddd'] ?? null,
+            'phone' => $validated['phone'],
+            'professional_id'  => $validated['professional_id'] ?? null,
+            'establishment_id' => $validated['establishment_id'] ?? null,
+        ]);
 
         return redirect()
             ->route('phones.index')
@@ -100,24 +73,21 @@ class AgendaAiPhoneController extends Controller
     public function update(Request $request, $id): RedirectResponse
     {
         $validated = $request->validate([
-            'phones.*.ddi' => 'nullable|string|max:5',
-            'phones.*.ddd' => 'nullable|string|max:5',
-            'phones.*.phone' => 'required|string|max:20',
-            'phones.*.professional_id'  => 'nullable|exists:agendaai_professionals,id',
-            'phones.*.establishment_id' => 'nullable|exists:agendaai_establishments,id',
+            'ddi' => 'nullable|string|max:5',
+            'ddd' => 'nullable|string|max:5',
+            'phone' => 'required|string|max:20',
+            'professional_id'  => 'nullable|exists:agendaai_professionals,id',
+            'establishment_id' => 'nullable|exists:agendaai_establishments,id',
         ]);
 
         $phoneModel = AgendaAiPhone::findOrFail($id);
 
-        // usa apenas o primeiro telefone do array
-        $item = $validated['phones'][0];
-
         $phoneModel->update([
-            'ddi' => $item['ddi'] ?? null,
-            'ddd'  => $item['ddd'] ?? null,
-            'phone' => $item['phone'],
-            'professional_id'  => $item['professional_id']  ?? null,
-            'establishment_id' => $item['establishment_id'] ?? null,
+            'ddi' => $validated['ddi'] ?? null,
+            'ddd'  => $validated['ddd'] ?? null,
+            'phone' => $validated['phone'],
+            'professional_id'  => $validated['professional_id'] ?? null,
+            'establishment_id' => $validated['establishment_id'] ?? null,
         ]);
 
         return redirect()
