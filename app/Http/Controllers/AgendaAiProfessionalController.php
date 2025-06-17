@@ -28,7 +28,7 @@ class AgendaAiProfessionalController extends Controller
     public function create()
     {
         $users = User::orderBy('name')->pluck('name', 'id');
-        $establishments = AgendaAiEstablishment::all();
+        $establishments = AgendaAiEstablishment::pluck('name', 'id');
 
         // Placeholder para start do formulário de telefones (caso queira já exibir um)
         $phones = old('phones', [[
@@ -84,7 +84,7 @@ class AgendaAiProfessionalController extends Controller
                             ->firstOrFail();
 
         $users = User::orderBy('name')->pluck('name', 'id');
-        $establishments = AgendaAiEstablishment::all();
+        $establishments = AgendaAiEstablishment::pluck('name', 'id');
 
         // Se voltou de validação com old(), usa aquilo; senão monta do Model
         $phonesOld = old('phones', null);
