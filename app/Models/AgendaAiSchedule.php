@@ -18,6 +18,6 @@ class AgendaAiSchedule extends Model
 
     public function professional()
     {
-        return $this->belongsTo(AgendaAiProfessional::class, 'professional_id');
+        return $this->belongsTo(AgendaAiProfessional::class, 'professional_id', 'id');
     }
 }

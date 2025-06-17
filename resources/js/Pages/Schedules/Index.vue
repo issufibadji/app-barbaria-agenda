@@ -36,7 +36,7 @@ const props = defineProps({
             <tr v-for="item in schedules.data" :key="item.id" class="border-t">
               <td class="px-4 py-2">{{ item.id }}</td>
               <td class="px-4 py-2">{{ item.schedule }}</td>
-              <td class="px-4 py-2">{{ item.professional?.user?.name }}</td>
+              <td class="px-4 py-2">{{ item.professional?.user?.name || '—' }}</td>
               <td class="px-4 py-2 text-right space-x-2">
                 <Link
                   v-if="item?.id"
