@@ -17,7 +17,9 @@ class AgendaAiProductController extends Controller
     public function index()
     {
 
-        $products = AgendaAiProduct::orderBy('created_at', 'desc')->get();
+        $products = AgendaAiProduct::orderBy('created_at', 'desc')
+                                ->latest()
+                                ->paginate(15);;
         return Inertia::render('Products/Index', [
             'products' => $products,
         ]);

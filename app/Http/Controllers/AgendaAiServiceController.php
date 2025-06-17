@@ -14,7 +14,9 @@ class AgendaAiServiceController extends Controller
 {
     public function index()
     {
-        $services = AgendaAiService::orderBy('created_at', 'desc')->get();
+        $services = AgendaAiService::orderBy('created_at', 'desc')
+                                ->latest()
+                                ->paginate(15);
         return Inertia::render('Services/Index', [
             'services' => $services,
         ]);

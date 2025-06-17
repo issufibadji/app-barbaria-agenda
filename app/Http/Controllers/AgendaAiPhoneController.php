@@ -18,6 +18,8 @@ class AgendaAiPhoneController extends Controller
         $phones = AgendaAiPhone::with('professional.user', 'establishment')
                                 ->latest()
                                 ->paginate(15);
+
+        //dd($phones->toArray());
         return Inertia::render('Phones/Index', [
             'phones' => $phones,
         ]);
@@ -27,6 +29,7 @@ class AgendaAiPhoneController extends Controller
     {
         $professionals  = AgendaAiProfessional::with('user')->get();
         $establishments = AgendaAiEstablishment::all();
+
 
         return Inertia::render('Phones/Create', [
             'professionals' => $professionals,
@@ -51,6 +54,8 @@ class AgendaAiPhoneController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+
+        // dd($request->all());
         $validated = $request->validate([
             'ddi' => 'nullable|string|max:5',
             'ddd' => 'nullable|string|max:5',
