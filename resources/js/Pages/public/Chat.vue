@@ -15,7 +15,7 @@ const services = ref([])
 const selectedServices = ref([])
 
 const loadServices = async () => {
-  const response = await fetch(`/api/public/${props.establishment.uuid}/services`)
+  const response = await fetch(`http://127.0.0.1:8000/public/${props.establishment.uuid}/services`)
   services.value = await response.json()
 }
 
