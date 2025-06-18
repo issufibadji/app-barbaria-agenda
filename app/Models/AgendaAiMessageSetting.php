@@ -9,7 +9,7 @@ class AgendaAiMessageSetting extends Model
 {
     use HasFactory;
 
-    protected $table = 'agenda_ai_message_settings';
+    protected $table = 'agendaai_message_settings';
 
     protected $fillable = [
         'type',

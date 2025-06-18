@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('agenda_ai_message_settings', function (Blueprint $table) {
+        Schema::create('agendaai_message_settings', function (Blueprint $table) {
             $table->id();
             $table->string('type');
             $table->text('message');
@@ -20,6 +20,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('agenda_ai_message_settings');
+        Schema::dropIfExists('agendaai_message_settings');
     }
 };
