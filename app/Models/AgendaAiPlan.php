@@ -17,5 +17,10 @@ class AgendaAiPlan extends Model
         'active',
         'price',
         'descrition',
+        'features', // ← aqui só o nome
+    ];
+
+    protected $casts = [
+        'features' => 'array', // ← aqui sim você define o tipo
     ];
 }

@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->boolean('active')->default(true);
             $table->decimal('price', 8, 2);
             $table->text('descrition')->nullable();
+            $table->json('features')->nullable();
             $table->timestamps();
         });
     }

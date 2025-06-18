@@ -14,12 +14,13 @@ const form = useForm({
   days: props.plan?.days || '',
   price: props.plan?.price || '',
   descrition: props.plan?.descrition || '',
-  active: props.plan?.active ? true : false
+  active: props.plan?.active ?? true,
+  features: props.plan?.features || ['']
 })
 
 function submit() {
   if (props.mode === 'edit') {
-    form.post(route('plans.update', props.plan.id), { _method: 'put' })
+    form.put(route('plans.update', props.plan.id))
   } else {
     form.post(route('plans.store'))
   }
@@ -38,27 +39,43 @@ function submit() {
             <input id="name" v-model="form.name" type="text" class="input" />
             <InputError :message="form.errors.name" />
           </div>
+
           <div class="col-span-2">
             <InputLabel for="days" value="Dias" />
             <input id="days" v-model="form.days" type="number" class="input" />
             <InputError :message="form.errors.days" />
           </div>
+
           <div class="col-span-1 flex items-center">
             <label class="flex items-center gap-2 mt-6">
               <input type="checkbox" v-model="form.active" class="rounded" /> Ativo
             </label>
           </div>
+
           <div class="col-span-3">
             <InputLabel for="price" value="Valor (R$)" />
             <input id="price" v-model="form.price" type="number" step="0.01" class="input" />
             <InputError :message="form.errors.price" />
           </div>
+
           <div class="col-span-6">
             <InputLabel for="descrition" value="Descrição" />
             <textarea id="descrition" v-model="form.descrition" rows="3" class="input"></textarea>
             <InputError :message="form.errors.descrition" />
           </div>
+
+          <!-- Lista de Benefícios Dinâmicos -->
+          <div class="col-span-6">
+            <InputLabel for="features" value="Benefícios" />
+            <div v-for="(feature, index) in form.features" :key="index" class="flex items-center gap-2 mb-2">
+              <input v-model="form.features[index]" class="input w-full" placeholder="Digite o benefício" />
+              <button type="button" @click="form.features.splice(index, 1)" class="text-red-600">🗑️</button>
+            </div>
+            <button type="button" @click="form.features.push('')" class="text-sm text-blue-600 mt-1">+ Adicionar benefício</button>
+            <InputError :message="form.errors.features" />
+          </div>
         </div>
+
         <div class="flex gap-2">
           <Link :href="route('plans.index')" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar</Link>
           <button type="submit" class="px-4 py-2 bg-brown-700 text-white rounded hover:bg-brown-600" :disabled="form.processing">

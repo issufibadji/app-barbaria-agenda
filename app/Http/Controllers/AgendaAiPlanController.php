@@ -35,29 +35,29 @@ class AgendaAiPlanController extends Controller
         return Inertia::render('Plans/Create');
     }
 
-    public function store(Request $request): RedirectResponse
+   public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'name'       => 'required|string|max:255',
             'days'       => 'required|integer|min:0',
             'price'      => 'required|numeric|min:0',
             'descrition' => 'nullable|string',
+            'features'   => 'nullable|array',
+            'features.*' => 'nullable|string|max:255',
         ]);
 
-        // if checkbox absent, force false
         $validated['active'] = $request->has('active');
+        $validated['features'] = array_filter($request->input('features', []));
 
         AgendaAiPlan::create($validated);
 
-        return redirect()
-            ->route('plans.index')
-            ->with('success','Plano criado com sucesso.');
+        return redirect()->route('plans.index')->with('success', 'Plano criado com sucesso.');
     }
 
     public function edit(int $id)
     {
         $plan = AgendaAiPlan::findOrFail($id);
-        return Inertia::render('Agenda/Plans/Edit', [
+        return Inertia::render('Plans/Edit', [
             'plan' => $plan,
         ]);
     }
@@ -71,14 +71,16 @@ class AgendaAiPlanController extends Controller
             'days'       => 'required|integer|min:0',
             'price'      => 'required|numeric|min:0',
             'descrition' => 'nullable|string',
+            'features'   => 'nullable|array',
+            'features.*' => 'nullable|string|max:255',
         ]);
+
         $validated['active'] = $request->has('active');
+        $validated['features'] = array_filter($request->input('features', []));
 
         $plan->update($validated);
 
-        return redirect()
-            ->route('plans.index')
-            ->with('success','Plano atualizado com sucesso.');
+        return redirect()->route('plans.index')->with('success', 'Plano atualizado com sucesso.');
     }
 
     public function destroy(int $id): RedirectResponse

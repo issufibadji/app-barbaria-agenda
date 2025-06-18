@@ -119,17 +119,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Templates
     Route::prefix('template')->name('template.')->group(function () {
-        Route::get('/barbershop', fn () => Inertia::render('Templates/landingpage/Barbershop'))->name('barbershop');
-        Route::get('/LandingBarbershop', fn () => Inertia::render('Templates/landingpage/LandingBarbershop'))->name('LandingBarbershop');
-        Route::get('/LandingManhattan', fn () => Inertia::render('Templates/landingpage/LandingManhattan'))->name('LandingManhattan');
-        Route::get('/LandingNYC', fn () => Inertia::render('Templates/landingpage/LandingNYC'))->name('LandingNYC');
-        Route::get('/LandingPrices', fn () => Inertia::render('Templates/landingpage/LandingPrices'))->name('LandingPrices');
-        Route::get('/LandingBarberNY', fn () => Inertia::render('Templates/landingpage/LandingBarberNY'))->name('LandingBarberNY');
-        Route::get('/LandingModel', fn () => Inertia::render('Templates/landingpage/LandingModel'))->name('LandingModel');
-        Route::get('/LandingBlaxCut', fn () => Inertia::render('Templates/landingpage/LandingBlaxCut'))->name('LandingBlaxCut');
-        Route::get('/LandingBarberHtml5', fn () => Inertia::render('Templates/landingpage/LandingBarberHtml5'))->name('LandingBarberHtml5');
-        Route::get('/LandingBarberHouse', fn () => Inertia::render('Templates/landingpage/LandingBarberHouse'))->name('LandingBarberHouse');
-        Route::get('/LandingCustom', fn () => Inertia::render('Templates/landingpage/LandingCustom'))->name('LandingCustom');
+       Route::get('/barbershop', fn () => Inertia::render('Templates/Landingpage/Barbershop'))->name('barbershop');
+
+        Route::get('/LandingBarbershop', fn () => Inertia::render('Templates/Landingpage/LandingBarbershop'))->name('LandingBarbershop');
+        Route::get('/LandingManhattan', fn () => Inertia::render('Templates/Landingpage/LandingManhattan'))->name('LandingManhattan');
+        Route::get('/LandingNYC', fn () => Inertia::render('Templates/Landingpage/LandingNYC'))->name('LandingNYC');
+        Route::get('/LandingPrices', fn () => Inertia::render('Templates/Landingpage/LandingPrices'))->name('LandingPrices');
+        Route::get('/LandingBarberNY', fn () => Inertia::render('Templates/Landingpage/LandingBarberNY'))->name('LandingBarberNY');
+        Route::get('/LandingModel', fn () => Inertia::render('Templates/Landingpage/LandingModel'))->name('LandingModel');
+        Route::get('/LandingBlaxCut', fn () => Inertia::render('Templates/Landingpage/LandingBlaxCut'))->name('LandingBlaxCut');
+        Route::get('/LandingBarberHtml5', fn () => Inertia::render('Templates/Landingpage/LandingBarberHtml5'))->name('LandingBarberHtml5');
+        Route::get('/LandingBarberHouse', fn () => Inertia::render('Templates/Landingpage/LandingBarberHouse'))->name('LandingBarberHouse');
+        Route::get('/LandingCustom', fn () => Inertia::render('Templates/Landingpage/LandingCustom'))->name('LandingCustom');
     });
 });
 
