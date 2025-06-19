@@ -314,6 +314,8 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/{slug}', [\App\Http\Controllers\PublicChatController::class, 'show']);
+Route::get('/public/{establishment:uuid}/services', [\App\Http\Controllers\PublicChatController::class, 'services']);
+Route::get('/public/{establishment:uuid}/messages', [\App\Http\Controllers\PublicChatController::class, 'messages']);
+Route::get('/{slug}', [\App\Http\Controllers\PublicChatController::class, 'show'])->name('chat.show');
 
 require __DIR__ . '/auth.php';

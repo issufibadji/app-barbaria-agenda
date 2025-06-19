@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\AgendaAiService;
 use App\Models\AgendaAiProduct;
+use App\Models\AgendaAiMessageSetting;
 
 class AgendaAiEstablishment extends Model
 {
@@ -42,5 +43,10 @@ class AgendaAiEstablishment extends Model
     public function products()
     {
       return $this->hasMany(AgendaAiProduct::class, 'establishment_id');
+    }
+
+    public function messageSettings()
+    {
+        return $this->hasMany(AgendaAiMessageSetting::class, 'establishment_id');
     }
 }

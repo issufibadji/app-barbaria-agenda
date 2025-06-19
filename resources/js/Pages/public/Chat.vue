@@ -1,22 +1,24 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
   establishment: Object
 })
 
-const messages = ref([
-  { from: 'system', text: `Olá, seja bem-vindo à ${props.establishment.name}! 😊` },
-  { from: 'system', text: 'Por qual serviço você está procurando?' }
-])
+const messages = ref([])
 
 const services = ref([])
 const selectedServices = ref([])
 
 const loadServices = async () => {
-  const response = await fetch(`http://127.0.0.1:8000/public/${props.establishment.uuid}/services`)
+  const response = await fetch(`/public/${props.establishment.uuid}/services`)
   services.value = await response.json()
+}
+
+const loadMessages = async () => {
+  const response = await fetch(`/public/${props.establishment.uuid}/messages`)
+  const data = await response.json()
+  messages.value = data.map(m => ({ from: 'system', text: m.message }))
 }
 
 const send = () => {
@@ -31,7 +33,9 @@ const send = () => {
   selectedServices.value = []
 }
 
-onMounted(loadServices)
+onMounted(async () => {
+  await Promise.all([loadServices(), loadMessages()])
+})
 </script>
 
 <template>

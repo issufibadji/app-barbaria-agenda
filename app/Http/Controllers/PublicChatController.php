@@ -16,4 +16,14 @@ class PublicChatController extends Controller
             // você pode passar serviços, horários disponíveis, etc.
         ]);
     }
+
+    public function services(AgendaAiEstablishment $establishment)
+    {
+        return response()->json($establishment->services()->select('id', 'name', 'price')->get());
+    }
+
+    public function messages(AgendaAiEstablishment $establishment)
+    {
+        return response()->json($establishment->messageSettings()->select('type', 'message')->get());
+    }
 }

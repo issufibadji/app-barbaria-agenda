@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AgendaAiEstablishment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class AgendaAiChatLinkController extends Controller
@@ -20,12 +21,17 @@ class AgendaAiChatLinkController extends Controller
 
     public function update(Request $request)
     {
-       $request->validate([
-            'link' => ['required', 'string', 'max:255', Rule::unique('agendaai_establishments', 'manual_chat_link')->ignore($establishment->id)],
+        $establishment = Auth::user()->establishment;
+
+        $request->validate([
+            'manual_chat_link' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('agendaai_establishments', 'manual_chat_link')->ignore($establishment->id),
+            ],
         ]);
 
-
-        $establishment = Auth::user()->establishment;
         $establishment->manual_chat_link = $request->manual_chat_link;
         $establishment->save();
 
