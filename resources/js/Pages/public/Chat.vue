@@ -23,6 +23,8 @@ const services = ref([
 const selectedServices = ref([])
 const selectedDate = ref(null)
 const selectedTime = ref(null)
+const telefone = ref('')
+
 
 const substituirTags = (texto) => {
   const mock = {
@@ -106,8 +108,22 @@ const horarios = ['09:00', '10:30', '13:00', '15:00', '16:30']
 const selecionarHorario = () => {
   if (!selectedDate.value || !selectedTime.value) return
   chatMessages.value.push({ from: 'user', text: `Dia ${selectedDate.value} às ${selectedTime.value}` })
-  chatMessages.value.push({ from: 'bot', text: 'Pronto! Recebemos seu pedido. Em breve entraremos em contato para confirmar seu agendamento! 😊' })
+  chatMessages.value.push({ from: 'bot', text: 'Que bom, qual seu telefone?' })
   etapa.value = 5
+}
+
+const enviarTelefone = () => {
+  if (!telefone.value.trim()) return
+  chatMessages.value.push({ from: 'user', text: telefone.value.trim() })
+  etapa.value = 6
+
+  // Mensagem final
+  chatMessages.value.push({ from: 'bot', text: 'Perfeito....' })
+  chatMessages.value.push({
+    from: 'bot',
+    text: `Agendamento realizado: Um(a) ${selectedServices.value.map(id => services.value.find(s => s.id === id)?.name).join(', ')} - com o(a) profissional no(a) ${selectedDate.value} às ${selectedTime.value}.`
+  })
+  chatMessages.value.push({ from: 'bot', text: 'Muito obrigado, até mais! 🧔✂️' })
 }
 </script>
 
@@ -202,7 +218,17 @@ const selecionarHorario = () => {
         Enviar
     </button>
     </div>
-
+    <!-- Etapa 5: Telefone -->
+    <div v-if="etapa === 5" class="flex gap-2">
+    <input
+        v-model="telefone"
+        @keyup.enter="enviarTelefone"
+        type="tel"
+        placeholder="Digite seu telefone..."
+        class="w-full px-4 py-2 rounded bg-gray-700 border border-gray-600 text-white"
+    />
+    <button @click="enviarTelefone" class="bg-brown-600 px-4 py-2 rounded text-white">Enviar</button>
+    </div>
     </div>
   </div>
 </template>
