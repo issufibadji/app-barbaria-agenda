@@ -37,9 +37,9 @@ const groupedMenus = computed(() => {
   parents.forEach(item => {
     const group =
       item.level === 1 ? 'Área Operacional'
-      : item.level === 2 ? 'Gestão da Site'
-      : item.level === 3 ? 'Gestão da Loja'
-      : item.level === 4 ? 'Administração do Sistema'
+    //   : item.level === 2 ? 'Gestão da Site'
+      : item.level === 2 ? 'Gestão da Loja'
+      : item.level === 3 ? 'Administração do Sistema'
       : 'Outros'
 
     if (!groups[group]) groups[group] = []
@@ -61,7 +61,7 @@ const groupedMenus = computed(() => {
 
 function defaultTextClass(groupName) {
   if (groupName === 'Área Operacional') return 'text-camel-300'
-  if (groupName === 'Gestão da Site') return 'text-vanilla-300'
+//   if (groupName === 'Gestão da Site') return 'text-vanilla-300'
   if (groupName === 'Gestão da Loja') return 'text-vanilla-300'
   if (groupName === 'Administração do Sistema') return 'text-mint-300'
   return 'text-gray-400'

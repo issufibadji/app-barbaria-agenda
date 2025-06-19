@@ -131,45 +131,45 @@ class MenuSidebarSeeder extends Seeder
             'group' => 'Público',
         ]);
         // Grupo: Conteúdo - Blog
-        $blog = MenuSideBar::create([
-            'description' => 'Gestão de Blog',
-            'icon' => 'fa-blog',
-            'level' => 2,
-            'route' => null,
-            'acl' => null,
-            'order' => 150,
-            'active' => true,
-            'style' => 'color: text-emerald-200;',
-            'group' => 'Conteúdo',
-        ]);
+        // $blog = MenuSideBar::create([
+        //     'description' => 'Gestão de Blog',
+        //     'icon' => 'fa-blog',
+        //     'level' => 2,
+        //     'route' => null,
+        //     'acl' => null,
+        //     'order' => 150,
+        //     'active' => true,
+        //     'style' => 'color: text-emerald-200;',
+        //     'group' => 'Conteúdo',
+        // ]);
 
-        $blogMenus = [
-            // ['Listar Categorias', 'fa-boxes-stacked', 'blog/categories', 'blog-categories'],
-            // ['Listar Tags', 'fa-tags', 'blog/tags', 'blog-tags'],
-            ['Listar Templates', 'fa-newspaper', 'blog/templates', 'blog-templates'],
-            ['Listar Posts', 'fa-feather-pointed', 'blog/posts', 'blog-posts'],
-        ];
+        // $blogMenus = [
+        //     // ['Listar Categorias', 'fa-boxes-stacked', 'blog/categories', 'blog-categories'],
+        //     // ['Listar Tags', 'fa-tags', 'blog/tags', 'blog-tags'],
+        //     ['Listar Templates', 'fa-newspaper', 'blog/templates', 'blog-templates'],
+        //     ['Listar Posts', 'fa-feather-pointed', 'blog/posts', 'blog-posts'],
+        // ];
 
-        foreach ($blogMenus as $i => [$desc, $icon, $route, $acl]) {
-            MenuSideBar::create([
-                'description' => $desc,
-                'icon' => $icon,
-                'level' => 2,
-                'route' => $route,
-                'acl' => $acl,
-                'order' => 151 + $i,
-                'active' => true,
-                'style' => 'color: text-emerald-200;',
-                'group' => 'Conteúdo',
-                'parent_id' => $blog->id,
-            ]);
-        }
+        // foreach ($blogMenus as $i => [$desc, $icon, $route, $acl]) {
+        //     MenuSideBar::create([
+        //         'description' => $desc,
+        //         'icon' => $icon,
+        //         'level' => 2,
+        //         'route' => $route,
+        //         'acl' => $acl,
+        //         'order' => 151 + $i,
+        //         'active' => true,
+        //         'style' => 'color: text-emerald-200;',
+        //         'group' => 'Conteúdo',
+        //         'parent_id' => $blog->id,
+        //     ]);
+        // }
 
         // Grupo: Administração
         $admin = MenuSideBar::create([
             'description' => 'Gestão da Loja',
             'icon' => 'fa-store',
-            'level' => 3,
+            'level' => 2,
             'route' => null,
             'acl' => null,
             'order' => 300,
@@ -192,10 +192,10 @@ class MenuSidebarSeeder extends Seeder
             MenuSideBar::create([
                 'description' => $desc,
                 'icon' => $icon,
-                'level' => 3,
+                'level' => 2,
                 'route' => $route,
                 'acl' => $acl,
-                'order' => 301 + $i,
+                'order' => 201 + $i,
                 'active' => true,
                 'style' => 'color: text-sky-300;',
                 'group' => 'Administração',
@@ -207,10 +207,10 @@ class MenuSidebarSeeder extends Seeder
         $system = MenuSideBar::create([
             'description' => 'Administração do Sistema',
             'icon' => 'fa-tools',
-            'level' => 4,
+            'level' => 3,
             'route' => null,
             'acl' => null,
-            'order' => 400,
+            'order' => 300,
             'active' => true,
             'style' => 'color: text-yellow-300;',
             'group' => 'Sistema',
@@ -231,10 +231,10 @@ class MenuSidebarSeeder extends Seeder
             MenuSideBar::create([
                 'description' => $desc,
                 'icon' => $icon,
-                'level' => 4,
+                'level' => 3,
                 'route' => $route,
                 'acl' => $acl,
-                'order' => 401 + $i,
+                'order' => 301 + $i,
                 'active' => true,
                 'style' => 'color: text-yellow-300;',
                 'group' => 'Sistema',
