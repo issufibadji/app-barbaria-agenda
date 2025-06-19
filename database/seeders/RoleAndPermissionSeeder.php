@@ -37,7 +37,6 @@ class RoleAndPermissionSeeder extends Seeder
             'plan-all',
             'configs-all',
             'signature-all',
-            'configs-all',
             'user-all',
             'audit-all',
             'notification-all',
