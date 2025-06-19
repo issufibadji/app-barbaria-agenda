@@ -47,8 +47,8 @@ function submit() {
           <InputError :message="form.errors.link" />
         </div>
         <div>
-          <InputLabel for="manual_chat_link" value="Link do Chat Manual" />
-          <input id="manual_chat_link" v-model="form.manual_chat_link" type="url" class="input" />
+          <InputLabel for="manual_chat_link" value="Slug do Chat Manual" />
+          <input id="manual_chat_link" v-model="form.manual_chat_link" type="text" class="input" placeholder="nome-unico-estabelecimento" />
           <InputError :message="form.errors.manual_chat_link" />
         </div>
         <div>

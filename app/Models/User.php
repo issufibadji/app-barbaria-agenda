@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use OwenIt\Auditing\Auditable;
+use App\Models\AgendaAiEstablishment;
 
 class User extends Authenticatable implements AuditableContract
 {
@@ -56,5 +57,10 @@ class User extends Authenticatable implements AuditableContract
             'confirmed_2fa' => 'boolean',
             'password' => 'hashed',
         ];
+    }
+
+    public function establishment()
+    {
+        return $this->hasOne(AgendaAiEstablishment::class, 'user_id');
     }
 }
