@@ -29,7 +29,7 @@ class AgendaAiChatLinkController extends Controller
                 'string',
                 'max:255',
                 'regex:/^[a-z0-9\-]+$/i',
-                'unique:agendaai_establishments,manual_chat_link,' . $user->establishment->id,
+                'unique:agendaai_establishments,manual_chat_link,' . $establishment->id,
             ],
         ]);
 
