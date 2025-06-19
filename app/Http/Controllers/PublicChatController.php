@@ -3,19 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\AgendaAiEstablishment;
+use App\Models\AgendaAiMessageSetting;
 use Inertia\Inertia;
 
 class PublicChatController extends Controller
 {
     public function show($slug)
-    {
-        $establishment = AgendaAiEstablishment::where('manual_chat_link', $slug)->firstOrFail();
+{
+    $establishment = AgendaAiEstablishment::where('manual_chat_link', $slug)->firstOrFail();
 
-        return Inertia::render('Public/Chat', [
-            'establishment' => $establishment,
-            // você pode passar serviços, horários disponíveis, etc.
-        ]);
-    }
+    // Buscar mensagens do próprio estabelecimento OU as padrões (establishment_id null)
+    $messagesRaw = AgendaAiMessageSetting::where(function ($q) use ($establishment) {
+        $q->whereNull('establishment_id')
+          ->orWhere('establishment_id', $establishment->id);
+    })->get();
+
+    $messages = $messagesRaw->pluck('message', 'type');
+
+    return Inertia::render('Public/Chat', [
+        'establishment' => $establishment,
+        'messages' => $messages,
+    ]);
+}
+
 
     public function services(AgendaAiEstablishment $establishment)
     {

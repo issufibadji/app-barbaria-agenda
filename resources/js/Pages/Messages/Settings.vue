@@ -8,7 +8,10 @@ const props = defineProps({
 })
 
 const form = useForm({
-  messages: Object.fromEntries(props.messages.map(m => [m.type, m.message]))
+ messages: props.messages.reduce((acc, cur) => {
+  acc[cur.type] = cur.message
+  return acc
+}, {})
 })
 
 const labels = {

@@ -18,12 +18,12 @@ const form = useForm({
 })
 
 function submit() {
+  const options = { forceFormData: true }
+
   if (props.mode === 'edit') {
-    form.post(route('establishments.update', props.establishment.uuid), {
-      _method: 'put'
-    })
+    form.post(route('establishments.update', props.establishment.uuid), options)
   } else {
-    form.post(route('establishments.store'))
+    form.post(route('establishments.store'), options)
   }
 }
 </script>

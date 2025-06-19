@@ -9,17 +9,40 @@ use Inertia\Inertia;
 
 class AgendaAiMessageSettingController extends Controller
 {
+
     public function index()
-    {
-        $user = auth()->user();
-        $establishmentId = $user->establishment->id ?? null;
+{
+    $establishmentId = auth()->user()->establishment->id ?? null;
 
-        $messages = AgendaAiMessageSetting::where('establishment_id', $establishmentId)->get();
+    $types = [
+        'confirmacao_agendamento',
+        'cancelamento_agendamento',
+        'lembrete_agendamento',
+        'agradecimento',
+        'remarketing',
+    ];
 
-        return Inertia::render('Messages/Settings', [
-            'messages' => $messages,
-        ]);
-    }
+    $messages = collect($types)->map(function ($type) use ($establishmentId) {
+        // Busca personalizada
+        $setting = AgendaAiMessageSetting::where('type', $type)
+            ->where(function ($q) use ($establishmentId) {
+                $q->where('establishment_id', $establishmentId)
+                  ->orWhereNull('establishment_id');
+            })
+            ->orderByRaw("CASE WHEN establishment_id IS NULL THEN 1 ELSE 0 END") // Prioriza personalizada
+            ->first();
+
+        return [
+            'type' => $type,
+            'message' => $setting?->message ?? '',
+        ];
+    })->values()->toArray();
+
+    return Inertia::render('Messages/Settings', [
+        'messages' => $messages,
+    ]);
+}
+
 
     public function update(Request $request)
     {
@@ -29,6 +52,11 @@ class AgendaAiMessageSettingController extends Controller
         if (!$establishmentId) {
             return back()->withErrors(['msg' => 'Estabelecimento não encontrado.']);
         }
+
+        // Validação leve (opcional)
+        $request->validate([
+            'messages' => 'required|array',
+        ]);
 
         foreach ($request->messages as $type => $message) {
             AgendaAiMessageSetting::updateOrCreate(
@@ -60,5 +88,3 @@ class AgendaAiMessageSettingController extends Controller
     }
 }
 
-
-}

@@ -144,8 +144,8 @@ class MenuSidebarSeeder extends Seeder
         ]);
 
         $blogMenus = [
-            ['Listar Categorias', 'fa-boxes-stacked', 'blog/categories', 'blog-categories'],
-            ['Listar Tags', 'fa-tags', 'blog/tags', 'blog-tags'],
+            // ['Listar Categorias', 'fa-boxes-stacked', 'blog/categories', 'blog-categories'],
+            // ['Listar Tags', 'fa-tags', 'blog/tags', 'blog-tags'],
             ['Listar Templates', 'fa-newspaper', 'blog/templates', 'blog-templates'],
             ['Listar Posts', 'fa-feather-pointed', 'blog/posts', 'blog-posts'],
         ];

@@ -26,7 +26,7 @@ const props = defineProps({
             <p class="text-sm text-gray-600 flex-1">{{ est.descrition }}</p>
             <div class="mt-4 space-x-2">
               <a :href="est.link" target="_blank" class="text-blue-600 hover:underline">Visitar</a>
-              <a :href="route('chat.show', est.manual_chat_link)" target="_blank" class="text-blue-600 hover:underline">Chat</a>
+             <a v-if="est.manual_chat_link" :href="route('chat.show', { slug: est.manual_chat_link })" target="_blank"class="text-blue-600 hover:underline">Abrir chat</a>
               <Link :href="route('establishments.edit', est.uuid)" class="text-yellow-600 hover:underline">Editar</Link>
               <Link as="button" method="delete" :href="route('establishments.destroy', est.uuid)" class="text-red-600 hover:underline" preserve-scroll>Excluir</Link>
             </div>

@@ -28,7 +28,8 @@ class AgendaAiChatLinkController extends Controller
                 'nullable',
                 'string',
                 'max:255',
-                Rule::unique('agendaai_establishments', 'manual_chat_link')->ignore($establishment->id),
+                'regex:/^[a-z0-9\-]+$/i',
+                'unique:agendaai_establishments,manual_chat_link,' . $user->establishment->id,
             ],
         ]);
 

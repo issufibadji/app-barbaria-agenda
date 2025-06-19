@@ -90,7 +90,7 @@ class AgendaAiEstablishmentController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'link' => 'required|url|max:255',
-            'manual_chat_link' => 'nullable|string|max:255|unique:agendaai_establishments,manual_chat_link,' . $establishment->id,
+            'manual_chat_link' => 'nullable|string|max:255|unique:agendaai_establishments,manual_chat_link,' . $establishment->uuid . ',uuid',
             'descrition' => 'nullable|string|max:1000',
             'image' => 'nullable|image|max:2048',
         ]);

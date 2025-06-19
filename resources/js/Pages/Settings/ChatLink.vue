@@ -22,17 +22,19 @@ const form = useForm({
           Link personalizado (ex: chat.meusistema.com/<strong>sua-barbearia</strong>)
         </label>
         <div class="flex items-center">
-          <span class="text-sm text-gray-500 bg-gray-100 px-3 py-2 rounded-l border border-r-0 border-gray-300">
-            https://chat.seusistema.com/
-          </span>
-          <input
+        <span class="bg-gray-100 border border-r-0 border-gray-300 px-3 py-2 rounded-l text-sm text-gray-600">
+            chat.seusistema.com/
+        </span>
+        <input
             v-model="form.manual_chat_link"
             type="text"
+            placeholder="sua-barbearia"
             class="flex-1 border border-gray-300 rounded-r px-3 py-2 text-sm"
-            placeholder="nome-unico-estabelecimento"
-          />
+            @blur="form.manual_chat_link = form.manual_chat_link.toLowerCase().replace(/[^a-z0-9\-]/g, '')"
+            />
+
         </div>
-        <p class="text-xs text-gray-500 mt-2">Escolha um nome único e profissional.</p>
+        <p class="text-xs text-gray-500 mt-1">Escolha um nome único e profissional. Use apenas letras, números e traços.</p>
       </div>
 
       <button
