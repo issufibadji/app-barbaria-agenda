@@ -118,4 +118,20 @@ class AgendaAiEstablishmentController extends Controller
         return redirect()->route('establishments.index')
                          ->with('success', 'Estabelecimento excluído com sucesso.');
     }
+
+    /**
+     * Show edit form for the authenticated user's establishment.
+     */
+    public function editCurrent()
+    {
+        $establishment = Auth::user()->establishment;
+
+        if (! $establishment) {
+            return redirect()->route('establishments.create');
+        }
+
+        return Inertia::render('Establishments/Edit', [
+            'establishment' => $establishment,
+        ]);
+    }
 }

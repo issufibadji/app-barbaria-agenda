@@ -237,6 +237,7 @@ Route::controller(AgendaAiEstablishmentController::class)
     ->name('establishments.')
     ->group(function () {
         Route::get('/',   'index')->name('index');
+        Route::get('/update', 'editCurrent')->name('update-page');
         Route::get('/create', 'create')->name('create');
         Route::post('/',  'store')->name('store');
         Route::get('/{establishment}/edit', 'edit')->name('edit');
