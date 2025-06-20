@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\AgendaAiEstablishment;
+use App\Traits\BelongsToEstablishment;
 
 class AgendaAiMessage extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToEstablishment;
 
     protected $table = 'agendaai_messages';
 

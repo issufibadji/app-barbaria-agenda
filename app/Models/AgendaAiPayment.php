@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\BelongsToEstablishment;
 use App\Models\AgendaAiPlan;
 use App\Models\AgendaAiEstablishment;
 use App\Models\MercadoPayment;
 
 class AgendaAiPayment extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToEstablishment;
 
     protected $table = 'agendaai_payments';
 

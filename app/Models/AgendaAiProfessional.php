@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\AgendaAiEstablishment;
 use App\Models\AgendaAiPhone;
 use App\Models\AgendaAiService;
+use App\Traits\BelongsToEstablishment;
 class AgendaAiProfessional extends Model
 {
-    use HasFactory, Uuid;
+    use HasFactory, Uuid, BelongsToEstablishment;
 
     protected $table = 'agendaai_professionals';
     protected $primaryKey = 'uuid';
