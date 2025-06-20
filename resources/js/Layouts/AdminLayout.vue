@@ -7,6 +7,16 @@ const sidebarOpen = ref(false)
 const darkMode = ref(false)
 const dropdownOpen = ref(false)
 const sideMenus = usePage().props.sideMenus ?? []
+const roles = usePage().props.auth.roles ?? []
+
+const filteredMenus = computed(() =>
+  sideMenus.filter(m => {
+    if (m.route?.startsWith('establishments')) {
+      return roles.includes('super-master') || roles.includes('master')
+    }
+    return true
+  })
+)
 
 onMounted(() => {
   darkMode.value = localStorage.getItem('theme') === 'dark'
@@ -32,7 +42,7 @@ function logout() {
 // ✅ Agrupando por level (grupos visuais)
 const groupedMenus = computed(() => {
   const groups = {}
-  const parents = sideMenus.filter(m => m.parent_id === null)
+  const parents = filteredMenus.value.filter(m => m.parent_id === null)
 
   parents.forEach(item => {
     const group =
@@ -46,7 +56,7 @@ const groupedMenus = computed(() => {
 
     groups[group].push({
       ...item,
-      children: sideMenus
+      children: filteredMenus.value
         .filter(child => child.parent_id === item.id)
         .map(child => ({
           ...child,
