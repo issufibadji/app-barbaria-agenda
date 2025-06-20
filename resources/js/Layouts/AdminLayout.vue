@@ -7,16 +7,24 @@ const sidebarOpen = ref(false)
 const darkMode = ref(false)
 const dropdownOpen = ref(false)
 const sideMenus = usePage().props.sideMenus ?? []
-const roles = usePage().props.auth.roles ?? []
+const roles = usePage().props.auth.user.roles ?? []
 
 const filteredMenus = computed(() =>
   sideMenus.filter(m => {
-    if (m.route?.startsWith('establishments')) {
-      return roles.includes('super-master') || roles.includes('master')
+    // Ocultar menus de Administração do Sistema para admin/professional
+    if (m.level === 3 && (roles.includes('admin') || roles.includes('professional'))) {
+      return false
     }
+
+    // Ocultar menus de Estabelecimentos para quem não for super/master
+    if (m.route?.startsWith('establishments') && !(roles.includes('super-master') || roles.includes('master'))) {
+      return false
+    }
+
     return true
   })
 )
+
 
 onMounted(() => {
   darkMode.value = localStorage.getItem('theme') === 'dark'
