@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\AgendaAiService;
 use App\Models\AgendaAiProduct;
 use App\Models\AgendaAiMessageSetting;
+use App\Models\AgendaAiPhone;
 
 class AgendaAiEstablishment extends Model
 {
@@ -18,6 +19,7 @@ class AgendaAiEstablishment extends Model
     protected $primaryKey = 'uuid';
     public $incrementing = false;
     protected $keyType = 'string';
+
     protected $fillable = [
         'uuid',
         'name',
@@ -33,20 +35,23 @@ class AgendaAiEstablishment extends Model
         return 'uuid';
     }
 
-
     public function services()
     {
-      return $this->hasMany(AgendaAiService::class, 'establishment_id');
-
+        return $this->hasMany(AgendaAiService::class, 'establishment_id');
     }
 
     public function products()
     {
-      return $this->hasMany(AgendaAiProduct::class, 'establishment_id');
+        return $this->hasMany(AgendaAiProduct::class, 'establishment_id');
     }
 
     public function messageSettings()
     {
         return $this->hasMany(AgendaAiMessageSetting::class, 'establishment_id');
+    }
+
+    public function phones()
+    {
+        return $this->hasMany(AgendaAiPhone::class, 'establishment_id');
     }
 }

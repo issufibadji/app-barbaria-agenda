@@ -21,7 +21,7 @@ function submit() {
   const options = { forceFormData: true }
 
   if (props.mode === 'edit') {
-    form.post(route('establishments.update', props.establishment.uuid), options)
+    form.put(route('establishments.update', props.establishment.uuid), options)
   } else {
     form.post(route('establishments.store'), options)
   }

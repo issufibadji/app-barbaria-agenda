@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\AgendaAiEstablishment;
+use App\Models\AgendaAiPhone;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -16,7 +19,7 @@ use Inertia\Response;
 class RegisteredUserController extends Controller
 {
     /**
-     * Display the registration view.
+     * Exibe a tela de registro.
      */
     public function create(): Response
     {
@@ -24,9 +27,7 @@ class RegisteredUserController extends Controller
     }
 
     /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * Processa o cadastro de um novo usuário administrador e cria o estabelecimento vinculado.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -39,37 +40,43 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
         $user->assignRole('admin');
 
-        $slug = \Illuminate\Support\Str::slug($request->establishment_name);
+        $slug = Str::slug($request->establishment_name);
 
-        $establishment = \App\Models\AgendaAiEstablishment::create([
-            'uuid' => (string) \Illuminate\Support\Str::uuid(),
-            'name' => $request->establishment_name,
-            'link' => 'https://agenderbarber.app/chat/' . $slug,
-            'manual_chat_link' => $slug,
-            'user_id' => $user->id,
+         $establishment = AgendaAiEstablishment::create([
+            'uuid'              => (string) Str::uuid(),
+            'name'              => $request->establishment_name,
+            'link'              => 'https://agenderbarber.app/chat/' . $slug,
+            'manual_chat_link'  => $slug,
+            'user_id'           => $user->id,
         ]);
 
-        // associate user to establishment
+        $establishment->refresh(); // 🔧 garante que $establishment->uuid está carregado corretamente
+
+
+        // Relaciona o usuário ao estabelecimento
         $user->establishment_id = $establishment->id;
         $user->save();
 
-        \App\Models\AgendaAiPhone::create([
-            'phone' => $request->phone,
+        // Cria telefone vinculado
+        AgendaAiPhone::create([
+            'telefone'          => $request->phone, // CORRIGIDO: o nome do campo na migration é "telefone", não "phone"
             'establishment_id' => $establishment->id,
-            'professional_id' => null,
+            'professional_id'   => null,
         ]);
 
         event(new Registered($user));
-
         Auth::login($user);
 
-        return redirect()->route('establishments.update-page');
+        // Redireciona para a tela de edição do estabelecimento para completar os dados
+       return redirect()->route('establishments.edit', $establishment->uuid)
+         ->with('success', 'Cadastro concluído! Complete os dados do seu estabelecimento.');
+
     }
 }
