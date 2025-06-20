@@ -40,7 +40,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         if ($user->hasAnyRole(['admin', 'professional'])) {
-            return redirect()->route('establishments.update-page');
+            return redirect()->route('dashboard');
         }
 
         return redirect()->intended(route('dashboard', absolute: false));
