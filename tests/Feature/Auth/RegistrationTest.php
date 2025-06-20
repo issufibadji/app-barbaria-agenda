@@ -23,9 +23,12 @@ class RegistrationTest extends TestCase
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
+            'establishment_name' => 'Barbearia Teste',
+            'phone' => '123456789',
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $establishment = \App\Models\AgendaAiEstablishment::first();
+        $response->assertRedirect(route('establishments.edit', $establishment->uuid, absolute: false));
     }
 }

@@ -32,8 +32,10 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'establishment_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
         ]);
 
         $user = User::create([
@@ -42,10 +44,27 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->assignRole('admin');
+
+        $slug = \Illuminate\Support\Str::slug($request->establishment_name);
+
+        $establishment = \App\Models\AgendaAiEstablishment::create([
+            'uuid' => (string) \Illuminate\Support\Str::uuid(),
+            'name' => $request->establishment_name,
+            'link' => 'https://agenderbarber.app/chat/' . $slug,
+            'manual_chat_link' => $slug,
+            'user_id' => $user->id,
+        ]);
+
+        \App\Models\AgendaAiPhone::create([
+            'phone' => $request->phone,
+            'establishment_id' => $establishment->id,
+        ]);
+
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect()->route('establishments.edit', $establishment->uuid);
     }
 }

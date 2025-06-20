@@ -66,6 +66,32 @@
       <p v-if="form.errors.password_confirmation" class="mt-2 text-sm text-red-600">{{ form.errors.password_confirmation }}</p>
     </div>
 
+    <!-- Establishment Name -->
+    <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-2">Nome do Estabelecimento</label>
+      <input
+        type="text"
+        v-model="form.establishment_name"
+        required
+        class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-brown-400 focus:bg-white"
+        placeholder="Barbearia Joao"
+      />
+      <p v-if="form.errors.establishment_name" class="mt-2 text-sm text-red-600">{{ form.errors.establishment_name }}</p>
+    </div>
+
+    <!-- Phone -->
+    <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-2">Telefone</label>
+      <input
+        type="text"
+        v-model="form.phone"
+        required
+        class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-brown-400 focus:bg-white"
+        placeholder="(00) 00000-0000"
+      />
+      <p v-if="form.errors.phone" class="mt-2 text-sm text-red-600">{{ form.errors.phone }}</p>
+    </div>
+
     <button
       type="submit"
       class="w-full bg-brown-500 text-white py-3 rounded-lg font-semibold hover:bg-brown-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:outline-none focus:shadow-outline"
@@ -93,11 +119,13 @@ const form = useForm({
   email: '',
   password: '',
   password_confirmation: '',
+  establishment_name: '',
+  phone: '',
 })
 
 const submit = () => {
   form.post(route('register'), {
-    onFinish: () => form.reset('password', 'password_confirmation'),
+    onFinish: () => form.reset('password', 'password_confirmation', 'establishment_name', 'phone'),
   })
 }
 </script>
