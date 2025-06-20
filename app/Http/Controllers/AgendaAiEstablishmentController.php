@@ -64,7 +64,9 @@ class AgendaAiEstablishmentController extends Controller
     {
         $establishment = AgendaAiEstablishment::findOrFail($uuid);
         return Inertia::render('Establishments/Edit', [
-            'establishment' => $establishment,
+            'establishment' => $establishment->only([
+                'uuid', 'name', 'link', 'manual_chat_link', 'descrition', 'image'
+            ]),
             'mode' => 'show'
         ]);
     }
@@ -76,7 +78,9 @@ class AgendaAiEstablishmentController extends Controller
     {
         $establishment = AgendaAiEstablishment::findOrFail($uuid);
         return Inertia::render('Establishments/Edit', [
-            'establishment' => $establishment,
+            'establishment' => $establishment->only([
+                'uuid', 'name', 'link', 'manual_chat_link', 'descrition', 'image'
+            ]),
             'mode' => 'edit'
         ]);
     }
@@ -132,7 +136,9 @@ class AgendaAiEstablishmentController extends Controller
         }
 
         return Inertia::render('Establishments/Edit', [
-            'establishment' => $establishment,
+            'establishment' => $establishment->only([
+                'uuid', 'name', 'link', 'manual_chat_link', 'descrition', 'image'
+            ]),
             'mode' => 'edit'
         ]);
     }

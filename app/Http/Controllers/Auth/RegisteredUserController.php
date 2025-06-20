@@ -11,7 +11,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -47,14 +46,9 @@ class RegisteredUserController extends Controller
 
         $user->assignRole('admin');
 
-        $slug = Str::slug($request->establishment_name);
-
-         $establishment = AgendaAiEstablishment::create([
-            'uuid'              => (string) Str::uuid(),
-            'name'              => $request->establishment_name,
-            'link'              => 'https://agenderbarber.app/chat/' . $slug,
-            'manual_chat_link'  => $slug,
-            'user_id'           => $user->id,
+        $establishment = AgendaAiEstablishment::create([
+            'name'    => $request->establishment_name,
+            'user_id' => $user->id,
         ]);
 
         $establishment->refresh(); // 🔧 garante que $establishment->uuid está carregado corretamente
