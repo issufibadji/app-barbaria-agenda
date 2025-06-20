@@ -21,31 +21,48 @@ class DatabaseSeeder extends Seeder
             MenuSidebarSeeder::class, // ✅ Seeder dos Menus
             AppConfigSeeder::class,
             MessageSettingsSeeder::class
-         ]);
-        // Usuário comum
-        $user = User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
         ]);
 
-        // Usuário admin
+        // Usuário super master
+        $super = User::factory()->create([
+            'name' => 'Super Master',
+            'email' => 'super@agender.com',
+        ]);
+
+        // Usuário master
+        $master = User::factory()->create([
+            'name' => 'Master TI',
+            'email' => 'master@agender.com',
+        ]);
+
+        // Usuário admin (gestor de barbearia)
         $admin = User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
+            'name' => 'Administrador',
+            'email' => 'admin@agender.com',
         ]);
 
-         $master = User::factory()->create([
-            'name' => 'mastre',
-            'email' => 'master@gmail.com',
+        // Profissional colaborador
+        $professional = User::factory()->create([
+            'name' => 'Barbeiro Pedro',
+            'email' => 'pedro@barbearia.com',
         ]);
+
+        // Cliente externo
+        $client = User::factory()->create([
+            'name' => 'Cliente Externo',
+            'email' => 'cliente@teste.com',
+        ]);
+
         // Atribui papéis
-       $master->assignRole('master');
+        $super->assignRole('super-master');
+        $master->assignRole('master');
         $admin->assignRole('admin');
-        $user->assignRole('user');
+        $professional->assignRole('professional');
+        $client->assignRole('client');
 
-        // Atribui permissões diretas (opcional, além dos papéis)
-       $master->givePermissionTo('audit-all');
+        // Permissões diretas opcionais
+        $super->givePermissionTo('audit-all');
         $admin->givePermissionTo('audit-all');
-        $user->givePermissionTo('notification-all');
+        $client->givePermissionTo('youself');
     }
 }

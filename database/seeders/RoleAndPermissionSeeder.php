@@ -25,9 +25,11 @@ class RoleAndPermissionSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Criação dos papéis
-        $master = Role::firstOrCreate(['name' => 'master']);
-        $admin = Role::firstOrCreate(['name' => 'admin']);
-        $user = Role::firstOrCreate(['name' => 'user']);
+        $superMaster = Role::firstOrCreate(['name' => 'super-master']); // Dono do SaaS
+        $master = Role::firstOrCreate(['name' => 'master']);           // Suporte técnico/TI
+        $admin = Role::firstOrCreate(['name' => 'admin']);             // Administrador da barbearia
+        $professional = Role::firstOrCreate(['name' => 'professional']);// Colaborador/barbeiro
+        $client = Role::firstOrCreate(['name' => 'client']);           // Usuário externo
 
         // Lista de permissões
         $permissions = [
@@ -54,16 +56,27 @@ class RoleAndPermissionSeeder extends Seeder
             'phones-all',
             'mensagens-settings-all',
             'chat-link-settings-all'
-
         ];
 
         foreach ($permissions as $perm) {
             Permission::firstOrCreate(['name' => $perm]);
         }
 
-        // Atribui todas as permissões aos papéis
+        // Atribui permissões conforme níveis
         $allPermissions = Permission::all();
-        $admin->syncPermissions($allPermissions);
+        $superMaster->syncPermissions($allPermissions);
         $master->syncPermissions($allPermissions);
+        $admin->syncPermissions($allPermissions);
+
+        // Permissões limitadas
+        $professional->syncPermissions([
+            'appointments-all',
+            'schedules-all',
+            'youself'
+        ]);
+
+        $client->syncPermissions([
+            'youself'
+        ]);
     }
 }
