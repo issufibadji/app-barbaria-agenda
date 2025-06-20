@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use App\Models\AgendaAiService;
 use App\Models\AgendaAiProduct;
 use App\Models\AgendaAiMessageSetting;
@@ -29,6 +30,20 @@ class AgendaAiEstablishment extends Model
         'image',
         'user_id',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->name = trim($model->name);
+            $model->manual_chat_link = Str::slug($model->name);
+
+            if (empty($model->link)) {
+                $model->link = 'https://agenderbarber.app/chat/' . $model->manual_chat_link;
+            }
+        });
+    }
 
     public function getRouteKeyName()
     {
