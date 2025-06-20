@@ -17,7 +17,19 @@ class AgendaAiEstablishmentController extends Controller
      */
     public function index()
     {
-        $establishments = AgendaAiEstablishment::orderBy('created_at', 'desc')->paginate(10);
+        $user = Auth::user();
+        $query = AgendaAiEstablishment::orderBy('created_at', 'desc');
+
+        if ($user->hasRole('master')) {
+            $query->where('user_id', $user->id);
+        }
+
+        if ($user->hasAnyRole(['admin', 'professional'])) {
+            $query->where('id', $user->establishment_id);
+        }
+
+        $establishments = $query->paginate(10);
+
         return Inertia::render('Establishments/Index', [
             'establishments' => $establishments,
         ]);
@@ -63,6 +75,7 @@ class AgendaAiEstablishmentController extends Controller
     public function show(string $uuid)
     {
         $establishment = AgendaAiEstablishment::findOrFail($uuid);
+        $this->checkAccess($establishment);
         return Inertia::render('Establishments/Edit', [
             'establishment' => $establishment->only([
                 'uuid', 'name', 'link', 'manual_chat_link', 'descrition', 'image'
@@ -77,6 +90,7 @@ class AgendaAiEstablishmentController extends Controller
     public function edit(string $uuid)
     {
         $establishment = AgendaAiEstablishment::findOrFail($uuid);
+        $this->checkAccess($establishment);
         return Inertia::render('Establishments/Edit', [
             'establishment' => $establishment->only([
                 'uuid', 'name', 'link', 'manual_chat_link', 'descrition', 'image'
@@ -91,6 +105,7 @@ class AgendaAiEstablishmentController extends Controller
     public function update(Request $request, string $uuid): RedirectResponse
     {
         $establishment = AgendaAiEstablishment::findOrFail($uuid);
+        $this->checkAccess($establishment);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -118,6 +133,7 @@ class AgendaAiEstablishmentController extends Controller
     public function destroy(string $uuid): RedirectResponse
     {
         $establishment = AgendaAiEstablishment::findOrFail($uuid);
+        $this->checkAccess($establishment);
         $establishment->delete();
 
         return redirect()->route('establishments.index')
@@ -141,5 +157,24 @@ class AgendaAiEstablishmentController extends Controller
             ]),
             'mode' => 'edit'
         ]);
+    }
+
+    private function checkAccess(AgendaAiEstablishment $establishment): void
+    {
+        $user = Auth::user();
+
+        if ($user->hasRole('super-master')) {
+            return;
+        }
+
+        if ($user->hasRole('master') && $establishment->user_id === $user->id) {
+            return;
+        }
+
+        if ($user->hasAnyRole(['admin', 'professional']) && $user->establishment_id === $establishment->id) {
+            return;
+        }
+
+        abort(403);
     }
 }
