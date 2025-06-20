@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Traits\BelongsToEstablishment;
 use Illuminate\Support\Str;
 use App\Models\AgendaAiService;
 use App\Models\AgendaAiProduct;
@@ -16,7 +15,6 @@ class AgendaAiEstablishment extends Model
 {
     use HasFactory;
     use Uuid;
-    use BelongsToEstablishment;
 
     protected $table = 'agendaai_establishments';
     protected $primaryKey = 'uuid';
