@@ -38,20 +38,22 @@ use App\Http\Controllers\{
     AgendaAiChatLinkController
 };
 
-// Home
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
 
-// Dashboard
-Route::get('/dashboard', fn () => Inertia::render('Dashboard'))
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Home e Dashboard protegidos com redirecionamento
+Route::middleware(['auth', 'establishment.redirect'])->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Welcome', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+        ]);
+    });
+
+    Route::get('/dashboard', fn () => Inertia::render('Dashboard'))
+        ->middleware(['verified'])
+        ->name('dashboard');
+});
 
 // 2FA
 Route::middleware('auth')->group(function () {
@@ -71,6 +73,7 @@ Route::middleware('auth')->group(function () {
         return response()->json(['redirect' => route('dashboard')]);
     });
 });
+
 
 // Perfil
 Route::middleware('auth')->prefix('profile')->name('profile.')->group(function () {
@@ -314,6 +317,18 @@ Route::middleware('auth')->group(function () {
     Route::post('push-subscriptions', [PushSubscriptionController::class, 'store'])->name('push-subscriptions.store');
 });
 
+
+
+// Middleware para restringir acesso de admin/professional
+Route::middleware(['auth', 'restrict.system.access'])->group(function () {
+    Route::resource('roles', RoleController::class);
+    Route::resource('permissions', PermissionController::class);
+    Route::resource('plans', AgendaAiPlanController::class);
+    Route::resource('menus', MenuSideBarController::class);
+    Route::get('config', [AppConfigController::class, 'index'])->name('config.index');
+    Route::get('audits', [AuditController::class, 'index'])->name('audits.index');
+    Route::get('notifications/send', [NotificationController::class, 'create'])->name('notifications.send');
+});
 
 Route::get('/public/{establishment:uuid}/services', [\App\Http\Controllers\PublicChatController::class, 'services']);
 Route::get('/public/{establishment:uuid}/messages', [\App\Http\Controllers\PublicChatController::class, 'messages']);

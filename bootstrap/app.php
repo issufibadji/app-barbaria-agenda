@@ -16,11 +16,13 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
         $middleware->alias([
-                'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
-                'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
-                'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
-                 '2fa' => \App\Http\Middleware\Ensure2FAIsVerified::class,
-            ]);
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            '2fa' => \App\Http\Middleware\Ensure2FAIsVerified::class,
+            'restrict.system.access' => \App\Http\Middleware\RestrictSystemAccess::class,
+            'establishment.redirect' => \App\Http\Middleware\RedirectEstablishmentUser::class,
+        ]);
 
         //
     })
