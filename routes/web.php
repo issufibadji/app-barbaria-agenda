@@ -39,21 +39,20 @@ use App\Http\Controllers\{
 };
 
 
-// Home e Dashboard protegidos com redirecionamento
-Route::middleware(['auth', 'establishment.redirect'])->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Welcome', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
-        ]);
-    });
+// Página inicial pública com redirecionamento para usuários logados
+Route::get('/', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->middleware('establishment.redirect');
 
-    Route::get('/dashboard', fn () => Inertia::render('Dashboard'))
-        ->middleware(['verified'])
-        ->name('dashboard');
-});
+// Dashboard protegido
+Route::get('/dashboard', fn () => Inertia::render('Dashboard'))
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // 2FA
 Route::middleware('auth')->group(function () {
@@ -88,10 +87,6 @@ Route::middleware('auth')->prefix('profile')->name('profile.')->group(function (
 
 // Administração (admin)
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    // Roles, Permissões, Atribuições
-    Route::resource('roles', RoleController::class)->except('show');
-    Route::resource('permissions', PermissionController::class)->except('show');
-
     Route::controller(RoleUserController::class)->prefix('roles-user')->name('roles-user.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/', 'assign')->name('assign');
@@ -110,8 +105,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/{user}/toggle-2fa', 'toggle2FA')->name('toggle-2fa');
     });
 
-    // Menus
-    Route::resource('menus', MenuSideBarController::class)->except('show');
 
     // Auditoria
     Route::controller(AuditController::class)->prefix('audits')->name('audits.')->group(function () {
@@ -269,18 +262,6 @@ Route::get('/settings/chat-link', [AgendaAiChatLinkController::class, 'edit'])->
 Route::post('/settings/chat-link', [AgendaAiChatLinkController::class, 'update'])->name('settings.chat-link.update');
 
 
-Route::controller(AgendaAiPlanController::class)
-    ->prefix('plans')
-    ->name('plans.')
-    ->group(function () {
-        Route::get('/',   'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::post('/',  'store')->name('store');
-        Route::get('/{plan}/edit', 'edit')->name('edit');
-        Route::put('/{plan}',      'update')->name('update');
-        Route::delete('/{plan}',   'destroy')->name('destroy');
-});
-
 
 Route::controller(AgendaAiPaymentController::class)
     ->prefix('payments')
@@ -318,8 +299,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-// Middleware para restringir acesso de admin/professional
+// Rotas restritas a super-master e master
 Route::middleware(['auth', 'restrict.system.access'])->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
