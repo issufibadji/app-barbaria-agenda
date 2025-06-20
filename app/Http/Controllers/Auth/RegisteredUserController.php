@@ -56,6 +56,10 @@ class RegisteredUserController extends Controller
             'user_id' => $user->id,
         ]);
 
+        // associate user to establishment
+        $user->establishment_id = $establishment->id;
+        $user->save();
+
         \App\Models\AgendaAiPhone::create([
             'phone' => $request->phone,
             'establishment_id' => $establishment->id,
@@ -65,6 +69,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('establishments.edit', $establishment->uuid);
+        return redirect()->route('establishments.update-page');
     }
 }
