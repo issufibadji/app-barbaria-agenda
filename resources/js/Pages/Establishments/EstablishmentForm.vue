@@ -21,11 +21,15 @@ function submit() {
   const options = { forceFormData: true }
 
   if (props.mode === 'edit') {
-    form.put(route('establishments.update', props.establishment.uuid), options)
+    form.transform(data => ({
+      ...data,
+      _method: 'put' // ✅ adiciona _method corretamente
+    })).post(route('establishments.update', props.establishment.uuid), options)
   } else {
     form.post(route('establishments.store'), options)
   }
 }
+
 </script>
 
 <template>
