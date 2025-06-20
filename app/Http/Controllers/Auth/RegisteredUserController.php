@@ -63,6 +63,7 @@ class RegisteredUserController extends Controller
         \App\Models\AgendaAiPhone::create([
             'phone' => $request->phone,
             'establishment_id' => $establishment->id,
+            'professional_id' => null,
         ]);
 
         event(new Registered($user));
