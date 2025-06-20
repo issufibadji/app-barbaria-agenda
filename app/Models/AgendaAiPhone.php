@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\BelongsToEstablishment;
 use App\Models\AgendaAiProfessional;
 use App\Models\AgendaAiEstablishment;
 
 class AgendaAiPhone extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToEstablishment;
 
     protected $table = 'agendaai_phones';
     protected $fillable = [

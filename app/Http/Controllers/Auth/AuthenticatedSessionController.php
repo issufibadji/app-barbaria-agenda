@@ -36,7 +36,11 @@ class AuthenticatedSessionController extends Controller
         $user = $request->user();
 
         if ($user->two_factor_enabled) {
-            return redirect()->route('two-factor'); // <- nome da rota
+            return redirect()->route('two-factor');
+        }
+
+        if ($user->hasAnyRole(['admin', 'professional'])) {
+            return redirect()->route('establishments.update-page');
         }
 
         return redirect()->intended(route('dashboard', absolute: false));

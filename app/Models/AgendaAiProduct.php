@@ -5,11 +5,12 @@ namespace App\Models;
 use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\BelongsToEstablishment;
 use App\Models\AgendaAiEstablishment;
 
 class AgendaAiProduct extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToEstablishment;
     use Uuid;
 
     protected $table = 'agendaai_products';
