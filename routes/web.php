@@ -35,11 +35,12 @@ use App\Http\Controllers\{
     AuditController,
     PublicChatController,
     AgendaAiMessageSettingController,
-    AgendaAiChatLinkController
+    AgendaAiChatLinkController,
+    DashboardController
 };
 
 
-// Página inicial pública com redirecionamento para usuários logados
+// Home e Dashboard protegidos com redirecionamento
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -47,12 +48,12 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-})->middleware('establishment.redirect');
+});
 
-// Dashboard protegido
-Route::get('/dashboard', fn () => Inertia::render('Dashboard'))
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Dashboard protegida com auth
+Route::middleware(['auth', 'verified', 'establishment.redirect'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
 
 // 2FA
 Route::middleware('auth')->group(function () {

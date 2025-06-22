@@ -1,29 +1,34 @@
 <script setup>
-import { Head,  usePage } from '@inertiajs/vue3'
+import { Head, usePage } from '@inertiajs/vue3'
 import AdminLayout from '@/Layouts/AdminLayout.vue'
-const user = usePage().props.auth.user
+import AdminDashboardCards from '@/Layouts/AdminDashboardCards.vue'
+import DashboardAppointmentsChart from '@/Layouts/Charts/DashboardAppointmentsChart.vue'
 
-
-console.log("Roles:", user?.roles)
-console.log("Permissions:", user?.permissions)
-console.log('Usuário logado:', user)
-
+const establishment = usePage().props.establishment
+const weeklyAppointments = usePage().props.weeklyAppointments
 </script>
 
 <template>
   <Head title="Dashboard" />
-  <AdminLayout>
+<AdminLayout>
     <div class="py-12">
-      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 space-y-6">
+
         <h1 class="text-2xl font-semibold text-brown-900 dark:text-white mb-4">Dashboard</h1>
 
-        <div class="p-6 bg-white dark:bg-brown-800 rounded-lg shadow-md">
-          <p class="text-brown-600 dark:text-brown-200">
-            This is a dark sidebar example with submenus.
-          </p>
+        <!-- ALERTA DE ESTABELECIMENTO INCOMPLETO -->
+        <div v-if="!establishment.address || !establishment.phone" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md">
+          <p class="font-semibold">Estabelecimento incompleto:</p>
+          <ul class="ml-4 list-disc">
+            <li v-if="!establishment.address">Endereço não preenchido.</li>
+            <li v-if="!establishment.phone">Telefone não cadastrado.</li>
+          </ul>
         </div>
+
+        <AdminDashboardCards :establishment="establishment" />
+        <DashboardAppointmentsChart :data="weeklyAppointments" />
+
       </div>
     </div>
   </AdminLayout>
 </template>
-

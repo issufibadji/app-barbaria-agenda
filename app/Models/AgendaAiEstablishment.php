@@ -69,4 +69,35 @@ class AgendaAiEstablishment extends Model
     {
         return $this->hasMany(AgendaAiPhone::class, 'establishment_id');
     }
+   public function appointments()
+    {
+        return $this->hasMany(\App\Models\AgendaAiAppointment::class, 'establishment_id');
+    }
+
+    public function professionals()
+    {
+        return $this->hasMany(\App\Models\AgendaAiProfessional::class, 'establishment_id');
+    }
+
+    public function clients()
+    {
+        return $this->hasMany(\App\Models\AgendaAiClient::class, 'establishment_id');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(\App\Models\AgendaAiPayment::class, 'establishment_id');
+    }
+
+    public function address()
+    {
+        return $this->hasOne(\App\Models\AgendaAiAddressEstablishment::class, 'establishment_id');
+    }
+
+    public function phone()
+    {
+        return $this->hasOne(\App\Models\AgendaAiPhone::class, 'establishment_id');
+    }
+
+
 }
