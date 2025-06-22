@@ -71,8 +71,7 @@ class DashboardController extends Controller
             $start = Carbon::now()->startOfWeek(); // segunda
             $end = Carbon::now()->endOfWeek();     // domingo
 
-            $rows = DB::table('agendaai_appointments')
-                ->select('date', 'time', 'client_name', 'service_name', 'price')
+            $rows = \App\Models\AgendaAiAppointment::with(['client', 'service'])
                 ->where('establishment_id', $establishment->uuid)
                 ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
                 ->orderBy('date')
@@ -81,14 +80,14 @@ class DashboardController extends Controller
 
             foreach ($rows as $row) {
                 $key = Carbon::parse($row->date)->format('Y-m-d');
-
                 $appointmentsWeek[$key][] = [
                     'time' => $row->time,
-                    'client_name' => $row->client_name,
-                    'service_name' => $row->service_name,
                     'price' => $row->price,
+                    'client' => ['name' => $row->client->name ?? ''],
+                    'service' => ['name' => $row->service->name ?? ''],
                 ];
             }
+
         }
 
         return Inertia::render('Dashboard', [

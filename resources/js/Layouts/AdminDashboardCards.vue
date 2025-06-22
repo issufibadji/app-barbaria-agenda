@@ -12,23 +12,11 @@ defineProps({
       <div>
         <h2 class="text-lg font-semibold text-brown-800 dark:text-white">Estabelecimento</h2>
         <p :class="establishment?.name ? 'text-brown-600' : 'text-red-500 dark:text-red-400'">
-          {{ establishment?.name || 'Nome não cadastrado' }}
+          Nome: {{ establishment?.name || 'Nome não cadastrado' }}
         </p>
         <p class="text-sm text-brown-500">CNPJ: {{ establishment?.cnpj || '---' }}</p>
-      </div>
-    </div>
-
-    <!-- Card: Contato -->
-    <div class="bg-white dark:bg-brown-800 rounded-lg shadow p-4 flex items-start gap-4">
-      <i class="fas fa-phone text-2xl text-brown-500 mt-1"></i>
-      <div>
-        <h2 class="text-lg font-semibold text-brown-800 dark:text-white">Contato</h2>
-        <p :class="establishment?.address ? 'text-brown-600' : 'text-red-500 dark:text-red-400'">
-          Endereço: {{ establishment?.address || 'Não informado' }}
-        </p>
-        <p :class="establishment?.phone ? 'text-brown-600' : 'text-red-500 dark:text-red-400'">
-          Telefone: {{ establishment?.phone || 'Não informado' }}
-        </p>
+        <p class="text-sm text-brown-500">Endereço: {{ establishment?.address || '---' }}</p>
+        <p class="text-sm text-brown-500">Telefone: {{ establishment?.pone || '---' }}</p>
       </div>
     </div>
 
@@ -44,7 +32,7 @@ defineProps({
     </div>
 
     <!-- Card: Faturamento -->
-    <div class="bg-white dark:bg-brown-800 rounded-lg shadow p-4 col-span-1 md:col-span-2 flex items-start gap-4">
+   <div class="bg-white dark:bg-brown-800 rounded-lg shadow p-4 flex items-start gap-4">
       <i class="fas fa-dollar-sign text-3xl text-green-600 mt-1"></i>
       <div>
         <h2 class="text-lg font-semibold text-brown-800 dark:text-white">Faturamento</h2>
