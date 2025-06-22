@@ -55,7 +55,8 @@ class RoleAndPermissionSeeder extends Seeder
             'addresses-all',
             'phones-all',
             'mensagens-settings-all',
-            'chat-link-settings-all'
+            'chat-link-settings-all',
+            'establishments-settings-all'
         ];
 
         foreach ($permissions as $perm) {

@@ -36,7 +36,8 @@ use App\Http\Controllers\{
     PublicChatController,
     AgendaAiMessageSettingController,
     AgendaAiChatLinkController,
-    DashboardController
+    DashboardController,
+    AgendaAiSettingsController
 };
 
 
@@ -53,6 +54,7 @@ Route::get('/', function () {
 // Dashboard protegida com auth
 Route::middleware(['auth', 'verified', 'establishment.redirect'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+     Route::get('/settings', [AgendaAiSettingsController::class, 'index'])->name('settings');
 });
 
 // 2FA

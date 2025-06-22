@@ -3,10 +3,13 @@ import { Head, usePage } from '@inertiajs/vue3'
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 import AdminDashboardCards from '@/Layouts/AdminDashboardCards.vue'
 import DashboardAppointmentsChart from '@/Layouts/Charts/DashboardAppointmentsChart.vue'
+import DashboardAppointmentsCalendar from '@/Layouts/Charts/DashboardAppointmentsCalendar.vue'
 
 const establishment = usePage().props.establishment
 const weeklyAppointments = usePage().props.weeklyAppointments
+const appointmentsWeek = usePage().props.appointmentsWeek
 </script>
+
 
 <template>
   <Head title="Dashboard" />
@@ -26,6 +29,7 @@ const weeklyAppointments = usePage().props.weeklyAppointments
         </div>
 
         <AdminDashboardCards :establishment="establishment" />
+        <DashboardAppointmentsCalendar :appointmentsWeek="appointmentsWeek" />
         <DashboardAppointmentsChart :data="weeklyAppointments" />
 
       </div>

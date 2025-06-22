@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
+use Inertia\Inertia;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-        $showEstablishmentPanel = $user->hasRole('admin');
+        $showEstablishmentPanel = $user->hasRole('admin') || $user->hasRole('professional');
         $establishment = $user->establishment;
 
         $establishmentData = $establishment ? [
@@ -38,7 +38,7 @@ class DashboardController extends Controller
         // Gráfico: agendamentos por dia da semana
         $weeklyAppointments = [];
         if ($establishment) {
-            $appointments = DB::table('agenda_ai_appointments')
+            $appointments = DB::table('agendaai_appointments')
                 ->select(DB::raw('DAYOFWEEK(date) as weekday'), DB::raw('COUNT(*) as count'))
                 ->where('establishment_id', $establishment->uuid)
                 ->groupBy('weekday')
@@ -64,10 +64,38 @@ class DashboardController extends Controller
             }
         }
 
+        // Detalhamento: agendamentos da semana atual por data (formato Y-m-d)
+        $appointmentsWeek = [];
+
+        if ($establishment) {
+            $start = Carbon::now()->startOfWeek(); // segunda
+            $end = Carbon::now()->endOfWeek();     // domingo
+
+            $rows = DB::table('agendaai_appointments')
+                ->select('date', 'time', 'client_name', 'service_name', 'price')
+                ->where('establishment_id', $establishment->uuid)
+                ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
+                ->orderBy('date')
+                ->orderBy('time')
+                ->get();
+
+            foreach ($rows as $row) {
+                $key = Carbon::parse($row->date)->format('Y-m-d');
+
+                $appointmentsWeek[$key][] = [
+                    'time' => $row->time,
+                    'client_name' => $row->client_name,
+                    'service_name' => $row->service_name,
+                    'price' => $row->price,
+                ];
+            }
+        }
+
         return Inertia::render('Dashboard', [
             'showEstablishmentPanel' => $showEstablishmentPanel,
             'establishment' => $establishmentData,
             'weeklyAppointments' => $weeklyAppointments,
+            'appointmentsWeek' => $appointmentsWeek,
         ]);
     }
 }
