@@ -54,6 +54,7 @@ Route::get('/', function () {
 // Dashboard protegida com auth
 Route::middleware(['auth', 'verified', 'establishment.redirect'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/week-data', [DashboardController::class, 'fetchWeekData'])->name('dashboard.weekData');
      Route::get('/settings', [AgendaAiSettingsController::class, 'index'])->name('settings');
 });
 

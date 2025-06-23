@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -97,4 +98,37 @@ class DashboardController extends Controller
             'appointmentsWeek' => $appointmentsWeek,
         ]);
     }
+
+    public function fetchWeekData(Request $request)
+{
+    $user = Auth::user();
+    $establishment = $user->establishment;
+
+    $start = Carbon::parse($request->startDate)->startOfWeek();
+    $end = Carbon::parse($start)->endOfWeek();
+
+    $appointmentsWeek = [];
+
+    if ($establishment) {
+        $rows = \App\Models\AgendaAiAppointment::with(['client', 'service'])
+            ->where('establishment_id', $establishment->uuid)
+            ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
+            ->orderBy('date')
+            ->orderBy('time')
+            ->get();
+
+        foreach ($rows as $row) {
+            $key = Carbon::parse($row->date)->format('Y-m-d');
+            $appointmentsWeek[$key][] = [
+                'time' => $row->time,
+                'price' => $row->price,
+                'client' => ['name' => $row->client->name ?? ''],
+                'service' => ['name' => $row->service->name ?? ''],
+            ];
+        }
+    }
+
+    return response()->json(['appointmentsWeek' => $appointmentsWeek]);
+}
+
 }
