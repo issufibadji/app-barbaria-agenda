@@ -11,72 +11,42 @@ class RoleAndPermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        // 🔒 Desativa checagem de chaves estrangeiras
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
-        // Limpa as tabelas com delete (mais seguro com FKs)
         DB::table('role_has_permissions')->delete();
         DB::table('model_has_roles')->delete();
         DB::table('model_has_permissions')->delete();
         Permission::query()->delete();
         Role::query()->delete();
-
-        // 🔓 Reativa checagem de chaves estrangeiras
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // Criação dos papéis
-        $superMaster = Role::firstOrCreate(['name' => 'super-master']); // Dono do SaaS
-        $master = Role::firstOrCreate(['name' => 'master']);           // Suporte técnico/TI
-        $admin = Role::firstOrCreate(['name' => 'admin']);             // Administrador da barbearia
-        $professional = Role::firstOrCreate(['name' => 'professional']);// Colaborador/barbeiro
-        $client = Role::firstOrCreate(['name' => 'client']);           // Usuário externo
+        // Cria os papéis
+        Role::firstOrCreate(['name' => 'super-master']);
+        Role::firstOrCreate(['name' => 'master']);
+        Role::firstOrCreate(['name' => 'admin']);
+        Role::firstOrCreate(['name' => 'professional']);
+        Role::firstOrCreate(['name' => 'client']);
 
         // Lista de permissões
-        $permissions = [
-            'permissions-all',
-            'roles-all',
-            'roles-user-all',
-            'plan-all',
-            'configs-all',
-            'signature-all',
-            'user-all',
-            'audit-all',
-            'notification-all',
-            'menu-all',
-            'youself',
-            'clients-all',
-            'employees-all',
-            'appointments-all',
-            'schedules-all',
-            'products-all',
-            'services-all',
-            'establishments-all',
-            'messages-all',
-            'addresses-all',
-            'phones-all',
-            'mensagens-settings-all',
-            'chat-link-settings-all'
+        $perms = [
+            'permissions-all','roles-all','roles-user-all','plan-all','configs-all',
+            'signature-all','user-all','audit-all','notification-all','menu-all','youself',
+            'clients-all','employees-all','appointments-all','schedules-all',
+            'products-all','services-all','establishments-all','messages-all',
+            'addresses-all','phones-all','mensagens-settings-all','chat-link-settings-all'
         ];
-
-        foreach ($permissions as $perm) {
-            Permission::firstOrCreate(['name' => $perm]);
+        foreach ($perms as $p) {
+            Permission::firstOrCreate(['name' => $p]);
         }
 
-        // Atribui permissões conforme níveis
-        $allPermissions = Permission::all();
-        $superMaster->syncPermissions($allPermissions);
-        $master->syncPermissions($allPermissions);
-        $admin->syncPermissions($allPermissions);
+        // Sincroniza permissões
+        $all = Permission::all();
+        Role::findByName('super-master')->syncPermissions($all);
+        Role::findByName('master')      ->syncPermissions($all);
+        Role::findByName('admin')       ->syncPermissions($all);
 
-        // Permissões limitadas
-        $professional->syncPermissions([
-            'appointments-all',
-            'schedules-all',
-            'youself'
+        Role::findByName('professional')->syncPermissions([
+            'appointments-all','schedules-all','youself'
         ]);
-
-        $client->syncPermissions([
-            'youself'
-        ]);
+        Role::findByName('client')->syncPermissions(['youself']);
     }
 }
